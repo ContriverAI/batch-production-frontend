@@ -1,0 +1,23 @@
+{
+  "name": "batch-production-frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ContriverAI/batch-production-frontend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ContriverAI/batch-production-frontend/issues"
+  },
+  "homepage": "https://github.com/ContriverAI/batch-production-frontend#readme",
+  "dependencies": {
+    "http-server": "^0.12.3"
+  }
+}
