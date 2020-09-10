@@ -8,28 +8,95 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Lilita One' rel='stylesheet'>
-    <link rel="stylesheet" type="text/css" href="./css/index.css">
+    <link rel="stylesheet" type="text/css" href="../css/user_cooling.css">
     <title>Bakery</title>
    
   </head>
-  <body class="login">
-        <h1>User cooling</h1>
+  <body class="">
+      
      
-      <form class="form-login" id="loginForm" method = "POST">
-        <h1 class="form-login-heading">Log in</h1>
+      <!-- Tab links -->
+        <div class="tab">
+            <button class="tablinks" onclick="openCity(event, 'Main')" id="defaultOpen" >Main</button>
+            <button class="tablinks" onclick="openCity(event, 'Packaging')">Packaging</button>
+            <button class="tablinks" onclick="openCity(event, 'Live_Table')">Live Table</button>
+            <button class="tablinks" onclick="" style="margin-right: 0px;">Logout</button>
+        </div>
+        
+        
+        <!-- Tab content -->
+        <div id="Main" class="tabcontent">
+            <h3>Main Form</h3>
 
-        <div>
-            <label for="inputUsername" >Username</label>
-            <input type="text" id="inputUsername" class="form-control" placeholder="Enter username"  required autofocus>
+            <form class="form-login card" id="loginForm" method = "POST">
+                <h1 class="form-login-heading">Log in</h1>
+        
+                <div style="margin-top: 20px;">
+                    <label for="inputUsername" >Username</label>
+                    <input type="text" id="inputUsername" class="form-control" placeholder="Enter username"  required autofocus>
+                </div>
+        
+                <div style="margin-top: 10px;margin-bottom: 20px;">
+                    <label for="inputPassword">Password</label>
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Enter password"  required>
+                </div>
+        
+                <button id = "login" class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+              </form>
+
+        </div>
+        
+        <div id="Packaging" class="tabcontent">
+            <h3>Packaging Form</h3>
+
+            <form class="form-login card" id="loginForm" method = "POST">
+                <h1 class="form-login-heading">Log in</h1>
+
+                <div style="margin-top: 20px;">
+                    <label for="inputUsername" >Username</label>
+                    <input type="text" id="inputUsername" class="form-control" placeholder="Enter username"  required autofocus>
+                </div>
+
+                <div style="margin-top: 10px;margin-bottom: 20px;">
+                    <label for="inputPassword">Password</label>
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Enter password"  required>
+                </div>
+
+                <button id = "login" class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+            </form>
+
+        </div>
+        
+        <div id="Live_Table" class="tabcontent">
+            <h3>Live Table</h3>
+            <p>Live Table is the capital of Japan.</p>
         </div>
 
-        <div style="margin-top: 10px;margin-bottom: 20px;">
-            <label for="inputPassword">Password</label>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Enter password"  required>
-        </div>
+        <script>
 
-        <button id = "login" class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-      </form>
+            document.getElementById("defaultOpen").click();
+
+            function openCity(evt, cityName) {
+                // Declare all variables
+                var i, tabcontent, tablinks;
+
+                // Get all elements with class="tabcontent" and hide them
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+
+                // Get all elements with class="tablinks" and remove the class "active"
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+
+                // Show the current tab, and add an "active" class to the button that opened the tab
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+        </script>
 
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -37,7 +104,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     
     
-    <script src = "./js/index.js" ></script>
+    <script src = "../js/user_cooling.js" ></script>
 
 
     
