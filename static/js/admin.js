@@ -3,14 +3,15 @@ if(navigator.onLine)
     $(document).ready(function(){
 
         function checkLogin() {
-            if(!(sessionStorage.getItem("designation") === "superviser") && !(sessionStorage.getItem("role") === "cooling")){
+            if(sessionStorage.getItem("designation") === "admin" && sessionStorage.getItem("role") === "system"){
+                window.location.pathname = "/admin";
+            }
+            else{
                 window.location.pathname = "/";
             }
          }
-         
-         window.onload = function(){
-             checkLogin();
-         }
+      
+         checkLogin();
 
          $("#Logout").click(function(event){
             event.preventDefault();

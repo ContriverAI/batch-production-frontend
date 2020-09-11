@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href='https://fonts.googleapis.com/css?family=Lilita One' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/admin.css')}}">
+    <title>Bakery</title>
+   
+  </head>
+  <body class="">
+      
+     
+      <!-- Tab links -->
+        <div class="tab">
+            <button class="tablinks" onclick="openCity(event, 'Production')" id="defaultOpen" >Production</button>
+            <button class="tablinks" onclick="openCity(event, 'Packaging')">Cooling</button>
+            <button class="tablinks" onclick="openCity(event, 'Store')">Store</button>
+            <button class="tablinks" onclick="openCity(event, 'Reports')">Reports</button>
+            <button class="tablinks" onclick="openCity(event, 'Users')">Users</button>
+            <button class="tablinks" id="Logout" onclick="" style="margin-right: 0px;">Logout</button>
+        </div>
+        
+        
+        <!-- Tab content -->
+        <div id="Production" class="tabcontent">
+            <h3 style="text-align: center;">Production Table</h3>
+            <table id="production_table">
+                <tr>
+                    <th>Date</th>
+                    <th>Trolley</th>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Time In</th>
+                    <th>Duration</th>
+                    <th>Complete Time</th>
+                </tr>
+            </table>
+        </div>
+        
+        <div id="Cooling" class="tabcontent">
+            <h3 style="text-align: center;">Cooling Table</h3>
+            <table id="cooling_table">
+                <tr>
+                    <th>Date</th>
+                    <th>Trolley</th>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Time In</th>
+                    <th>Duration</th>
+                    <th>Complete Time</th>
+                </tr>
+            </table>
+        </div>
+
+        <div id="Store" class="tabcontent">
+            <h3 style="text-align: center;">Store Table</h3>
+            <table id="store_table">
+                <tr>
+                    <th>Date</th>
+                    <th>Trolley</th>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Time In</th>
+                    <th>Duration</th>
+                    <th>Complete Time</th>
+                </tr>
+            </table>
+        </div>
+
+        <div id="Reports" class="tabcontent">
+            <h3 style="text-align: center;">Reports</h3>
+            
+        </div>
+        
+        <div id="Users" class="tabcontent">
+            <h3 style="text-align: center;">Users</h3>
+            
+        </div>
+
+        <script>
+
+            document.getElementById("defaultOpen").click();
+
+            function openCity(evt, cityName) {
+                // Declare all variables
+                var i, tabcontent, tablinks;
+
+                // Get all elements with class="tabcontent" and hide them
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+
+                // Get all elements with class="tablinks" and remove the class "active"
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+
+                // Show the current tab, and add an "active" class to the button that opened the tab
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+        </script>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    
+    
+    <script src = "{{url_for('static',filename='js/admin.js')}}" ></script>
+
+
+    
+    
+</body>
+</html>
