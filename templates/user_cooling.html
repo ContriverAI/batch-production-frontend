@@ -57,7 +57,7 @@
 
                 <div style="margin-top: 20px;margin-bottom: 20px;">
                     <label for="inputCoolingTime" >Cooling Start Time</label>
-                    <input type="text" id="input_main_coolingTime" class="form-control" placeholder="Enter cooling start time"  required autofocus>
+                    <input type="time" id="input_main_coolingTime" class="form-control" placeholder="Enter cooling start time"  required autofocus>
                 </div>
         
                 <button id = "submitMain" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
@@ -81,8 +81,8 @@
                 </div>
 
                 <div style="margin-top: 20px;margin-bottom: 20px;">
-                    <label for="inputCoolingTime" >Cooling Start Time</label>
-                    <input type="text" id="input_packaging_time" class="form-control" placeholder="Enter time"  required autofocus>
+                    <label for="inputTime" > Time</label>
+                    <input type="time" id="input_packaging_time" class="form-control" placeholder="Enter time"  required autofocus>
                 </div>
         
                 <button id = "submitPackaging" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
@@ -94,8 +94,8 @@
             <h3 style="text-align: center;">Live Table</h3>
             <table id="user_cooling_table">
                 <tr>
-                    <th contenteditable="true">Date</th>
-                    <th contenteditable="true">Trolley</th>
+                    <th>Date</th>
+                    <th>Trolley</th>
                     <th>Product</th>
                     <th>Qty</th>
                     <th>Time In</th>
