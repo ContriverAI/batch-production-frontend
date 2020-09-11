@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href='https://fonts.googleapis.com/css?family=Lilita One' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/superviser_store.css')}}">
+    <title>Bakery</title>
+   
+  </head>
+  <body class="">
+      
+     
+      <!-- Tab links -->
+        <div class="tab">
+            <button class="tablinks" onclick="openCity(event, 'Receiving')" id="defaultOpen" >Receiving</button>
+            <button class="tablinks" onclick="openCity(event, 'Dispatching')">Dispatching</button>
+            <button class="tablinks" onclick="openCity(event, 'Live_Table')">Live Table</button>
+            <button class="tablinks" onclick="openCity(event, 'Reports')">Reports</button>
+            <button class="tablinks" id="Logout" onclick="" style="margin-right: 0px;">Logout</button>
+        </div>
+        
+        
+        <!-- Tab content -->
+        <div id="Main" class="tabcontent">
+            <h3 style="text-align: center;">receiving Screen Form</h3>
+
+            <form class="form-store-receiving card" id="receivingForm" method = "POST">
+        
+                <div style="margin-top: 20px;">
+                    <label for="inputDate" >Date</label>
+                    <input type="date" id="input_receiving_date" class="form-control" placeholder="Enter Date"  required autofocus>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <label for="inputProduct" >Product</label>
+                    <input type="text" id="input_receiving_product" class="form-control" placeholder="Enter product"  required autofocus>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <label for="inputStdQtyReceived" >Standard Qty Received</label>
+                    <input type="text" id="input_receiving_standard_qty_received" class="form-control" placeholder="Enter standard qty received"  required autofocus>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <label for="inputPkgSuperviser" >Pkg. Supervisor</label>
+                    <input type="text" id="input_receiving_pkg_superviser" class="form-control" placeholder="Enter Pkg. Supervisor"  required autofocus>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <label for="inputRoughtQtyReceived" >Rough Qty Received</label>
+                    <input type="text" id="input_receiving_rough_qty_received" class="form-control" placeholder="Enter rough quantity received"  required autofocus>
+                </div>
+    
+                <button id = "submitReceiving" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+            </form>
+
+        </div>
+        
+        <div id="Dispatching" class="tabcontent">
+            <h3 style="text-align: center;">Packaging Screen Form</h3>
+
+            <form class="form-store-dispatching card" id="dispatchingForm" method = "POST">
+        
+                <div style="margin-top: 20px;margin-bottom: 20px;">
+                    <label for="inputTime"> Date</label>
+                    <input type="date" id="input_dispatching_date" class="form-control" placeholder="Enter date"  required autofocus>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <label for="inputProduct" >Product</label>
+                    <input type="text" id="input_dispatching_product" class="form-control" placeholder="Enter Product"  required autofocus>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <label for="inputStdDispatched" >Standard Dispatched</label>
+                    <input type="text" id="input_dispatching_standard_dispatched" class="form-control" placeholder="Enter Standard Dispatched"  required autofocus>
+                </div>
+
+                <div style="margin-top: 20px;margin-bottom: 20px;">
+                    <label for="inputRoughDispatched"> Rough Dispatched</label>
+                    <input type="date" id="input_dispatching_rough_dispatched" class="form-control" placeholder="Enter Rough Dispatched"  required autofocus>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <label for="inputRoughReturned" >Rough Returned</label>
+                    <input type="text" id="input_dispatching_rough_returned" class="form-control" placeholder="Enter Rough Returned"  required autofocus>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <label for="inputDspSuperviser" >Dsp. Supervisor</label>
+                    <input type="text" id="input_dispatching_dsp_superviser" class="form-control" placeholder="Enter Dsp. Supervisor"  required autofocus>
+                </div>
+
+        
+                <button id = "submitPackaging" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+              </form>
+
+        </div>
+        
+        <div id="Live_Table" class="tabcontent">
+            <h3 style="text-align: center;">Live Table</h3>
+            <button id = "saveTable" class="btn btn-lg btn-primary btn-block saveBtn" >Save Table</button>
+            <table id="superviser_store_table">
+                <tr>
+                    <th contenteditable="true">QTY RECEIVED STANDARD</th>
+                    <th contenteditable="true">QTY RECEIVED ROUGH</th>
+                    <th>DISPATCHED STANDARD</th>
+                    <th>DISPATCHED ROUGH</th>
+                    <th>ROUGH RETURNED BREAD</th>
+                    <th>BREAD IN STORE</th>
+                    <th>ROUGH BREAD IN STORE</th>
+                </tr>
+            </table>
+        </div>
+
+        <div id="Reports" class="tabcontent">
+            <h3 style="text-align: center;">Reports</h3>
+        </div>
+
+        <script>
+            
+            document.getElementById("defaultOpen").click();
+
+            function openCity(evt, cityName) {
+                // Declare all variables
+                var i, tabcontent, tablinks;
+
+                // Get all elements with class="tabcontent" and hide them
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+
+                // Get all elements with class="tablinks" and remove the class "active"
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+
+                // Show the current tab, and add an "active" class to the button that opened the tab
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+        </script>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    
+    
+    <script src = "{{url_for('static',filename='js/superviser_store.js')}}" ></script>
+    
+</body>
+</html>
