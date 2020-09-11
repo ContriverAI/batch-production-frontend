@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href='https://fonts.googleapis.com/css?family=Lilita One' rel='stylesheet'>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/superviser_production.css')}}">
+    <title>Bakery</title>
+   
+  </head>
+  <body class="">
+      
+     
+      <!-- Tab links -->
+        <div class="tab">
+            <button class="tablinks" onclick="openCity(event, 'Main')" id="defaultOpen" >Main</button>
+            <button class="tablinks" onclick="openCity(event, 'Recall')">Recall</button>
+            <button class="tablinks" onclick="openCity(event, 'Bake')">Bake</button>
+            <button class="tablinks" onclick="openCity(event, 'Live_Table')">Live Table</button>
+            <button class="tablinks" onclick="openCity(event, 'Reports')">Reports</button>
+            <button class="tablinks" id="Logout" onclick="" style="margin-right: 0px;">Logout</button>
+        </div>
+        
+        
+        <!-- Tab content -->
+        <div id="Main" class="tabcontent">
+            <h3 style="text-align: center;">Main Screen Form</h3>
+
+            <form class="form-production-main card" id="mainForm" method = "POST">
+        
+                <div style="margin-top: 20px;">
+                    <label for="inputDate" >Date</label>
+                    <input type="date" id="input_main_date" class="form-control" placeholder="Enter Date"  required autofocus>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <label for="inputBatch" >Batch</label>
+                    <input type="text" id="input_main_Batch" class="form-control" placeholder="Enter batch no."  required autofocus>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <label for="inputYeastUsed" >Yeast used</label>
+                    <input type="text" id="input_main_yeastused" class="form-control" placeholder="Enter yeast used"  required autofocus>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <label for="inputFloorUsed" >Floor used</label>
+                    <input type="text" id="input_main_floorused" class="form-control" placeholder="Enter floor used"  required autofocus>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <label for="inputYield" >Yield</label>
+                    <input type="text" id="input_main_yield" class="form-control" placeholder="Enter Yield"  required autofocus>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <label for="inputShift" >Shift</label>
+                    <input type="text" id="input_main_shift" class="form-control" placeholder="Enter shift"  required autofocus>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <label for="inputProduct" >Product</label>
+                    <input type="text" id="input_main_product" class="form-control" placeholder="Enter product"  required autofocus>
+                </div>
+
+                <div style="margin-top: 20px;margin-bottom: 20px;">
+                    <label for="inputRemixUsed" >Remix used</label>
+                    <input type="text" id="input_main_remixused" class="form-control" placeholder="Enter remix used"  required autofocus>
+                </div>
+        
+                <div style="margin-top: 20px;margin-bottom: 20px;">
+                    <label for="inputTime" >Time</label>
+                    <input type="time" id="input_main_time" class="form-control" placeholder="Enter time"  required autofocus>
+                </div>
+
+
+                <div style="margin-top: 20px;margin-bottom: 20px;">
+                    <label for="inputRemixUsed" >Remix used</label>
+                    <input type="time" id="input_main_remixused" class="form-control" placeholder="Enter remix used"  required autofocus>
+                </div>
+        
+                <button id = "submitMain" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+            </form>
+
+        </div>
+        
+        <div id="Recall" class="tabcontent">
+            <h3 style="text-align: center;">Recall Screen Form</h3>
+
+            <form class="form-production-recall card" id="recallForm" method = "POST">
+        
+                <div style="margin-top: 20px;">
+                    <label for="inputBatch" >Batch</label>
+                    <input type="text" id="input_recall_batch" class="form-control" placeholder="Enter trolley no."  required autofocus>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <label for="inputStatus" >Cancel Batch</label>
+                    <input type="text" id="input_recall_cancelbatch" class="form-control" placeholder="Enter Status"  required autofocus>
+                </div>
+
+                <div style="margin-top: 20px;margin-bottom: 20px;">
+                    <label for="inputTime"> Time</label>
+                    <input type="time" id="input_recall_time" class="form-control" placeholder="Enter time"  required autofocus>
+                </div>
+        
+                <button id = "submitRecall" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+              </form>
+
+        </div>
+        
+        <div id="Bake" class="tabcontent">
+            <h3 style="text-align: center;">Recall Screen Form</h3>
+
+            <form class="form-production-bake card" id="bakeForm" method = "POST">
+        
+                <div style="margin-top: 20px;">
+                    <label for="inputBatch" >Batch</label>
+                    <input type="text" id="input_bake_batch" class="form-control" placeholder="Enter batch"  required autofocus>
+                </div>
+
+                <div style="margin-top: 20px;">
+                    <label for="inputStatus" >Status</label>
+                    <input type="text" id="input_bake_status" class="form-control" placeholder="Enter status"  required autofocus>
+                </div>
+
+                <div style="margin-top: 20px;margin-bottom: 20px;">
+                    <label for="inputTime"> Time</label>
+                    <input type="time" id="input_bake_time" class="form-control" placeholder="Enter time"  required autofocus>
+                </div>
+        
+                <button id = "submitBake" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+              </form>
+
+        </div>
+
+
+        <div id="Live_Table" class="tabcontent">
+            <h3 style="text-align: center;">Live Table</h3>
+            <button id = "saveTable" class="btn btn-lg btn-primary btn-block saveBtn" >Save Table</button>
+            <table id="superviser_production_table">
+                <tr>
+                    
+                    <th>DATE</th>
+                    <th>FLOUR</th>
+                    <th>SHIFT</th>
+                    <th>REMIX</th>
+                    <th>YEAST</th>
+                    <th>JSP</th>
+                    <th>ECO</th>
+                    <th>JEX</th>
+                    <th>OYOKUN</th>
+                    <th>MIDI</th>
+                    <th>MIXING TIME</th>
+                    <th>STATUS</th>
+                    <th>BAKING TIME</th>
+                </tr>
+            </table>
+        </div>
+
+        <div id="Reports" class="tabcontent">
+            <h3 style="text-align: center;">Reports</h3>
+            
+        </div>
+
+        <script>
+
+            document.getElementById("defaultOpen").click();
+
+            function openCity(evt, cityName) {
+                // Declare all variables
+                var i, tabcontent, tablinks;
+
+                // Get all elements with class="tabcontent" and hide them
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+
+                // Get all elements with class="tablinks" and remove the class "active"
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+
+                // Show the current tab, and add an "active" class to the button that opened the tab
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+        </script>
+
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <script src = "{{url_for('static',filename='js/superviser_production.js')}}" ></script>
+
+
+    
+    
+</body>
+</html>
