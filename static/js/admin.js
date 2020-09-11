@@ -3,10 +3,7 @@ if(navigator.onLine)
     $(document).ready(function(){
 
         function checkLogin() {
-            if(sessionStorage.getItem("designation") === "admin" && sessionStorage.getItem("role") === "system"){
-                window.location.pathname = "/admin";
-            }
-            else{
+            if(!(sessionStorage.getItem("designation") === "admin") && !(sessionStorage.getItem("role") === "system")){
                 window.location.pathname = "/";
             }
          }

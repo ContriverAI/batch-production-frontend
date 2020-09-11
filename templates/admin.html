@@ -18,7 +18,7 @@
       <!-- Tab links -->
         <div class="tab">
             <button class="tablinks" onclick="openCity(event, 'Production')" id="defaultOpen" >Production</button>
-            <button class="tablinks" onclick="openCity(event, 'Packaging')">Cooling</button>
+            <button class="tablinks" onclick="openCity(event, 'Cooling')">Cooling</button>
             <button class="tablinks" onclick="openCity(event, 'Store')">Store</button>
             <button class="tablinks" onclick="openCity(event, 'Reports')">Reports</button>
             <button class="tablinks" onclick="openCity(event, 'Users')">Users</button>
@@ -78,8 +78,92 @@
         </div>
         
         <div id="Users" class="tabcontent">
-            <h3 style="text-align: center;">Users</h3>
+            <div style="display: flex;flex-direction: row;">
+                <h3 style="text-align: center;">Users</h3>
+                <div style="margin: auto; margin-right: 55px;">
+                    <button id = "createUserBtn" class="btn btn-lg btn-primary  createBtn" >Create User</button>
+                    <button id = "updateUserBtn" class="btn btn-lg btn-primary  updateBtn" >Update User</button>
+                </div>    
+            </div>
+            <div style="display: flex;">
+                <table id="users_table" style="margin-top: 10px;width: 60%;">
+                    <tr>
+                        <th>Username</th>
+                        <th>Designation</th>
+                        <th>Role</th>
+                    </tr>
+                </table>
+
+                <form class="form-create-user card" id="createUserForm" method = "POST">
             
+                    <div style="margin-top: 20px;">
+                        <label for="inputUsername" >Username</label>
+                        <input type="text" id="input_username" class="form-control" placeholder="Enter username"  required autofocus>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <label for="inputpassword" >Password</label>
+                        <input type="password" id="input_password" class="form-control" placeholder="Enter password"  required autofocus>
+                    </div>
+
+                    <div style="margin-top: 20px;margin-bottom: 20px;">
+                        <label for="inputDesignation">Designation</label>
+                        <select id="inputDesignation" name="inputDesignation" class="form-control" required autofocus>
+                            <option value="user">User</option>
+                            <option value="supervisor">Supervisor</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-top: 10px;margin-bottom: 20px;">
+                    <label for="inputRole">Role</label>
+                        <select id="inputRole" name="inputRole" class="form-control" required autofocus>
+                            <option value="cooling">Cooling</option>
+                            <option value="production">Production</option>
+                            <option value="store">Store</option>
+                            <option value="system">System</option>
+                        </select>
+                    </div>
+            
+                    <button id = "submitCreateUser" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                </form>
+
+
+                <form class="form-update-user card" id="updateUserForm" method = "POST">
+            
+                    <div style="margin-top: 20px;">
+                        <label for="inputUsername" >Username</label>
+                        <input type="text" id="input_username" class="form-control" placeholder="Enter username"  required autofocus>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <label for="inputpassword" >New Password</label>
+                        <input type="password" id="input_password" class="form-control" placeholder="Enter password"  required autofocus>
+                    </div>
+
+                    <div style="margin-top: 20px;margin-bottom: 20px;">
+                        <label for="inputDesignation">New Designation</label>
+                        <select id="inputDesignation" name="inputDesignation" class="form-control" required autofocus>
+                            <option value="user">User</option>
+                            <option value="supervisor">Supervisor</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+
+                    <div style="margin-top: 10px;margin-bottom: 20px;">
+                    <label for="inputRole">New Role</label>
+                        <select id="inputRole" name="inputRole" class="form-control" required autofocus>
+                            <option value="cooling">Cooling</option>
+                            <option value="production">Production</option>
+                            <option value="store">Store</option>
+                            <option value="system">System</option>
+                        </select>
+                    </div>
+            
+                    <button id = "submitUpdateUser" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                </form>
+
+            </div>
         </div>
 
         <script>

@@ -64,3 +64,38 @@ td, th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+.createBtn{
+  margin-right: 20px;
+}
+
+.updateBtn{
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 15px; /* 5px rounded corners */
+  padding: 50px;
+}
+
+.form-create-user{
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-right: 20px;
+  width: 25%;
+  text-align: center;
+  background: white;
+  display: none;
+}
+
+.form-update-user{
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-right: 20px;
+  width: 25%;
+  text-align: center;
+  background: white;
+}

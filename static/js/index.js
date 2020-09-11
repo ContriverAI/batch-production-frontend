@@ -15,13 +15,13 @@ if(navigator.onLine)
             else if(sessionStorage.getItem("designation") === "user" && sessionStorage.getItem("role") === "production"){
                 window.location.pathname = "/user_production";
             }
-            else if(sessionStorage.getItem("designation") === "superviser" && sessionStorage.getItem("role") === "cooling"){
+            else if(sessionStorage.getItem("designation") === "supervisor" && sessionStorage.getItem("role") === "cooling"){
                 window.location.pathname = "/superviser_cooling";
             }
-            else if(sessionStorage.getItem("designation") === "superviser" && sessionStorage.getItem("role") === "store"){
+            else if(sessionStorage.getItem("designation") === "supervisor" && sessionStorage.getItem("role") === "store"){
                 window.location.pathname = "/superviser_store";
             }
-            else if(sessionStorage.getItem("designation") === "superviser" && sessionStorage.getItem("role") === "production"){
+            else if(sessionStorage.getItem("designation") === "supervisor" && sessionStorage.getItem("role") === "production"){
                 window.location.pathname = "/superviser_production";
             }
             else if(sessionStorage.getItem("designation") === "admin" && sessionStorage.getItem("role") === "system"){
