@@ -33,6 +33,7 @@
     display: none;
     padding: 6px 12px;
     border-top: none;
+    margin-top: 30px;
   }
 
   .tabcontent {
@@ -56,10 +57,36 @@
     padding: 50px;
   }
 
-.form-login{
+.form-cooling-main{
     margin: auto;
-    margin-top: 140px;
+    margin-top: 30px;
+    margin-bottom: 30px;
     width: 40%;
     text-align: center;
     background: white;
+}
+
+.form-cooling-packaging{
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  width: 40%;
+  text-align: center;
+  background: white;
+}
+
+table{
+  width: 100%;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
 }
