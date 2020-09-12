@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Lilita One' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/admin.css')}}">
-    <title>Bakery</title>
+    <title>PIMS</title>
    
   </head>
   <body class="">
@@ -45,15 +45,6 @@
         <div id="Cooling" class="tabcontent">
             <h3 style="text-align: center;">Cooling Table</h3>
             <table id="cooling_table">
-                <tr>
-                    <th>Date</th>
-                    <th>Trolley</th>
-                    <th>Product</th>
-                    <th>Qty</th>
-                    <th>Time In</th>
-                    <th>Duration</th>
-                    <th>Complete Time</th>
-                </tr>
             </table>
         </div>
 
@@ -81,17 +72,14 @@
             <div style="display: flex;flex-direction: row;">
                 <h3 style="text-align: center;">Users</h3>
                 <div style="margin: auto; margin-right: 55px;">
-                    <button id = "createUserBtn" class="btn btn-lg btn-primary  createBtn" >Create User</button>
+                    <button id = "createUserBtn" class="btn btn-lg btn-primary  createBtn disabled" >Create User</button>
                     <button id = "updateUserBtn" class="btn btn-lg btn-primary  updateBtn" >Update User</button>
+                    <button id = "deleteUserBtn" class="btn btn-lg btn-primary  deleteBtn" >Delete User</button>
                 </div>    
             </div>
             <div style="display: flex;">
                 <table id="users_table" style="margin-top: 10px;width: 60%;">
-                    <tr>
-                        <th>Username</th>
-                        <th>Designation</th>
-                        <th>Role</th>
-                    </tr>
+                    
                 </table>
 
                 <form class="form-create-user card" id="createUserForm" method = "POST">
@@ -132,18 +120,20 @@
                 <form class="form-update-user card" id="updateUserForm" method = "POST">
             
                     <div style="margin-top: 20px;">
-                        <label for="inputUsername" >Username</label>
-                        <input type="text" id="input_username" class="form-control" placeholder="Enter username"  required autofocus>
+                        <label for="input_update_username" >Username</label>
+                        <select id="input_update_username" name="input_update_username" class="form-control" required autofocus>
+                           
+                        </select>
                     </div>
 
                     <div style="margin-top: 20px;">
                         <label for="inputpassword" >New Password</label>
-                        <input type="password" id="input_password" class="form-control" placeholder="Enter password"  required autofocus>
+                        <input type="password" id="input_update_password" class="form-control" placeholder="Enter password"  required autofocus>
                     </div>
 
                     <div style="margin-top: 20px;margin-bottom: 20px;">
-                        <label for="inputDesignation">New Designation</label>
-                        <select id="inputDesignation" name="inputDesignation" class="form-control" required autofocus>
+                        <label for="inputUpdateDesignation">New Designation</label>
+                        <select id="inputUpdateDesignation" name="inputUpdateDesignation" class="form-control" required autofocus>
                             <option value="user">User</option>
                             <option value="supervisor">Supervisor</option>
                             <option value="admin">Admin</option>
@@ -151,8 +141,8 @@
                     </div>
 
                     <div style="margin-top: 10px;margin-bottom: 20px;">
-                    <label for="inputRole">New Role</label>
-                        <select id="inputRole" name="inputRole" class="form-control" required autofocus>
+                        <label for="inputUpdateRole">New Role</label>
+                        <select id="inputUpdateRole" name="inputUpdateRole" class="form-control" required autofocus>
                             <option value="cooling">Cooling</option>
                             <option value="production">Production</option>
                             <option value="store">Store</option>
@@ -161,6 +151,18 @@
                     </div>
             
                     <button id = "submitUpdateUser" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
+                </form>
+
+                <form class="form-delete-user card" id="deleteUserForm" method = "POST">
+            
+                    <div style="margin-top: 20px;margin-bottom: 20px;">
+                        <label for="input_delete_username" >Username</label>
+                        <select id="input_delete_username" name="input_delete_username" class="form-control" required autofocus>
+                           
+                        </select>
+                    </div>
+            
+                    <button id = "submitDeleteUser" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
                 </form>
 
             </div>
@@ -195,7 +197,7 @@
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     
     
     <script src = "{{url_for('static',filename='js/admin.js')}}" ></script>

@@ -13,7 +13,14 @@
 .form-login{
     margin: auto;
     margin-top: 140px;
-    width: 40%;
+    width: 30%;
     text-align: center;
     background: white;
+}
+
+.head{
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    margin-top: 50px;
 }

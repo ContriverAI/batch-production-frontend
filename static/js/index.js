@@ -63,6 +63,7 @@ if(navigator.onLine)
                         sessionStorage.setItem("username" , data.username);
                         sessionStorage.setItem("designation" , data.designation);
                         sessionStorage.setItem("role" , data.role);
+                        sessionStorage.setItem("ukey" , data.u_key);
                     }
                     else{
                         console.log(data);
@@ -86,15 +87,15 @@ if(navigator.onLine)
                         window.location.pathname = '/user_store'
                     }
 
-                    if(data.role === "cooling" && data.designation === "superviser"){
+                    if(data.role === "cooling" && data.designation === "supervisor"){
                         window.location.pathname = '/superviser_cooling'
                     }
 
-                    if(data.role === "production" && data.designation === "user"){
+                    if(data.role === "production" && data.designation === "supervisor"){
                         window.location.pathname = '/superviser_production'
                     }
 
-                    if(data.role === "store" && data.designation === "user"){
+                    if(data.role === "store" && data.designation === "supervisor"){
                         window.location.pathname = '/superviser_store'
                     }
 

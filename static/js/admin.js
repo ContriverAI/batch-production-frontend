@@ -16,23 +16,131 @@ if(navigator.onLine)
             window.location.pathname = "/";
          });
 
+         function msToTime(duration) {
+            var milliseconds = parseInt((duration % 1000) / 100),
+              seconds = Math.floor((duration / 1000) % 60),
+              minutes = Math.floor((duration / (1000 * 60)) % 60),
+              hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+          
+            hours = (hours < 10) ? "0" + hours : hours;
+            minutes = (minutes < 10) ? "0" + minutes : minutes;
+          
+            return hours + ":" + minutes ;
+          }
+
+        function getCoolingData(){
+
+            var settings = {
+                "url": "http://34.122.82.176:9001/get/cooling_data",
+                "method": "GET",
+                "timeout": 0,
+              };
+              
+              $.ajax(settings).done(function (response) {
+                var d = JSON.parse(response);
+                console.log(d.columns);
+                console.log(d.data);
+                sessionStorage.setItem("tableData" , JSON.stringify(d));
+                
+              });
+
+              var table_row = `<tr>
+                    <th>Date</th>
+                    <th>Trolley</th>
+                    <th>Product</th>
+                    <th>Qty</th>
+                    <th>Time In</th>
+                    <th>Duration</th>
+                    <th>Complete Time</th>
+                    <th>Packaging Complete </th>
+                </tr>`;
+
+                var data = sessionStorage.getItem("tableData");
+                var m = JSON.parse(data);
+                console.log(m.data);
+
+                for(var i = 0; i < m.data.length; i++){
+
+                    if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
+
+                            var date = new Date(m.data[i][0]);
+                            var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                            table_row += 
+                            '<tr>'+
+                                '<td>'+ finalD +'</td>'+
+                                '<td>'+m.data[i][1]+'</td>'+
+                                '<td>'+m.data[i][2]+'</td>'+
+                                '<td>'+m.data[i][3]+'</td>'+
+                                '<td>'+msToTime(m.data[i][4])+'</td>'+
+                                '<td>'+msToTime(m.data[i][5])+'</td>'+
+                                '<td>'+msToTime(m.data[i][6])+'</td>'+
+                                '<td>'+m.data[i][7]+'</td>'+
+                            '</tr>';
+                    }
+                }
+
+                document.getElementById('cooling_table').innerHTML = table_row;
+
+        }
+
+        getCoolingData();
+
+         function getUsersData(){
+
+            var settings = {
+                "url": "http://34.122.82.176:9001/get/allusers",
+                "method": "GET",
+                "timeout": 0,
+              };
+              
+              $.ajax(settings).done(function (response) {
+                var d = JSON.parse(response);
+                console.log(d.columns);
+                console.log(d.data);
+                sessionStorage.setItem("usersData" , JSON.stringify(d));
+                
+              });
+
+              var table_row = `<tr>
+                    <th>Username</th>
+                    <th>Designation</th>
+                    <th>Role</th>
+                </tr>`;
+
+                var data = sessionStorage.getItem("usersData");
+                var m = JSON.parse(data);
+                console.log(m.data);
+
+                for(var i = 0; i < m.data.length; i++){
+                    table_row += 
+                    '<tr>'+
+                        '<td>'+m.data[i][0]+'</td>'+
+                        '<td>'+m.data[i][2]+'</td>'+
+                        '<td>'+m.data[i][3]+'</td>'+
+                    '</tr>';
+                }
+
+
+                document.getElementById('users_table').innerHTML = table_row;
+        }
+
+        getUsersData();
+
         
-        $(".form-cooling-main").submit(function(event) {
+        $(".form-create-user").submit(function(event) {
             event.stopPropagation();
             event.preventDefault();
 
-            const url = "http://34.122.82.176:9001/get/users"
+            const url = "http://34.122.82.176:9001/get/create_user"
 
             $.ajax({
                 url:url,
                 type:"POST",
                 data:JSON.stringify({
-                    "date": $('#input_main_date').val(),
-                    "trolleyNo": $('#input_main_trolley').val(),
-                    "product": $('#input_main_product').val(),
-                    "shiftProduced": $('#input_main_shift_produced').val(),
-                    "quantity": $('#input_main_quantity').val(),
-                    "coolingTime": $('#input_main_coolingTime').val()
+                    "username": $('#input_username').val(),
+                    "password": $('#input_password').val(),
+                    "designation": $('#inputDesignation').val(),
+                    "role": $('#inputRole').val()
                 }),
                 statusCode :{
                    200: function() {
@@ -43,10 +151,8 @@ if(navigator.onLine)
                 contentType:"application/json; charset=utf-8",
                 success: function(data, textStatus, jqXHR)
                 {
-
-                    if(textStatus == "success"){
-
-                    }
+                    getUsersData();
+                    alert(data);
                 },
                 error: function (e)
                 {
@@ -56,19 +162,22 @@ if(navigator.onLine)
 
         });
 
-        $(".form-cooling-packaging").submit(function(event) {
+        
+
+        $(".form-update-user").submit(function(event) {
             event.stopPropagation();
             event.preventDefault();
 
-            const url = "http://34.122.82.176:9001/get/users"
+            const url = "http://34.122.82.176:9001/get/update_user"
 
             $.ajax({
                 url:url,
                 type:"POST",
                 data:JSON.stringify({
-                    "trolleyNo": $('#input_packaging_trolley').val(),
-                    "status": $('#input_packaging_status').val(),
-                    "time": $('#input_packaging_time').val()
+                    "username": $('#input_update_username').val(),
+                    "password": $('#input_update_password').val(),
+                    "designation": $('#inputUpdateDesignation').val(),
+                    "role": $('#inputUpdateRole').val()
                 }),
                 statusCode :{
                    200: function() {
@@ -79,16 +188,101 @@ if(navigator.onLine)
                 contentType:"application/json; charset=utf-8",
                 success: function(data, textStatus, jqXHR)
                 {
-
-                    if(textStatus == "success"){
-                        
-                    }
+                    getUsersData();
+                    alert(data);
                 },
                 error: function (e)
                 {
                     console.log(e);
                 }
             });
+
+        });
+
+        $(".form-delete-user").submit(function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+
+            const url = "http://34.122.82.176:9001/get/delete_user"
+
+            $.ajax({
+                url:url,
+                type:"POST",
+                data:JSON.stringify({
+                    "username": $('#input_delete_username').val()
+                }),
+                statusCode :{
+                   200: function() {
+                        console.log("success");
+                   }
+                }
+                ,
+                contentType:"application/json; charset=utf-8",
+                success: function(data, textStatus, jqXHR)
+                {
+                    getUsersData();
+                    alert(data);
+                },
+                error: function (e)
+                {
+                    console.log(e);
+                }
+            });
+
+        });
+
+        $("#createUserBtn").click(function(){
+            $(this).addClass("disabled");
+            $("#updateUserBtn").removeClass("disabled");
+            $("#deleteUserBtn").removeClass("disabled");
+            document.getElementById("createUserForm").style.display = "inline";
+            document.getElementById("updateUserForm").style.display = "none";
+            document.getElementById("deleteUserForm").style.display = "none";
+
+        });
+
+        $("#updateUserBtn").click(function(){
+            $(this).addClass("disabled");
+            $("#createUserBtn").removeClass("disabled");
+            $("#deleteUserBtn").removeClass("disabled");
+            document.getElementById("createUserForm").style.display = "none";
+            document.getElementById("updateUserForm").style.display = "inline";
+            document.getElementById("deleteUserForm").style.display = "none";
+
+            var data = sessionStorage.getItem("usersData");
+            var m = JSON.parse(data);
+            console.log(m.data);
+
+            var options = '';
+            
+
+            for(var i = 0; i < m.data.length; i++)
+                options += '<option value="'+m.data[i][0]+'">'+m.data[i][0]+'</option>';
+
+            document.getElementById('input_update_username').innerHTML = options;
+
+        });
+
+        $("#deleteUserBtn").click(function(){
+            $(this).addClass("disabled");
+            $("#createUserBtn").removeClass("disabled");
+            $("#updateUserBtn").removeClass("disabled");
+            document.getElementById("createUserForm").style.display = "none";
+            document.getElementById("updateUserForm").style.display = "none";
+            document.getElementById("deleteUserForm").style.display = "inline";
+
+            var data = sessionStorage.getItem("usersData");
+            var m = JSON.parse(data);
+            console.log(m.data);
+
+            var options = '';
+            
+
+            for(var i = 0; i < m.data.length; i++)
+                options += '<option value="'+m.data[i][0]+'">'+m.data[i][0]+'</option>';
+
+            document.getElementById('input_delete_username').innerHTML = options;
+
 
         });
     

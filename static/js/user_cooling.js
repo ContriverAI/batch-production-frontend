@@ -2,6 +2,18 @@ if(navigator.onLine)
 {
     $(document).ready(function(){
 
+        function setDateForm(){
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+
+            today =  yyyy + '-' + mm + '-'+ dd;
+            $("#input_main_date").val(today);
+        }
+
+        setDateForm()
+
         function msToTime(duration) {
             var milliseconds = parseInt((duration % 1000) / 100),
               seconds = Math.floor((duration / 1000) % 60),
@@ -65,11 +77,19 @@ if(navigator.onLine)
                     }
                 }
 
-
                 document.getElementById('user_cooling_table').innerHTML = table_row;
+
+
+                var options = '';
+               
+                for(var i = 0; i < m.data.length; i++)
+                    options += '<option value="'+m.data[i][1]+'">'+m.data[i][1]+'</option>';
+
+                document.getElementById('input_packaging_trolley').innerHTML = options;
         }
 
-        getTableData();
+         setInterval(getTableData, 2000);
+        // getTableData();
 
         function checkLogin() {
             if(!(sessionStorage.getItem("designation") === "user") && !(sessionStorage.getItem("role") === "cooling")){
@@ -90,18 +110,19 @@ if(navigator.onLine)
             event.stopPropagation();
             event.preventDefault();
 
-            const url = "http://34.122.82.176:9001/get/users"
+            const url = "http://34.122.82.176:9001/get/create_cooling_main"
 
             $.ajax({
                 url:url,
                 type:"POST",
                 data:JSON.stringify({
+                    "u_key": sessionStorage.getItem("ukey"), 
                     "date": $('#input_main_date').val(),
                     "trolleyNo": $('#input_main_trolley').val(),
                     "product": $('#input_main_product').val(),
                     "shiftProduced": $('#input_main_shift_produced').val(),
                     "quantity": $('#input_main_quantity').val(),
-                    "coolingTime": $('#input_main_coolingTime').val()
+                    "coolingTime": new Date().toLocaleTimeString()
                 }),
                 statusCode :{
                    200: function() {
@@ -112,10 +133,7 @@ if(navigator.onLine)
                 contentType:"application/json; charset=utf-8",
                 success: function(data, textStatus, jqXHR)
                 {
-
-                    if(textStatus == "success"){
-
-                    }
+                    alert(data);                    
                 },
                 error: function (e)
                 {
@@ -131,15 +149,16 @@ if(navigator.onLine)
             event.stopPropagation();
             event.preventDefault();
 
-            const url = "http://34.122.82.176:9001/get/users"
+            const url = "http://34.122.82.176:9001/get/create_cooling_packaging"
 
             $.ajax({
                 url:url,
                 type:"POST",
                 data:JSON.stringify({
+                    "u_key": sessionStorage.getItem("ukey"), 
                     "trolleyNo": $('#input_packaging_trolley').val(),
                     "status": $('#input_packaging_status').val(),
-                    "time": $('#input_packaging_time').val()
+                    "time": new Date().toLocaleTimeString()
                 }),
                 statusCode :{
                    200: function() {
@@ -150,10 +169,7 @@ if(navigator.onLine)
                 contentType:"application/json; charset=utf-8",
                 success: function(data, textStatus, jqXHR)
                 {
-
-                    if(textStatus == "success"){
-                        
-                    }
+                    alert(data);
                 },
                 error: function (e)
                 {

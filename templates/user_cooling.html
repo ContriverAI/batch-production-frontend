@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Lilita One' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/user_cooling.css')}}">
-    <title>Bakery</title>
+    <title>PIMS</title>
    
   </head>
   <body class="">
@@ -26,39 +26,45 @@
         
         <!-- Tab content -->
         <div id="Main" class="tabcontent">
-            <h3 style="text-align: center;">Main Screen Form</h3>
+            <h3 style="text-align: center;">Cooling Data Form</h3>
 
             <form class="form-cooling-main card" id="mainForm" method = "POST">
         
                 <div style="margin-top: 20px;">
                     <label for="inputDate" >Date</label>
-                    <input type="date" id="input_main_date" class="form-control" placeholder="Enter Date"  required autofocus>
+                    <input type="text" id="input_main_date" class="form-control" placeholder="Enter Date" disabled  required autofocus>
                 </div>
 
                 <div style="margin-top: 20px;">
-                    <label for="inputTrolley" >Trolley No.</label>
+                    <label for="inputTrolley" >Trolley Number</label>
                     <input type="text" id="input_main_trolley" class="form-control" placeholder="Enter trolley no."  required autofocus>
                 </div>
 
                 <div style="margin-top: 20px;">
-                    <label for="inputProduct" >Product</label>
-                    <input type="text" id="input_main_product" class="form-control" placeholder="Enter product"  required autofocus>
+                    <label for="input_main_product" >Product</label>
+                    <select id="input_main_product" name="input_main_product" class="form-control" required autofocus>
+                        <option value="JSP">Jumbo Special</option>
+                        <option value="JMX">Jumbo Max</option>
+                        <option value="ECO">Economy Sliced</option>
+                        <option value="OYK">Oyokun Unsliced</option>
+                        <option value="LMD">Long Midi</option>
+                    </select>
                 </div>
 
                 <div style="margin-top: 20px;">
-                    <label for="inputShift" >Shift Produced</label>
-                    <input type="text" id="input_main_shift_produced" class="form-control" placeholder="Enter shift produced"  required autofocus>
+                    <label for="inputShift" >Shift Cooling Start Time</label>
+                    <input type="time" id="input_main_shift_produced" class="form-control" placeholder="Enter shift produced"  required autofocus>
                 </div>
 
-                <div style="margin-top: 20px;">
+                <div style="margin-top: 20px;margin-bottom: 20px;">
                     <label for="inputQuantity" >Quantity</label>
                     <input type="text" id="input_main_quantity" class="form-control" placeholder="Enter quantity"  required autofocus>
                 </div>
 
-                <div style="margin-top: 20px;margin-bottom: 20px;">
+                <!-- <div style="margin-top: 20px;margin-bottom: 20px;">
                     <label for="inputCoolingTime" >Cooling Start Time</label>
                     <input type="time" id="input_main_coolingTime" class="form-control" placeholder="Enter cooling start time"  required autofocus>
-                </div>
+                </div> -->
         
                 <button id = "submitMain" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
             </form>
@@ -71,19 +77,24 @@
             <form class="form-cooling-packaging card" id="packagingForm" method = "POST">
         
                 <div style="margin-top: 20px;">
-                    <label for="inputTrolley" >Trolley No.</label>
-                    <input type="text" id="input_packaging_trolley" class="form-control" placeholder="Enter trolley no."  required autofocus>
-                </div>
-
-                <div style="margin-top: 20px;">
-                    <label for="inputStatus" >Status</label>
-                    <input type="text" id="input_packaging_status" class="form-control" placeholder="Enter Status"  required autofocus>
+                    <label for="input_packaging_trolley" >Trolley Number</label>
+                    <select id="input_packaging_trolley" name="input_packaging_trolley" class="form-control" required autofocus>
+                        
+                    </select>
                 </div>
 
                 <div style="margin-top: 20px;margin-bottom: 20px;">
+                    <label for="input_packaging_status" >Status</label>
+                    <select id="input_packaging_status" name="input_packaging_status" class="form-control" required autofocus>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+
+                <!-- <div style="margin-top: 20px;margin-bottom: 20px;">
                     <label for="inputTime" > Time</label>
                     <input type="time" id="input_packaging_time" class="form-control" placeholder="Enter time"  required autofocus>
-                </div>
+                </div> -->
         
                 <button id = "submitPackaging" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
             </form>
@@ -123,8 +134,8 @@
             }
         </script>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script> -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     
