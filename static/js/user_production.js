@@ -108,12 +108,13 @@ if(navigator.onLine)
             window.location.pathname = "/";
          });
 
-        
-        $(".form-cooling-main").submit(function(event) {
+        //change tables
+        $(".form-production-main").submit(function(event) {
             event.stopPropagation();
             event.preventDefault();
 
-            const url = "http://34.122.82.176:9001/get/create_cooling_main"
+            //API required
+            const url = "http://34.122.82.176:9001/get/create_production_main"
 
             $.ajax({
                 url:url,
@@ -121,11 +122,91 @@ if(navigator.onLine)
                 data:JSON.stringify({
                     "u_key": sessionStorage.getItem("ukey"), 
                     "date": $('#input_main_date').val(),
-                    "trolleyNo": $('#input_main_trolley').val(),
+                    "batch": $('#input_main_Batch').val(),
+                    "yeast_used": $('#input_main_yeastused').val(),
+                    "floor_used": $('#input_main_floorused').val(),
+                    "yield": $('#input_main_yield').val(),
+                    "shift": $('#input_main_shift').val(),
                     "product": $('#input_main_product').val(),
-                    "shiftProduced": $('#input_main_shift_produced').val(),
-                    "quantity": $('#input_main_quantity').val(),
-                    "coolingTime": new Date().toLocaleTimeString()
+                    "remix_used": $('#input_main_remixused').val(),
+                    "time": $('#input_main_time').val(),
+            
+                }),
+                statusCode :{
+                   200: function() {
+                        console.log("success");
+                   }
+                }
+                ,
+                contentType:"application/json; charset=utf-8",
+                success: function(data, textStatus, jqXHR)
+                {
+                    alert(data);                    
+                },
+                error: function (e)
+                {
+                    console.log(e);
+                }
+            });
+
+            
+
+        });
+        
+        //change tables
+        $(".form-production-recall").submit(function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+
+            //API required
+            const url = "http://34.122.82.176:9001/get/create_production_recall"
+
+            $.ajax({
+                url:url,
+                type:"POST",
+                data:JSON.stringify({
+                    "u_key": sessionStorage.getItem("ukey"), 
+                    "batch": $('#input_recall_batch').val(),
+                    "status": $('#input_packaging_status').val(),
+                    "cancelbatch": $('#input_recall_cancelbatch').val(),
+                    "time": $('#input_recall_time').val(),
+                }),
+                statusCode :{
+                   200: function() {
+                        console.log("success");
+                   }
+                }
+                ,
+                contentType:"application/json; charset=utf-8",
+                success: function(data, textStatus, jqXHR)
+                {
+                    alert(data);
+                },
+                error: function (e)
+                {
+                    console.log(e);
+                }
+            });
+
+            
+
+        });
+        
+        //change tables
+        $(".form-production-bake").submit(function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+
+            const url = "http://34.122.82.176:9001/get/create_production_bake"
+
+            $.ajax({
+                url:url,
+                type:"POST",
+                data:JSON.stringify({
+                    "u_key": sessionStorage.getItem("ukey"), 
+                    "batch": $('#input_bake_batch').val(),
+                    "status": $('#input_bake_status').val(),
+                    "time": $('#input_bake_time').val(),
                 }),
                 statusCode :{
                    200: function() {
@@ -148,39 +229,6 @@ if(navigator.onLine)
 
         });
 
-        $(".form-cooling-packaging").submit(function(event) {
-            event.stopPropagation();
-            event.preventDefault();
-
-            const url = "http://34.122.82.176:9001/get/create_cooling_packaging"
-
-            $.ajax({
-                url:url,
-                type:"POST",
-                data:JSON.stringify({
-                    "u_key": sessionStorage.getItem("ukey"), 
-                    "trolleyNo": $('#input_packaging_trolley').val(),
-                    "status": $('#input_packaging_status').val(),
-                    "time": new Date().toLocaleTimeString()
-                }),
-                statusCode :{
-                   200: function() {
-                        console.log("success");
-                   }
-                }
-                ,
-                contentType:"application/json; charset=utf-8",
-                success: function(data, textStatus, jqXHR)
-                {
-                    alert(data);
-                },
-                error: function (e)
-                {
-                    console.log(e);
-                }
-            });
-
-        });
     
     });
 }
