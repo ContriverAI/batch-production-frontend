@@ -2,6 +2,80 @@ if(navigator.onLine)
 {
     $(document).ready(function(){
 
+        function getCoolingData(){
+
+            const socket = io('http://34.122.82.176:9001/');
+            socket.on('conn', data => {
+                console.log("CONNECTION RESPONSE: ", data)
+                socket.emit('getData', () => { })
+            })
+            socket.on('data', function (data) {
+                try {
+                    var d = JSON.parse(data.cooling);
+                    console.log(d.columns);
+                    console.log(d.data);
+                    sessionStorage.setItem("tableData" , JSON.stringify(d));
+
+                    var table_row = `<tr>
+                        <th>Date</th>
+                        <th>Trolley</th>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Time In</th>
+                        <th>Duration</th>
+                        <th>Complete Time</th>
+                        <th>Packaging Complete </th>
+                        <th> Shift Number </th>
+                        <th> Cooling Status </th>
+                    </tr>`;
+
+                    var data = sessionStorage.getItem("tableData");
+                    var m = JSON.parse(data);
+                    console.log(m.data);
+
+                    for(var i = 0; i < m.data.length; i++){
+
+                        if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
+
+                                var date = new Date(m.data[i][0]);
+                                var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                                table_row += 
+                                '<tr>'+
+                                    '<td>'+ finalD +'</td>'+
+                                    '<td>'+m.data[i][1]+'</td>'+
+                                    '<td>'+m.data[i][2]+'</td>'+
+                                    '<td>'+m.data[i][3]+'</td>'+
+                                    '<td>'+msToTime(m.data[i][4])+'</td>'+
+                                    '<td>'+msToTime(m.data[i][5])+'</td>'+
+                                    '<td>'+msToTime(m.data[i][6])+'</td>'+
+                                    '<td>'+m.data[i][7]+'</td>'+
+                                    '<td>'+m.data[i][9]+'</td>'+
+                                    '<td>'+m.data[i][10]+'</td>'+
+                                '</tr>';
+                        }
+                    }
+
+                    document.getElementById('user_cooling_table').innerHTML = table_row;
+
+
+                    var options = '';
+                
+                    for(var i = 0; i < m.data.length; i++)
+                        if(m.data[i][7] === "No"){
+                            options += '<option value="'+m.data[i][1]+'">'+m.data[i][1]+'</option>';
+                        }
+
+                    document.getElementById('input_packaging_trolley').innerHTML = options;
+
+                } catch (err) {
+                    console.error(err)
+                }
+            });
+
+        }   
+
+        getCoolingData()
+
         function setDateForm(){
             var today = new Date();
             var dd = String(today.getDate()).padStart(2, '0');
@@ -26,70 +100,6 @@ if(navigator.onLine)
             return hours + ":" + minutes ;
           }
 
-        function getTableData(){
-
-            var settings = {
-                "url": "http://34.122.82.176:9001/get/cooling_data",
-                "method": "GET",
-                "timeout": 0,
-              };
-              
-              $.ajax(settings).done(function (response) {
-                var d = JSON.parse(response);
-                console.log(d.columns);
-                console.log(d.data);
-                sessionStorage.setItem("tableData" , JSON.stringify(d));
-                
-              });
-
-              var table_row = `<tr>
-                    <th>Date</th>
-                    <th>Trolley</th>
-                    <th>Product</th>
-                    <th>Qty</th>
-                    <th>Time In</th>
-                    <th>Duration</th>
-                    <th>Complete Time</th>
-                    <th>Packaging Complete </th>
-                </tr>`;
-
-                var data = sessionStorage.getItem("tableData");
-                var m = JSON.parse(data);
-                console.log(m.data);
-
-                for(var i = 0; i < m.data.length; i++){
-
-                    if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
-
-                            var date = new Date(m.data[i][0]);
-                            var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
-                            table_row += 
-                            '<tr>'+
-                                '<td>'+ finalD +'</td>'+
-                                '<td>'+m.data[i][1]+'</td>'+
-                                '<td>'+m.data[i][2]+'</td>'+
-                                '<td>'+m.data[i][3]+'</td>'+
-                                '<td>'+msToTime(m.data[i][4])+'</td>'+
-                                '<td>'+msToTime(m.data[i][5])+'</td>'+
-                                '<td>'+msToTime(m.data[i][6])+'</td>'+
-                                '<td>'+m.data[i][7]+'</td>'+
-                            '</tr>';
-                    }
-                }
-
-                document.getElementById('user_cooling_table').innerHTML = table_row;
-
-
-                var options = '';
-               
-                for(var i = 0; i < m.data.length; i++)
-                    options += '<option value="'+m.data[i][1]+'">'+m.data[i][1]+'</option>';
-
-                document.getElementById('input_packaging_trolley').innerHTML = options;
-        }
-
-         setInterval(getTableData, 2000);
-        // getTableData();
 
         function checkLogin() {
             if(!(sessionStorage.getItem("designation") === "user") && !(sessionStorage.getItem("role") === "cooling")){
@@ -122,7 +132,9 @@ if(navigator.onLine)
                     "product": $('#input_main_product').val(),
                     "shiftProduced": $('#input_main_shift_produced').val(),
                     "quantity": $('#input_main_quantity').val(),
-                    "coolingTime": new Date().toLocaleTimeString()
+                    "coolingTime": new Date().toLocaleTimeString(),
+                    "duration": " ",
+                    "completeTime": " "
                 }),
                 statusCode :{
                    200: function() {

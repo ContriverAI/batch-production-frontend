@@ -22,6 +22,7 @@
             <button class="tablinks" onclick="openCity(event, 'Store')">Store</button>
             <button class="tablinks" onclick="openCity(event, 'Reports')">Reports</button>
             <button class="tablinks" onclick="openCity(event, 'Users')">Users</button>
+            <button class="tablinks" onclick="openCity(event, 'Configuration')">Configuration</button>
             <button class="tablinks" id="Logout" onclick="" style="margin-right: 0px;">Logout</button>
         </div>
         
@@ -39,6 +40,13 @@
                     <th>Duration</th>
                     <th>Complete Time</th>
                 </tr>
+            </table>
+        </div>
+
+        <div id="Configuration" class="tabcontent">
+            <h3 style="text-align: center;">Configuration Table</h3>
+            <table id="config_table">
+                
             </table>
         </div>
         
@@ -199,7 +207,7 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     
-    
+    <script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script>
     <script src = "{{url_for('static',filename='js/admin.js')}}" ></script>
 
 

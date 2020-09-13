@@ -17,9 +17,30 @@ if(navigator.onLine)
         function TableEdit() {
 
 
-            $('td').click(function() {
+            // $('td').click(function() {
             
             
+            //     var td_value = $(this).html();
+            //     var input_field = '<input type="text" id="edit" value="' + td_value + '" />'
+            //     $(this).empty().append(input_field);
+            //     $('input').focus();
+            
+            //     $('td').off('click');
+            
+            //     $(this).find('input').blur(function(){
+            //         var new_text = $(this).val();
+            //         $(this).parent().html(new_text);
+            //         console.log($(this).parent());
+            //         console.log(new_text);
+            //         TableEdit();
+            //     })
+            
+            // });
+
+            $(document).on("click" , "td"  ,  function(e) {
+                e.preventDefault();
+                console.log($(this).parent().attr("id"));
+                console.log($(this).attr('id'));
                 var td_value = $(this).html();
                 var input_field = '<input type="text" id="edit" value="' + td_value + '" />'
                 $(this).empty().append(input_field);
@@ -30,13 +51,14 @@ if(navigator.onLine)
                 $(this).find('input').blur(function(){
                     var new_text = $(this).val();
                     $(this).parent().html(new_text);
-                    console.log($(this).parent());
                     console.log(new_text);
                     TableEdit();
                 })
             
             });
         }
+
+        TableEdit();
 
         function msToTime(duration) {
             var milliseconds = parseInt((duration % 1000) / 100),
@@ -50,69 +72,75 @@ if(navigator.onLine)
             return hours + ":" + minutes ;
           }
 
-        function getTableData(){
+          function getCoolingData(){
 
-            var settings = {
-                "url": "http://34.122.82.176:9001/get/cooling_data",
-                "method": "GET",
-                "timeout": 0,
-              };
-              
-              $.ajax(settings).done(function (response) {
-                var d = JSON.parse(response);
-                console.log(d.columns);
-                console.log(d.data);
-                sessionStorage.setItem("tableData" , JSON.stringify(d));
-                
-              });
+            const socket = io('http://34.122.82.176:9001/');
+            socket.on('conn', data => {
+                console.log("CONNECTION RESPONSE: ", data)
+                socket.emit('getData', () => { })
+            })
+            socket.on('data', function (data) {
+                try {
+                    var d = JSON.parse(data);
+                    console.log(d.columns);
+                    console.log(d.data);
+                    sessionStorage.setItem("tableData" , JSON.stringify(d));
 
-              var table_row = `<tr>
-                    <th>Date</th>
-                    <th>Trolley</th>
-                    <th>Product</th>
-                    <th>Qty</th>
-                    <th>Time In</th>
-                    <th>Duration</th>
-                    <th>Complete Time</th>
-                    <th>Packaging Complete </th>
-                </tr>`;
+                    var table_row = `<tr>
+                        <th>Date</th>
+                        <th>Trolley</th>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Time In</th>
+                        <th>Duration</th>
+                        <th>Complete Time</th>
+                        <th>Packaging Complete </th>
+                    </tr>`;
 
-                var data = sessionStorage.getItem("tableData");
-                var m = JSON.parse(data);
-                console.log(m.data);
+                    var data = sessionStorage.getItem("tableData");
+                    var m = JSON.parse(data);
+                    console.log(m.data);
 
-                for(var i = 0; i < m.data.length; i++){
+                    for(var i = 0; i < m.data.length; i++){
 
-                    if(m.data[i][7] === "No"){
+                        if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
 
-                            var date = new Date(m.data[i][0]);
-                            var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
-                            table_row += 
-                            '<tr id ='+ i +'>'+
-                                '<td>'+ finalD +'</td>'+
-                                '<td>'+m.data[i][1]+'</td>'+
-                                '<td>'+m.data[i][2]+'</td>'+
-                                '<td>'+m.data[i][3]+'</td>'+
-                                '<td>'+msToTime(m.data[i][4])+'</td>'+
-                                '<td>'+msToTime(m.data[i][5])+'</td>'+
-                                '<td>'+msToTime(m.data[i][6])+'</td>'+
-                                '<td>'+m.data[i][7]+'</td>'+
-                            '</tr>';
+                                var date = new Date(m.data[i][0]);
+                                var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                                table_row += 
+                                '<tr>'+
+                                    '<td>'+ finalD +'</td>'+
+                                    '<td>'+m.data[i][1]+'</td>'+
+                                    '<td>'+m.data[i][2]+'</td>'+
+                                    '<td>'+m.data[i][3]+'</td>'+
+                                    '<td>'+msToTime(m.data[i][4])+'</td>'+
+                                    '<td>'+msToTime(m.data[i][5])+'</td>'+
+                                    '<td>'+msToTime(m.data[i][6])+'</td>'+
+                                    '<td>'+m.data[i][7]+'</td>'+
+                                '</tr>';
+                        }
                     }
+
+                    document.getElementById('superviser_cooling_table').innerHTML = table_row;
+
+
+                    var options = '';
+                
+                    for(var i = 0; i < m.data.length; i++)
+                        if(m.data[i][7] === "No"){
+                            options += '<option value="'+m.data[i][1]+'">'+m.data[i][1]+'</option>';
+                        }
+
+                    document.getElementById('input_packaging_trolley').innerHTML = options;
+
+                } catch (err) {
+                    console.error(err)
                 }
+            });
 
+        }   
 
-                document.getElementById('superviser_cooling_table').innerHTML = table_row;
-
-                var options = '';
-               
-                for(var i = 0; i < m.data.length; i++)
-                    options += '<option value="'+m.data[i][1]+'">'+m.data[i][1]+'</option>';
-
-                document.getElementById('input_packaging_trolley').innerHTML = options;
-        }
-
-        getTableData();
+        getCoolingData()
 
         function checkLogin() {
             if(!(sessionStorage.getItem("designation") === "supervisor") && !(sessionStorage.getItem("role") === "cooling")){

@@ -52,8 +52,22 @@
                 </div>
 
                 <div style="margin-top: 20px;">
-                    <label for="inputShift" >Shift Cooling Start Time</label>
-                    <input type="time" id="input_main_shift_produced" class="form-control" placeholder="Enter shift produced"  required autofocus>
+                    <label for="input_main_shift_produced" >Shift Number</label>
+                    <select id="input_main_shift_produced" name="input_main_shift_produced" class="form-control" required autofocus>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                    </select>
                 </div>
 
                 <div style="margin-top: 20px;margin-bottom: 20px;">
@@ -84,7 +98,7 @@
                 </div>
 
                 <div style="margin-top: 20px;margin-bottom: 20px;">
-                    <label for="input_packaging_status" >Status</label>
+                    <label for="input_packaging_status" >Package Complete</label>
                     <select id="input_packaging_status" name="input_packaging_status" class="form-control" required autofocus>
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
@@ -134,12 +148,15 @@
             }
         </script>
 
+
+
+
     <!-- <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script> -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     
-    
+    <script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script>
     <script src = "{{url_for('static',filename='js/user_cooling.js')}}" ></script>
 
 
