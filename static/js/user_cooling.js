@@ -11,7 +11,7 @@ if(navigator.onLine)
             })
             socket.on('data', function (data) {
                 try {
-                    var d = JSON.parse(data);
+                    var d = JSON.parse(data.cooling);
                     console.log(d.columns);
                     console.log(d.data);
                     sessionStorage.setItem("tableData" , JSON.stringify(d));
@@ -25,6 +25,8 @@ if(navigator.onLine)
                         <th>Duration</th>
                         <th>Complete Time</th>
                         <th>Packaging Complete </th>
+                        <th> Shift Number </th>
+                        <th> Cooling Status </th>
                     </tr>`;
 
                     var data = sessionStorage.getItem("tableData");
@@ -47,6 +49,8 @@ if(navigator.onLine)
                                     '<td>'+msToTime(m.data[i][5])+'</td>'+
                                     '<td>'+msToTime(m.data[i][6])+'</td>'+
                                     '<td>'+m.data[i][7]+'</td>'+
+                                    '<td>'+m.data[i][9]+'</td>'+
+                                    '<td>'+m.data[i][10]+'</td>'+
                                 '</tr>';
                         }
                     }

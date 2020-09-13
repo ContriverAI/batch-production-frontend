@@ -37,7 +37,7 @@ if(navigator.onLine)
             })
             socket.on('data', function (data) {
                 try {
-                    var d = JSON.parse(data);
+                    var d = JSON.parse(data.cooling);
                     console.log(d.columns);
                     console.log(d.data);
                     sessionStorage.setItem("tableData" , JSON.stringify(d));
@@ -88,6 +88,134 @@ if(navigator.onLine)
         }   
 
         getCoolingData()
+
+        function getProductionData(){
+
+            const socket = io('http://34.122.82.176:9001/');
+            socket.on('conn', data => {
+                console.log("CONNECTION RESPONSE: ", data)
+                socket.emit('getData', () => { })
+            })
+            socket.on('data', function (data) {
+                try {
+                    var d = JSON.parse(data.proddata);
+                    console.log(d.columns);
+                    console.log(d.data);
+                    sessionStorage.setItem("prodData" , JSON.stringify(d));
+
+                    var table_row = `<tr>    
+                        <th>DATE</th>
+                        <th>FLOUR</th>
+                        <th>SHIFT</th>
+                        <th>REMIX</th>
+                        <th>YEAST</th>
+                        <th>JSP</th>
+                        <th>ECO</th>
+                        <th>JEX</th>
+                        <th>OYOKUN</th>
+                        <th>MIDI</th>
+                        <th>MIXING TIME</th>
+                        <th>BAKING TIME</th>
+                    </tr>`;
+
+                    var data = sessionStorage.getItem("prodData");
+                    var m = JSON.parse(data);
+                    console.log(m.data);
+
+                    for(var i = 0; i < m.data.length; i++){
+
+                                var date = new Date(m.data[i][0]);
+                                var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                                table_row += 
+                                '<tr>'+
+                                    '<td>'+ finalD +'</td>'+
+                                    '<td>'+m.data[i][1]+'</td>'+
+                                    '<td>'+m.data[i][2]+'</td>'+
+                                    '<td>'+m.data[i][3]+'</td>'+
+                                    '<td>'+m.data[i][4]+'</td>'+
+                                    '<td>'+m.data[i][5]+'</td>'+
+                                    '<td>'+m.data[i][6]+'</td>'+
+                                    '<td>'+m.data[i][7]+'</td>'+
+                                    '<td>'+m.data[i][8]+'</td>'+
+                                    '<td>'+m.data[i][9]+'</td>'+
+                                    '<td>'+msToTime(m.data[i][10])+'</td>'+
+                                    '<td>'+msToTime(m.data[i][11])+'</td>'+
+                                '</tr>';
+                        
+                    }
+
+                    document.getElementById('production_table').innerHTML = table_row;
+
+
+                } catch (err) {
+                    console.error(err)
+                }
+            });
+
+        }   
+
+        getProductionData()
+
+        function getStoreData(){
+
+            const socket = io('http://34.122.82.176:9001/');
+            socket.on('conn', data => {
+                console.log("CONNECTION RESPONSE: ", data)
+                socket.emit('getData', () => { })
+            })
+            socket.on('data', function (data) {
+                try {
+                    var d = JSON.parse(data.store);
+                    console.log(d.columns);
+                    console.log(d.data);
+                    sessionStorage.setItem("storeData" , JSON.stringify(d));
+
+                    var table_row = `<tr>
+                        <th> DATE </th>
+                        <th> PRODUCT </th>
+                        <th>QTY RECEIVED STANDARD</th>
+                        <th>QTY RECEIVED ROUGH</th>
+                        <th>DISPATCHED STANDARD</th>
+                        <th>DISPATCHED ROUGH</th>
+                        <th>ROUGH RETURNED BREAD</th>
+                        <th>BREAD IN STORE</th>
+                        <th>ROUGH BREAD IN STORE</th>
+                    </tr>`;
+
+                    var data = sessionStorage.getItem("storeData");
+                    var m = JSON.parse(data);
+                    console.log(m.data);
+
+                    for(var i = 0; i < m.data.length; i++){
+
+
+                                var date = new Date(m.data[i][0]);
+                                var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                                table_row += 
+                                '<tr>'+
+                                    '<td>'+ finalD +'</td>'+
+                                    '<td>'+m.data[i][1]+'</td>'+
+                                    '<td>'+m.data[i][2]+'</td>'+
+                                    '<td>'+m.data[i][3]+'</td>'+
+                                    '<td>'+m.data[i][4]+'</td>'+
+                                    '<td>'+m.data[i][5]+'</td>'+
+                                    '<td>'+m.data[i][6]+'</td>'+
+                                    '<td>'+m.data[i][7]+'</td>'+
+                                    '<td>'+m.data[i][8]+'</td>'+
+                                '</tr>';
+                    }
+
+                    document.getElementById('store_table').innerHTML = table_row;
+
+
+                } catch (err) {
+                    console.error(err)
+                }
+            });
+
+        }   
+
+        getStoreData()
 
          function getUsersData(){
 
