@@ -2,18 +2,6 @@ if(navigator.onLine)
 {
     $(document).ready(function(){
 
-        function setDateForm(){
-            var today = new Date();
-            var dd = String(today.getDate()).padStart(2, '0');
-            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-            var yyyy = today.getFullYear();
-
-            today =  yyyy + '/' + dd + '/'+ mm;
-            $("#input_main_date").val(today);
-        }
-
-        setDateForm()
-
         function TableEdit() {
 
 
@@ -60,6 +48,18 @@ if(navigator.onLine)
 
         TableEdit();
 
+        function setDateForm(){
+            var today = new Date();
+            var dd = String(today.getDate()).padStart(2, '0');
+            var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+            var yyyy = today.getFullYear();
+
+            today =  yyyy + '-' + mm + '-'+ dd;
+            $("#input_main_date").val(today);
+        }
+
+        setDateForm()
+
         function msToTime(duration) {
             var milliseconds = parseInt((duration % 1000) / 100),
               seconds = Math.floor((duration / 1000) % 60),
@@ -81,7 +81,7 @@ if(navigator.onLine)
             })
             socket.on('data', function (data) {
                 try {
-                    var d = JSON.parse(data);
+                    var d = JSON.parse(data.cooling);
                     console.log(d.columns);
                     console.log(d.data);
                     sessionStorage.setItem("tableData" , JSON.stringify(d));

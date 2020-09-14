@@ -116,6 +116,10 @@ if(navigator.onLine)
                         <th>MIDI</th>
                         <th>MIXING TIME</th>
                         <th>BAKING TIME</th>
+                        <th>Batch</th>
+                        <th>Status</th>
+                        <th>Batch Recall</th>
+                        <th>Recall Time</th>
                     </tr>`;
 
                     var data = sessionStorage.getItem("prodData");
@@ -140,12 +144,15 @@ if(navigator.onLine)
                                     '<td>'+m.data[i][9]+'</td>'+
                                     '<td>'+msToTime(m.data[i][10])+'</td>'+
                                     '<td>'+msToTime(m.data[i][11])+'</td>'+
+                                    '<td>'+m.data[i][13]+'</td>'+
+                                    '<td>'+m.data[i][14]+'</td>'+
+                                    '<td>'+m.data[i][15]+'</td>'+
+                                    '<td>'+msToTime(m.data[i][17])+'</td>'+
                                 '</tr>';
                         
                     }
 
                     document.getElementById('production_table').innerHTML = table_row;
-
 
                 } catch (err) {
                     console.error(err)

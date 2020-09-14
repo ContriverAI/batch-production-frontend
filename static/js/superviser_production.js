@@ -132,7 +132,7 @@ if(navigator.onLine)
                         
                     }
 
-                    document.getElementById('user_production_table').innerHTML = table_row;
+                    document.getElementById('superviser_production_table').innerHTML = table_row;
 
                     var options = '';
                 
