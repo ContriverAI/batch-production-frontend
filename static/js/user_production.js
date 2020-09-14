@@ -110,6 +110,70 @@ if(navigator.onLine)
         getProductionData()
          
 
+        function localProductionData(){
+            if(sessionStorage.getItem("prodData")){
+                    var table_row = `<tr>    
+                        <th>DATE</th>
+                        <th>FLOUR</th>
+                        <th>SHIFT</th>
+                        <th>REMIX</th>
+                        <th>YEAST</th>
+                        <th>JSP</th>
+                        <th>ECO</th>
+                        <th>JEX</th>
+                        <th>OYOKUN</th>
+                        <th>MIDI</th>
+                        <th>MIXING TIME</th>
+                        <th>BAKING TIME</th>
+                        <th>Batch</th>
+                        <th>Status</th>
+                        <th>Batch Recall</th>
+                        <th>Recall Time</th>
+                    </tr>`;
+
+                    var data = sessionStorage.getItem("prodData");
+                    var m = JSON.parse(data);
+                    console.log(m.data);
+
+                    for(var i = 0; i < m.data.length; i++){
+
+                                var date = new Date(m.data[i][0]);
+                                var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                                table_row += 
+                                '<tr>'+
+                                    '<td>'+ finalD +'</td>'+
+                                    '<td>'+m.data[i][1]+'</td>'+
+                                    '<td>'+m.data[i][2]+'</td>'+
+                                    '<td>'+m.data[i][3]+'</td>'+
+                                    '<td>'+m.data[i][4]+'</td>'+
+                                    '<td>'+m.data[i][5]+'</td>'+
+                                    '<td>'+m.data[i][6]+'</td>'+
+                                    '<td>'+m.data[i][7]+'</td>'+
+                                    '<td>'+m.data[i][8]+'</td>'+
+                                    '<td>'+m.data[i][9]+'</td>'+
+                                    '<td>'+msToTime(m.data[i][10])+'</td>'+
+                                    '<td>'+msToTime(m.data[i][11])+'</td>'+
+                                    '<td>'+m.data[i][13]+'</td>'+
+                                    '<td>'+m.data[i][14]+'</td>'+
+                                    '<td>'+m.data[i][15]+'</td>'+
+                                    '<td>'+msToTime(m.data[i][17])+'</td>'+
+                                '</tr>';
+                        
+                    }
+
+                    document.getElementById('user_production_table').innerHTML = table_row;
+
+                    for(var i = 0; i < m.data.length; i++)
+                        options += '<option value="'+m.data[i][13]+'">'+m.data[i][13]+'</option>';
+                        
+
+                    document.getElementById('input_recall_batch').innerHTML = options;
+                    document.getElementById('input_bake_batch').innerHTML = options;
+                }
+        }
+
+        setInterval(localProductionData , 3000);
+
         function checkLogin() {
             if(!(sessionStorage.getItem("designation") === "user") && !(sessionStorage.getItem("role") === "production")){
                 window.location.pathname = "/";

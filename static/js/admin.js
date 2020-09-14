@@ -89,6 +89,50 @@ if(navigator.onLine)
 
         getCoolingData()
 
+        function localCoolingData(){
+
+            if(sessionStorage.getItem("tableData")){
+                var table_row = `<tr>
+                            <th>Date</th>
+                            <th>Trolley</th>
+                            <th>Product</th>
+                            <th>Qty</th>
+                            <th>Time In</th>
+                            <th>Duration</th>
+                            <th>Complete Time</th>
+                            <th>Packaging Complete </th>
+                        </tr>`;
+
+                        var data = sessionStorage.getItem("tableData");
+                        var m = JSON.parse(data);
+                        console.log(m.data);
+
+                        for(var i = 0; i < m.data.length; i++){
+
+                            if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
+
+                                    var date = new Date(m.data[i][0]);
+                                    var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                                    table_row += 
+                                    '<tr>'+
+                                        '<td>'+ finalD +'</td>'+
+                                        '<td>'+m.data[i][1]+'</td>'+
+                                        '<td>'+m.data[i][2]+'</td>'+
+                                        '<td>'+m.data[i][3]+'</td>'+
+                                        '<td>'+msToTime(m.data[i][4])+'</td>'+
+                                        '<td>'+msToTime(m.data[i][5])+'</td>'+
+                                        '<td>'+msToTime(m.data[i][6])+'</td>'+
+                                        '<td>'+m.data[i][7]+'</td>'+
+                                    '</tr>';
+                            }
+                        }
+
+                        document.getElementById('cooling_table').innerHTML = table_row;
+                }
+        }
+
+        setInterval(localCoolingData , 3000);
+
         function getProductionData(){
 
             const socket = io('http://34.122.82.176:9001/');
@@ -163,6 +207,63 @@ if(navigator.onLine)
 
         getProductionData()
 
+        function localProductionData(){
+            if(sessionStorage.getItem("prodData")){
+                    var table_row = `<tr>    
+                        <th>DATE</th>
+                        <th>FLOUR</th>
+                        <th>SHIFT</th>
+                        <th>REMIX</th>
+                        <th>YEAST</th>
+                        <th>JSP</th>
+                        <th>ECO</th>
+                        <th>JEX</th>
+                        <th>OYOKUN</th>
+                        <th>MIDI</th>
+                        <th>MIXING TIME</th>
+                        <th>BAKING TIME</th>
+                        <th>Batch</th>
+                        <th>Status</th>
+                        <th>Batch Recall</th>
+                        <th>Recall Time</th>
+                    </tr>`;
+
+                    var data = sessionStorage.getItem("prodData");
+                    var m = JSON.parse(data);
+                    console.log(m.data);
+
+                    for(var i = 0; i < m.data.length; i++){
+
+                                var date = new Date(m.data[i][0]);
+                                var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                                table_row += 
+                                '<tr>'+
+                                    '<td>'+ finalD +'</td>'+
+                                    '<td>'+m.data[i][1]+'</td>'+
+                                    '<td>'+m.data[i][2]+'</td>'+
+                                    '<td>'+m.data[i][3]+'</td>'+
+                                    '<td>'+m.data[i][4]+'</td>'+
+                                    '<td>'+m.data[i][5]+'</td>'+
+                                    '<td>'+m.data[i][6]+'</td>'+
+                                    '<td>'+m.data[i][7]+'</td>'+
+                                    '<td>'+m.data[i][8]+'</td>'+
+                                    '<td>'+m.data[i][9]+'</td>'+
+                                    '<td>'+msToTime(m.data[i][10])+'</td>'+
+                                    '<td>'+msToTime(m.data[i][11])+'</td>'+
+                                    '<td>'+m.data[i][13]+'</td>'+
+                                    '<td>'+m.data[i][14]+'</td>'+
+                                    '<td>'+m.data[i][15]+'</td>'+
+                                    '<td>'+msToTime(m.data[i][17])+'</td>'+
+                                '</tr>';
+                        
+                    }
+
+                    document.getElementById('production_table').innerHTML = table_row;
+                }
+        }
+
+        setInterval(localProductionData , 3000);
+
         function getStoreData(){
 
             const socket = io('http://34.122.82.176:9001/');
@@ -223,6 +324,50 @@ if(navigator.onLine)
         }   
 
         getStoreData()
+
+        function localStoreData(){
+
+            if(sessionStorage.getItem("storeData")){
+            var table_row = `<tr>
+                        <th> DATE </th>
+                        <th> PRODUCT </th>
+                        <th>QTY RECEIVED STANDARD</th>
+                        <th>QTY RECEIVED ROUGH</th>
+                        <th>DISPATCHED STANDARD</th>
+                        <th>DISPATCHED ROUGH</th>
+                        <th>ROUGH RETURNED BREAD</th>
+                        <th>BREAD IN STORE</th>
+                        <th>ROUGH BREAD IN STORE</th>
+                    </tr>`;
+
+                    var data = sessionStorage.getItem("storeData");
+                    var m = JSON.parse(data);
+                    console.log(m.data);
+
+                    for(var i = 0; i < m.data.length; i++){
+
+
+                                var date = new Date(m.data[i][0]);
+                                var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                                table_row += 
+                                '<tr>'+
+                                    '<td>'+ finalD +'</td>'+
+                                    '<td>'+m.data[i][1]+'</td>'+
+                                    '<td>'+m.data[i][2]+'</td>'+
+                                    '<td>'+m.data[i][3]+'</td>'+
+                                    '<td>'+m.data[i][4]+'</td>'+
+                                    '<td>'+m.data[i][5]+'</td>'+
+                                    '<td>'+m.data[i][6]+'</td>'+
+                                    '<td>'+m.data[i][7]+'</td>'+
+                                    '<td>'+m.data[i][8]+'</td>'+
+                                '</tr>';
+                    }
+
+                    document.getElementById('store_table').innerHTML = table_row;
+                }
+        }
+
+        setInterval(localStoreData , 3000);
 
          function getUsersData(){
 
