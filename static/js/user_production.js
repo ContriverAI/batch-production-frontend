@@ -53,6 +53,10 @@ if(navigator.onLine)
                         <th>MIDI</th>
                         <th>MIXING TIME</th>
                         <th>BAKING TIME</th>
+                        <th>Batch</th>
+                        <th>Status</th>
+                        <th>Batch Recall</th>
+                        <th>Recall Time</th>
                     </tr>`;
 
                     var data = sessionStorage.getItem("prodData");
@@ -77,12 +81,24 @@ if(navigator.onLine)
                                     '<td>'+m.data[i][9]+'</td>'+
                                     '<td>'+msToTime(m.data[i][10])+'</td>'+
                                     '<td>'+msToTime(m.data[i][11])+'</td>'+
+                                    '<td>'+m.data[i][13]+'</td>'+
+                                    '<td>'+m.data[i][14]+'</td>'+
+                                    '<td>'+m.data[i][15]+'</td>'+
+                                    '<td>'+msToTime(m.data[i][17])+'</td>'+
                                 '</tr>';
                         
                     }
 
                     document.getElementById('user_production_table').innerHTML = table_row;
 
+                    var options = '';
+                
+                    for(var i = 0; i < m.data.length; i++)
+                        options += '<option value="'+m.data[i][13]+'">'+m.data[i][13]+'</option>';
+                        
+
+                    document.getElementById('input_recall_batch').innerHTML = options;
+                    document.getElementById('input_bake_batch').innerHTML = options;
 
                 } catch (err) {
                     console.error(err)
@@ -114,7 +130,7 @@ if(navigator.onLine)
             event.preventDefault();
 
             //API required
-            const url = "http://34.122.82.176:9001/get/create_production_main"
+            const url = "http://34.122.82.176:9001/get/production_main_screen"
 
             $.ajax({
                 url:url,
@@ -123,13 +139,15 @@ if(navigator.onLine)
                     "u_key": sessionStorage.getItem("ukey"), 
                     "date": $('#input_main_date').val(),
                     "batch": $('#input_main_Batch').val(),
-                    "yeast_used": $('#input_main_yeastused').val(),
-                    "floor_used": $('#input_main_floorused').val(),
+                    "yeast": $('#input_main_yeastused').val(),
+                    "flour": $('#input_main_floorused').val(),
                     "yield": $('#input_main_yield').val(),
+                    "yield_val": $('#input_main_yield_value').val(),
                     "shift": $('#input_main_shift').val(),
                     "product": $('#input_main_product').val(),
-                    "remix_used": $('#input_main_remixused').val(),
-                    "time": $('#input_main_time').val(),
+                    "remix": $('#input_main_remixused').val(),
+                    "water": $('#input_main_waterused').val(),
+                    "time": new Date().toLocaleTimeString(),
             
                 }),
                 statusCode :{
@@ -159,7 +177,7 @@ if(navigator.onLine)
             event.preventDefault();
 
             //API required
-            const url = "http://34.122.82.176:9001/get/create_production_recall"
+            const url = "http://34.122.82.176:9001/get/production_recall_screen"
 
             $.ajax({
                 url:url,
@@ -167,9 +185,8 @@ if(navigator.onLine)
                 data:JSON.stringify({
                     "u_key": sessionStorage.getItem("ukey"), 
                     "batch": $('#input_recall_batch').val(),
-                    "status": $('#input_packaging_status').val(),
-                    "cancelbatch": $('#input_recall_cancelbatch').val(),
-                    "time": $('#input_recall_time').val(),
+                    "cancel": $('#input_recall_cancelbatch').val(),
+                    "time": new Date().toLocaleTimeString(),
                 }),
                 statusCode :{
                    200: function() {
@@ -197,7 +214,7 @@ if(navigator.onLine)
             event.stopPropagation();
             event.preventDefault();
 
-            const url = "http://34.122.82.176:9001/get/create_production_bake"
+            const url = "http://34.122.82.176:9001/get/production_bake_screen"
 
             $.ajax({
                 url:url,
@@ -206,7 +223,7 @@ if(navigator.onLine)
                     "u_key": sessionStorage.getItem("ukey"), 
                     "batch": $('#input_bake_batch').val(),
                     "status": $('#input_bake_status').val(),
-                    "time": $('#input_bake_time').val(),
+                    "time": new Date().toLocaleTimeString(),
                 }),
                 statusCode :{
                    200: function() {

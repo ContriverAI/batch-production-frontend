@@ -9,7 +9,8 @@ if(navigator.onLine)
             var yyyy = today.getFullYear();
 
             today =  yyyy + '-' + mm + '-'+ dd;
-            $("#input_main_date").val(today);
+            $("#input_receiving_date").val(today);
+            $("#input_dispatching_date").val(today);
         }
 
         setDateForm()
@@ -26,74 +27,69 @@ if(navigator.onLine)
             return hours + ":" + minutes ;
           }
 
-        function getTableData(){
+          function getStoreData(){
 
-            //need api store_data
+            const socket = io('http://34.122.82.176:9001/');
+            socket.on('conn', data => {
+                console.log("CONNECTION RESPONSE: ", data)
+                socket.emit('getData', () => { })
+            })
+            socket.on('data', function (data) {
+                try {
+                    var d = JSON.parse(data.store);
+                    console.log(d.columns);
+                    console.log(d.data);
+                    sessionStorage.setItem("storeData" , JSON.stringify(d));
 
-            var settings = {
-                "url": "http://34.122.82.176:9001/get/store_data",
-                "method": "GET",
-                "timeout": 0,
-              };
-              
-              $.ajax(settings).done(function (response) {
-                var d = JSON.parse(response);
-                console.log(d.columns);
-                console.log(d.data);
-                sessionStorage.setItem("tableData" , JSON.stringify(d));
-                
-              });
+                    var table_row = `<tr>
+                        <th> DATE </th>
+                        <th> PRODUCT </th>
+                        <th>QTY RECEIVED STANDARD</th>
+                        <th>QTY RECEIVED ROUGH</th>
+                        <th>DISPATCHED STANDARD</th>
+                        <th>DISPATCHED ROUGH</th>
+                        <th>ROUGH RETURNED BREAD</th>
+                        <th>BREAD IN STORE</th>
+                        <th>ROUGH BREAD IN STORE</th>
+                    </tr>`;
 
-              var table_row = `<tr>
-                    <th>QTY RECEIVED STANDARD</th>
-                    <th>QTY RECEIVED ROUGH</th>
-                    <th>DISPATCHED STANDARD</th>
-                    <th>DISPATCHED ROUGH</th>
-                    <th>ROUGH RETURNED BREAD</th>
-                    <th>BREAD IN STORE</th>
-                    <th>ROUGH BREAD IN STORE</th>
-                </tr>`;
+                    var data = sessionStorage.getItem("storeData");
+                    var m = JSON.parse(data);
+                    console.log(m.data);
 
-                var data = sessionStorage.getItem("tableData");
-                var m = JSON.parse(data);
-                console.log(m.data);
+                    for(var i = 0; i < m.data.length; i++){
 
-                for(var i = 0; i < m.data.length; i++){
 
-                    if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
-
-                            var date = new Date(m.data[i][0]);
-                            var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
-                            table_row += 
-                            '<tr>'+
-                                '<td>'+ finalD +'</td>'+
-                                '<td>'+m.data[i][1]+'</td>'+
-                                '<td>'+m.data[i][2]+'</td>'+
-                                '<td>'+m.data[i][3]+'</td>'+
-                                '<td>'+msToTime(m.data[i][4])+'</td>'+
-                                '<td>'+msToTime(m.data[i][5])+'</td>'+
-                                '<td>'+msToTime(m.data[i][6])+'</td>'+
-                                '<td>'+m.data[i][7]+'</td>'+
-                            '</tr>';
+                                var date = new Date(m.data[i][0]);
+                                var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                                table_row += 
+                                '<tr>'+
+                                    '<td>'+ finalD +'</td>'+
+                                    '<td>'+m.data[i][1]+'</td>'+
+                                    '<td>'+m.data[i][2]+'</td>'+
+                                    '<td>'+m.data[i][3]+'</td>'+
+                                    '<td>'+m.data[i][4]+'</td>'+
+                                    '<td>'+m.data[i][5]+'</td>'+
+                                    '<td>'+m.data[i][6]+'</td>'+
+                                    '<td>'+m.data[i][7]+'</td>'+
+                                    '<td>'+m.data[i][8]+'</td>'+
+                                '</tr>';
                     }
+
+                    document.getElementById('user_store_table').innerHTML = table_row;
+
+
+                } catch (err) {
+                    console.error(err)
                 }
+            });
 
-                document.getElementById('user_cooling_table').innerHTML = table_row;
+        }   
 
-
-                var options = '';
-               
-                for(var i = 0; i < m.data.length; i++)
-                    options += '<option value="'+m.data[i][1]+'">'+m.data[i][1]+'</option>';
-
-                document.getElementById('input_packaging_trolley').innerHTML = options;
-        }
-
-         setInterval(getTableData, 2000);
-        // getTableData();
+        getStoreData()
 
         function checkLogin() {
-            if(!(sessionStorage.getItem("designation") === "user") && !(sessionStorage.getItem("role") === "cooling")){
+            if(!(sessionStorage.getItem("designation") === "user") && !(sessionStorage.getItem("role") === "store")){
                 window.location.pathname = "/";
             }
          }
@@ -112,7 +108,7 @@ if(navigator.onLine)
             event.preventDefault();
 
             //API required
-            const url = "http://34.122.82.176:9001/get/create_store_receiving"
+            const url = "http://34.122.82.176:9001/get/store_receiving_screen"
 
             $.ajax({
                 url:url,
@@ -121,9 +117,9 @@ if(navigator.onLine)
                     "u_key": sessionStorage.getItem("ukey"), 
                     "date": $('#input_receiving_date').val(),
                     "product": $('#input_receiving_product').val(),
-                    "std_received": $('#input_receiving_standard_qty_received').val(),
-                    "pkg_superviser": $('#input_receiving_pkg_superviser').val(),
-                    "rough_received": $('#input_receiving_rough_qty_received').val(),
+                    "standard_qty_recv": $('#input_receiving_standard_qty_received').val(),
+                    "supervisor": $('#input_receiving_pkg_superviser').val(),
+                    "rough_qty_recv": $('#input_receiving_rough_qty_received').val(),
                 }),
                 statusCode :{
                    200: function() {
@@ -150,7 +146,7 @@ if(navigator.onLine)
             event.stopPropagation();
             event.preventDefault();
 
-            const url = "http://34.122.82.176:9001/get/create_store_dispatching"
+            const url = "http://34.122.82.176:9001/get/store_dispatch_screen"
 
             $.ajax({
                 url:url,
@@ -162,7 +158,7 @@ if(navigator.onLine)
                     "std_dispatched": $('#input_dispatching_standard_dispatched').val(),
                     "rough_dispatched": $('#input_dispatching_rough_dispatched').val(),
                     "rough_returned": $('#input_dispatching_rough_returned').val(),
-                    "dsp_superviser": $('#input_dispatching_dsp_superviser').val(),
+                    "dsp_supervisor": $('#input_dispatching_dsp_superviser').val(),
                 }),
                 statusCode :{
                    200: function() {
