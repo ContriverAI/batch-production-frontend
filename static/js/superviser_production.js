@@ -48,7 +48,6 @@ if(navigator.onLine)
 
         function localProductionData(){
             if(sessionStorage.getItem("prodData")){
-                if(sessionStorage.getItem("prodData")){
                     var table_row = `<tr>    
                         <th>Date</th>
                         <th>Product</th>
@@ -103,7 +102,8 @@ if(navigator.onLine)
                     document.getElementById('input_recall_batch').innerHTML = options;
                     document.getElementById('input_bake_batch').innerHTML = options;
                 }
-        }
+            }
+        
 
         setInterval(localProductionData , 3000);
 
