@@ -105,7 +105,7 @@ if(navigator.onLine)
             }
         
 
-        setInterval(localProductionData , 3000);
+        setInterval(localProductionData , 10000);
 
         function setDateForm(){
             var today = new Date();
