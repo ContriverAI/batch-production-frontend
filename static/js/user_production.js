@@ -97,6 +97,8 @@ if(navigator.onLine)
 
                     document.getElementById('user_production_table').innerHTML = table_row;
 
+                    var options = ''
+
                     for(var i = 0; i < m.data.length; i++)
                         options += '<option value="'+m.data[i][8]+'">'+m.data[i][8]+'</option>';
                         
