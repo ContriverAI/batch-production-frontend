@@ -122,6 +122,7 @@
                     </div>
             
                     <button id = "submitCreateUser" class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+                    <p id="creatingText" style="margin-top: 20px; display: none;">Creating ...</p>
                 </form>
 
 
@@ -159,6 +160,7 @@
                     </div>
             
                     <button id = "submitUpdateUser" class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
+                    <p id="updatingText" style="margin-top: 20px; display: none;">Updating ...</p>
                 </form>
 
                 <form class="form-delete-user card" id="deleteUserForm" method = "POST">
@@ -171,6 +173,7 @@
                     </div>
             
                     <button id = "submitDeleteUser" class="btn btn-lg btn-primary btn-block" type="submit">Delete</button>
+                    <p id="deletingText" style="margin-top: 20px; display: none;">Deleting ...</p>
                 </form>
 
             </div>
@@ -203,10 +206,12 @@
         </script>
 
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script>
     <script src = "{{url_for('static',filename='js/admin.js')}}" ></script>
 

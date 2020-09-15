@@ -40,66 +40,6 @@ if(navigator.onLine)
                     console.log(d.data);
                     sessionStorage.setItem("prodData" , JSON.stringify(d));
 
-                    var table_row = `<tr>    
-                        <th>DATE</th>
-                        <th>FLOUR</th>
-                        <th>SHIFT</th>
-                        <th>REMIX</th>
-                        <th>YEAST</th>
-                        <th>JSP</th>
-                        <th>ECO</th>
-                        <th>JEX</th>
-                        <th>OYOKUN</th>
-                        <th>MIDI</th>
-                        <th>MIXING TIME</th>
-                        <th>BAKING TIME</th>
-                        <th>Batch</th>
-                        <th>Status</th>
-                        <th>Batch Recall</th>
-                        <th>Recall Time</th>
-                    </tr>`;
-
-                    var data = sessionStorage.getItem("prodData");
-                    var m = JSON.parse(data);
-                    console.log(m.data);
-
-                    for(var i = 0; i < m.data.length; i++){
-
-                                var date = new Date(m.data[i][0]);
-                                var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
-                                table_row += 
-                                '<tr>'+
-                                    '<td>'+ finalD +'</td>'+
-                                    '<td>'+m.data[i][1]+'</td>'+
-                                    '<td>'+m.data[i][2]+'</td>'+
-                                    '<td>'+m.data[i][3]+'</td>'+
-                                    '<td>'+m.data[i][4]+'</td>'+
-                                    '<td>'+m.data[i][5]+'</td>'+
-                                    '<td>'+m.data[i][6]+'</td>'+
-                                    '<td>'+m.data[i][7]+'</td>'+
-                                    '<td>'+m.data[i][8]+'</td>'+
-                                    '<td>'+m.data[i][9]+'</td>'+
-                                    '<td>'+msToTime(m.data[i][10])+'</td>'+
-                                    '<td>'+msToTime(m.data[i][11])+'</td>'+
-                                    '<td>'+m.data[i][13]+'</td>'+
-                                    '<td>'+m.data[i][14]+'</td>'+
-                                    '<td>'+m.data[i][15]+'</td>'+
-                                    '<td>'+msToTime(m.data[i][17])+'</td>'+
-                                '</tr>';
-                        
-                    }
-
-                    document.getElementById('user_production_table').innerHTML = table_row;
-
-                    var options = '';
-                
-                    for(var i = 0; i < m.data.length; i++)
-                        options += '<option value="'+m.data[i][13]+'">'+m.data[i][13]+'</option>';
-                        
-
-                    document.getElementById('input_recall_batch').innerHTML = options;
-                    document.getElementById('input_bake_batch').innerHTML = options;
-
                 } catch (err) {
                     console.error(err)
                 }
@@ -113,20 +53,17 @@ if(navigator.onLine)
         function localProductionData(){
             if(sessionStorage.getItem("prodData")){
                     var table_row = `<tr>    
-                        <th>DATE</th>
-                        <th>FLOUR</th>
-                        <th>SHIFT</th>
-                        <th>REMIX</th>
-                        <th>YEAST</th>
-                        <th>JSP</th>
-                        <th>ECO</th>
-                        <th>JEX</th>
-                        <th>OYOKUN</th>
-                        <th>MIDI</th>
-                        <th>MIXING TIME</th>
-                        <th>BAKING TIME</th>
+                        <th>Date</th>
+                        <th>Product</th>
+                        <th>Flour</th>
+                        <th>Shift</th>
+                        <th>Remix</th>
+                        <th>Yeast</th>
+                        <th>Mixing Time</th>
+                        <th>Baking Time</th>
                         <th>Batch</th>
                         <th>Status</th>
+                        <th>Yield Value </th>
                         <th>Batch Recall</th>
                         <th>Recall Time</th>
                     </tr>`;
@@ -142,21 +79,18 @@ if(navigator.onLine)
                                 table_row += 
                                 '<tr>'+
                                     '<td>'+ finalD +'</td>'+
+                                    '<td>'+m.data[i][13]+'</td>'+
                                     '<td>'+m.data[i][1]+'</td>'+
                                     '<td>'+m.data[i][2]+'</td>'+
                                     '<td>'+m.data[i][3]+'</td>'+
                                     '<td>'+m.data[i][4]+'</td>'+
-                                    '<td>'+m.data[i][5]+'</td>'+
-                                    '<td>'+m.data[i][6]+'</td>'+
-                                    '<td>'+m.data[i][7]+'</td>'+
+                                    '<td>'+msToTime(m.data[i][5])+'</td>'+
+                                    '<td>'+msToTime(m.data[i][6])+'</td>'+
                                     '<td>'+m.data[i][8]+'</td>'+
                                     '<td>'+m.data[i][9]+'</td>'+
-                                    '<td>'+msToTime(m.data[i][10])+'</td>'+
-                                    '<td>'+msToTime(m.data[i][11])+'</td>'+
-                                    '<td>'+m.data[i][13]+'</td>'+
-                                    '<td>'+m.data[i][14]+'</td>'+
-                                    '<td>'+m.data[i][15]+'</td>'+
-                                    '<td>'+msToTime(m.data[i][17])+'</td>'+
+                                    '<td>'+m.data[i][10]+'</td>'+
+                                    '<td>'+m.data[i][11]+'</td>'+
+                                    '<td>'+msToTime(m.data[i][12])+'</td>'+
                                 '</tr>';
                         
                     }
@@ -164,7 +98,7 @@ if(navigator.onLine)
                     document.getElementById('user_production_table').innerHTML = table_row;
 
                     for(var i = 0; i < m.data.length; i++)
-                        options += '<option value="'+m.data[i][13]+'">'+m.data[i][13]+'</option>';
+                        options += '<option value="'+m.data[i][8]+'">'+m.data[i][8]+'</option>';
                         
 
                     document.getElementById('input_recall_batch').innerHTML = options;
@@ -205,12 +139,10 @@ if(navigator.onLine)
                     "batch": $('#input_main_Batch').val(),
                     "yeast": $('#input_main_yeastused').val(),
                     "flour": $('#input_main_floorused').val(),
-                    "yield": $('#input_main_yield').val(),
                     "yield_val": $('#input_main_yield_value').val(),
                     "shift": $('#input_main_shift').val(),
                     "product": $('#input_main_product').val(),
                     "remix": $('#input_main_remixused').val(),
-                    "water": $('#input_main_waterused').val(),
                     "time": new Date().toLocaleTimeString(),
             
                 }),

@@ -21,6 +21,19 @@ if(navigator.onLine)
                     var m = JSON.parse(data);
                     console.log(m.data);
 
+                    var bis = [];
+                    var rbis = [];
+                    for(var i= 0 ; i < m.data.length;i++){
+                        if( i === 0){
+                            bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6]);
+                            rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
+                        }
+                        else{
+                            bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6] + bis[i-1]);
+                            rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
+                        }
+                    }
+
                     for(var i = 0; i < m.data.length; i++){
 
 
@@ -35,8 +48,8 @@ if(navigator.onLine)
                                     '<td>'+m.data[i][4]+'</td>'+
                                     '<td>'+m.data[i][5]+'</td>'+
                                     '<td>'+m.data[i][6]+'</td>'+
-                                    '<td>'+m.data[i][7]+'</td>'+
-                                    '<td>'+m.data[i][8]+'</td>'+
+                                    '<td>'+bis[i]+'</td>'+
+                                    '<td>'+rbis[i]+'</td>'+
                                 '</tr>';
                     }
 
@@ -84,45 +97,6 @@ if(navigator.onLine)
                     console.log(d.columns);
                     console.log(d.data);
                     sessionStorage.setItem("storeData" , JSON.stringify(d));
-
-                    var table_row = `<tr>
-                        <th> DATE </th>
-                        <th> PRODUCT </th>
-                        <th>QTY RECEIVED STANDARD</th>
-                        <th>QTY RECEIVED ROUGH</th>
-                        <th>DISPATCHED STANDARD</th>
-                        <th>DISPATCHED ROUGH</th>
-                        <th>ROUGH RETURNED BREAD</th>
-                        <th>BREAD IN STORE</th>
-                        <th>ROUGH BREAD IN STORE</th>
-                    </tr>`;
-
-                    var data = sessionStorage.getItem("storeData");
-                    var m = JSON.parse(data);
-                    console.log(m.data);
-
-                    for(var i = 0; i < m.data.length; i++){
-
-
-                                var date = new Date(m.data[i][0]);
-                                var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
-                                table_row += 
-                                '<tr>'+
-                                    '<td>'+ finalD +'</td>'+
-                                    '<td>'+m.data[i][1]+'</td>'+
-                                    '<td>'+m.data[i][2]+'</td>'+
-                                    '<td>'+m.data[i][3]+'</td>'+
-                                    '<td>'+m.data[i][4]+'</td>'+
-                                    '<td>'+m.data[i][5]+'</td>'+
-                                    '<td>'+m.data[i][6]+'</td>'+
-                                    '<td>'+m.data[i][7]+'</td>'+
-                                    '<td>'+m.data[i][8]+'</td>'+
-                                '</tr>';
-                    }
-
-                    document.getElementById('user_store_table').innerHTML = table_row;
-
-
                 } catch (err) {
                     console.error(err)
                 }

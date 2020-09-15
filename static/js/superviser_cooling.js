@@ -139,53 +139,6 @@ if(navigator.onLine)
                     console.log(d.data);
                     sessionStorage.setItem("tableData" , JSON.stringify(d));
 
-                    var table_row = `<tr>
-                        <th>Date</th>
-                        <th>Trolley</th>
-                        <th>Product</th>
-                        <th>Qty</th>
-                        <th>Time In</th>
-                        <th>Duration</th>
-                        <th>Complete Time</th>
-                        <th>Packaging Complete </th>
-                    </tr>`;
-
-                    var data = sessionStorage.getItem("tableData");
-                    var m = JSON.parse(data);
-                    console.log(m.data);
-
-                    for(var i = 0; i < m.data.length; i++){
-
-                        if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
-
-                                var date = new Date(m.data[i][0]);
-                                var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
-                                table_row += 
-                                '<tr>'+
-                                    '<td>'+ finalD +'</td>'+
-                                    '<td>'+m.data[i][1]+'</td>'+
-                                    '<td>'+m.data[i][2]+'</td>'+
-                                    '<td>'+m.data[i][3]+'</td>'+
-                                    '<td>'+msToTime(m.data[i][4])+'</td>'+
-                                    '<td>'+msToTime(m.data[i][5])+'</td>'+
-                                    '<td>'+msToTime(m.data[i][6])+'</td>'+
-                                    '<td>'+m.data[i][7]+'</td>'+
-                                '</tr>';
-                        }
-                    }
-
-                    document.getElementById('superviser_cooling_table').innerHTML = table_row;
-
-
-                    var options = '';
-                
-                    for(var i = 0; i < m.data.length; i++)
-                        if(m.data[i][7] === "No"){
-                            options += '<option value="'+m.data[i][1]+'">'+m.data[i][1]+'</option>';
-                        }
-
-                    document.getElementById('input_packaging_trolley').innerHTML = options;
-
                 } catch (err) {
                     console.error(err)
                 }

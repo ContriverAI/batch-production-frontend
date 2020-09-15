@@ -39,7 +39,7 @@
 
                 <div style="margin-top: 20px;">
                     <label for="inputBatch" >Batch</label>
-                    <input type="text" id="input_main_Batch" class="form-control" placeholder="Enter batch no."  required autofocus>
+                    <input type="number" id="input_main_Batch" class="form-control" placeholder="Enter batch no."  required autofocus>
                 </div>
 
                 <div style="margin-top: 20px;">
@@ -48,19 +48,8 @@
                 </div>
 
                 <div style="margin-top: 20px;">
-                    <label for="inputFloorUsed" >Floor used</label>
+                    <label for="inputFloorUsed" >Flour used</label>
                     <input type="number" id="input_main_floorused" class="form-control" placeholder="Enter floor used"  required autofocus>
-                </div>
-
-                <div style="margin-top: 20px;">
-                    <label for="input_main_yield" >Yield</label>
-                    <select id="input_main_yield" name="input_main_yield" class="form-control" required autofocus>
-                        <option value="jsp">JSP</option>
-                        <option value="eco">ECO</option>
-                        <option value="jex">JEX</option>
-                        <option value="oyokun">OYOKUN</option>
-                        <option value="midi">MIDI</option>
-                    </select>
                 </div>
 
                 <div style="margin-top: 20px;">
@@ -98,17 +87,11 @@
                     </select>
                 </div>
 
-                <div style="margin-top: 20px;">
+                <div style="margin-top: 20px;margin-bottom: 20px;">
                     <label for="inputRemixUsed" >Remix used</label>
                     <input type="number" id="input_main_remixused" class="form-control" placeholder="Enter remix used"  required autofocus>
                 </div>
-
-                <div style="margin-top: 20px;margin-bottom: 20px;">
-                    <label for="inputWaterUsed" >Water used</label>
-                    <input type="number" id="input_main_waterused" class="form-control" placeholder="Enter water used"  required autofocus>
-                </div>
-
-
+                
                 <button id = "submitMain" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
             </form>
 
