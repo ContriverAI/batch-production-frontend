@@ -128,8 +128,10 @@ if(navigator.onLine)
 
                             var options = ''
 
-                            for(var i = 0; i < m.data.length; i++)
-                                options += '<option value="'+m.data[i][8]+'">'+m.data[i][8]+'</option>';
+                            for(var i = 0; i < m.data.length; i++){
+                                if(m.data[i][9] !== "Baked")
+                                    options += '<option value="'+m.data[i][8]+'">'+m.data[i][8]+'</option>';
+                            }
                                 
 
                             document.getElementById('input_recall_batch').innerHTML = options;
