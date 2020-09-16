@@ -28,7 +28,7 @@ if(navigator.onLine)
         
         function getStoreData(){
 
-            const socket = io('http://34.122.82.176:9001/');
+            const socket = io('http://localhost:9003/');
             socket.on('conn', data => {
                 console.log("CONNECTION RESPONSE: ", data)
                 socket.emit('getData', () => { })
@@ -107,7 +107,7 @@ if(navigator.onLine)
                         }
                 }
 
-                setInterval(localStoreData , 3000);
+                setInterval(localStoreData ,10000);
 
                 function setDateForm(){
                     var today = new Date();
@@ -157,7 +157,7 @@ if(navigator.onLine)
             modal.style.display = "block";
 
             //API required
-            const url = "http://34.122.82.176:9001/get/store_receiving_screen"
+            const url = "http://localhost:9003/get/store_receiving_screen"
 
             $.ajax({
                 url:url,
@@ -200,7 +200,7 @@ if(navigator.onLine)
             var modal = document.getElementById("myModal");
             modal.style.display = "block";
 
-            const url = "http://34.122.82.176:9001/get/store_dispatch_screen"
+            const url = "http://localhost:9003/get/store_dispatch_screen"
 
             $.ajax({
                 url:url,

@@ -25,7 +25,7 @@ if(navigator.onLine)
          
          function getCoolingData(){
 
-            const socket = io('http://34.122.82.176:9001/');
+            const socket = io('http://localhost:9003/');
             socket.on('conn', data => {
                 console.log("CONNECTION RESPONSE: ", data)
                 socket.emit('getData', () => { })
@@ -226,7 +226,7 @@ if(navigator.onLine)
                         function getUsersData(){
 
                             var settings = {
-                                "url": "http://34.122.82.176:9001/get/allusers",
+                                "url": "http://localhost:9003/get/allusers",
                                 "method": "GET",
                             };
                             
@@ -265,7 +265,7 @@ if(navigator.onLine)
                         function getConfigData(){
 
                             var settings = {
-                                "url": "http://34.122.82.176:9001/get/configparams",
+                                "url": "http://localhost:9003/get/configparams",
                                 "method": "GET",
                             };
                             
@@ -308,7 +308,7 @@ if(navigator.onLine)
                             event.stopPropagation();
                             event.preventDefault();
 
-                            const url = "http://34.122.82.176:9001/get/create_user"
+                            const url = "http://localhost:9003/get/create_user"
                             document.getElementById("creatingText").style.display = "inline";
 
                             $.ajax({
@@ -347,7 +347,7 @@ if(navigator.onLine)
                             event.stopPropagation();
                             event.preventDefault();
 
-                            const url = "http://34.122.82.176:9001/get/update_user"
+                            const url = "http://localhost:9003/get/update_user"
                             document.getElementById("updatingText").style.display = "inline";
 
                             $.ajax({
@@ -384,7 +384,7 @@ if(navigator.onLine)
                             event.stopPropagation();
                             event.preventDefault();
 
-                            const url = "http://34.122.82.176:9001/get/delete_user"
+                            const url = "http://localhost:9003/get/delete_user"
                             document.getElementById("deletingText").style.display = "inline";
 
                             $.ajax({
