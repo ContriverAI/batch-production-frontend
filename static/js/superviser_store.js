@@ -16,7 +16,7 @@ if(navigator.onLine)
         var loaded = false
 
         function dataLoad(){
-            if(sessionStorage.getItem("tableData")){
+            if(sessionStorage.getItem("storeData")){
                loaded = true
                document.getElementById("admin-main").style.display = "inline";
                document.getElementById("loader").style.display = "none";
@@ -216,7 +216,7 @@ if(navigator.onLine)
 
                 });
             }
-            
+
             setInterval(display , 3000);    
     
     });
