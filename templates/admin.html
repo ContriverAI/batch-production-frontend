@@ -13,171 +13,179 @@
    
   </head>
   <body class="">
+
+    <div id="loader">
+
+    </div>
       
+    <div id="admin-main">
      
-      <!-- Tab links -->
-        <div class="tab">
-            <button class="tablinks" onclick="openCity(event, 'Production')" id="defaultOpen" >Production</button>
-            <button class="tablinks" onclick="openCity(event, 'Cooling')">Cooling</button>
-            <button class="tablinks" onclick="openCity(event, 'Store')">Store</button>
-            <button class="tablinks" onclick="openCity(event, 'Reports')">Reports</button>
-            <button class="tablinks" onclick="openCity(event, 'Users')">Users</button>
-            <button class="tablinks" onclick="openCity(event, 'Configuration')">Configuration</button>
-            <button class="tablinks" id="Logout" onclick="" style="margin-right: 0px;">Logout</button>
-        </div>
-        
-        
-        <!-- Tab content -->
-        <div id="Production" class="tabcontent">
-            <h3 style="text-align: center;">Production Table</h3>
-            <table id="production_table">
-                <tr>
-                    <th>Date</th>
-                    <th>Trolley</th>
-                    <th>Product</th>
-                    <th>Qty</th>
-                    <th>Time In</th>
-                    <th>Duration</th>
-                    <th>Complete Time</th>
-                </tr>
-            </table>
-        </div>
-
-        <div id="Configuration" class="tabcontent">
-            <h3 style="text-align: center;">Configuration Table</h3>
-            <table id="config_table">
-                
-            </table>
-        </div>
-        
-        <div id="Cooling" class="tabcontent">
-            <h3 style="text-align: center;">Cooling Table</h3>
-            <table id="cooling_table">
-            </table>
-        </div>
-
-        <div id="Store" class="tabcontent">
-            <h3 style="text-align: center;">Store Table</h3>
-            <table id="store_table">
-                <tr>
-                    <th>Date</th>
-                    <th>Trolley</th>
-                    <th>Product</th>
-                    <th>Qty</th>
-                    <th>Time In</th>
-                    <th>Duration</th>
-                    <th>Complete Time</th>
-                </tr>
-            </table>
-        </div>
-
-        <div id="Reports" class="tabcontent">
-            <h3 style="text-align: center;">Reports</h3>
-            
-        </div>
-        
-        <div id="Users" class="tabcontent">
-            <div style="display: flex;flex-direction: row;">
-                <h3 style="text-align: center;">Users</h3>
-                <div style="margin: auto; margin-right: 55px;">
-                    <button id = "createUserBtn" class="btn btn-lg btn-primary  createBtn disabled" >Create User</button>
-                    <button id = "updateUserBtn" class="btn btn-lg btn-primary  updateBtn" >Update User</button>
-                    <button id = "deleteUserBtn" class="btn btn-lg btn-primary  deleteBtn" >Delete User</button>
-                </div>    
+        <!-- Tab links -->
+            <div class="tab">
+                <button class="tablinks" onclick="openCity(event, 'Production')" id="defaultOpen" >Production</button>
+                <button class="tablinks" onclick="openCity(event, 'Cooling')">Cooling</button>
+                <button class="tablinks" onclick="openCity(event, 'Store')">Store</button>
+                <button class="tablinks" onclick="openCity(event, 'Reports')">Reports</button>
+                <button class="tablinks" onclick="openCity(event, 'Users')">Users</button>
+                <button class="tablinks" onclick="openCity(event, 'Configuration')">Configuration</button>
+                <button class="tablinks" id="Logout" onclick="" style="margin-right: 0px;">Logout</button>
             </div>
-            <div style="display: flex;">
-                <table id="users_table" style="margin-top: 10px;width: 60%;">
+            
+            
+            <!-- Tab content -->
+            <div id="Production" class="tabcontent">
+                <h3 style="text-align: center;">Production Table</h3>
+                <table id="production_table">
+                    <tr>
+                        <th>Date</th>
+                        <th>Trolley</th>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Time In</th>
+                        <th>Duration</th>
+                        <th>Complete Time</th>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="Configuration" class="tabcontent">
+                <h3 style="text-align: center;">Configuration Table</h3>
+                <table id="config_table">
                     
                 </table>
-
-                <form class="form-create-user card" id="createUserForm" method = "POST">
-            
-                    <div style="margin-top: 20px;">
-                        <label for="inputUsername" >Username</label>
-                        <input type="text" id="input_username" class="form-control" placeholder="Enter username"  required autofocus>
-                    </div>
-
-                    <div style="margin-top: 20px;">
-                        <label for="inputpassword" >Password</label>
-                        <input type="password" id="input_password" class="form-control" placeholder="Enter password"  required autofocus>
-                    </div>
-
-                    <div style="margin-top: 20px;margin-bottom: 20px;">
-                        <label for="inputDesignation">Designation</label>
-                        <select id="inputDesignation" name="inputDesignation" class="form-control" required autofocus>
-                            <option value="user">User</option>
-                            <option value="supervisor">Supervisor</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                    </div>
-
-                    <div style="margin-top: 10px;margin-bottom: 20px;">
-                    <label for="inputRole">Role</label>
-                        <select id="inputRole" name="inputRole" class="form-control" required autofocus>
-                            <option value="cooling">Cooling</option>
-                            <option value="production">Production</option>
-                            <option value="store">Store</option>
-                            <option value="system">System</option>
-                        </select>
-                    </div>
-            
-                    <button id = "submitCreateUser" class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
-                    <p id="creatingText" style="margin-top: 20px; display: none;">Creating ...</p>
-                </form>
-
-
-                <form class="form-update-user card" id="updateUserForm" method = "POST">
-            
-                    <div style="margin-top: 20px;">
-                        <label for="input_update_username" >Username</label>
-                        <select id="input_update_username" name="input_update_username" class="form-control" required autofocus>
-                           
-                        </select>
-                    </div>
-
-                    <div style="margin-top: 20px;">
-                        <label for="inputpassword" >New Password</label>
-                        <input type="password" id="input_update_password" class="form-control" placeholder="Enter password"  required autofocus>
-                    </div>
-
-                    <div style="margin-top: 20px;margin-bottom: 20px;">
-                        <label for="inputUpdateDesignation">New Designation</label>
-                        <select id="inputUpdateDesignation" name="inputUpdateDesignation" class="form-control" required autofocus>
-                            <option value="user">User</option>
-                            <option value="supervisor">Supervisor</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                    </div>
-
-                    <div style="margin-top: 10px;margin-bottom: 20px;">
-                        <label for="inputUpdateRole">New Role</label>
-                        <select id="inputUpdateRole" name="inputUpdateRole" class="form-control" required autofocus>
-                            <option value="cooling">Cooling</option>
-                            <option value="production">Production</option>
-                            <option value="store">Store</option>
-                            <option value="system">System</option>
-                        </select>
-                    </div>
-            
-                    <button id = "submitUpdateUser" class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
-                    <p id="updatingText" style="margin-top: 20px; display: none;">Updating ...</p>
-                </form>
-
-                <form class="form-delete-user card" id="deleteUserForm" method = "POST">
-            
-                    <div style="margin-top: 20px;margin-bottom: 20px;">
-                        <label for="input_delete_username" >Username</label>
-                        <select id="input_delete_username" name="input_delete_username" class="form-control" required autofocus>
-                           
-                        </select>
-                    </div>
-            
-                    <button id = "submitDeleteUser" class="btn btn-lg btn-primary btn-block" type="submit">Delete</button>
-                    <p id="deletingText" style="margin-top: 20px; display: none;">Deleting ...</p>
-                </form>
-
             </div>
-        </div>
+            
+            <div id="Cooling" class="tabcontent">
+                <h3 style="text-align: center;">Cooling Table</h3>
+                <table id="cooling_table">
+                </table>
+            </div>
+
+            <div id="Store" class="tabcontent">
+                <h3 style="text-align: center;">Store Table</h3>
+                <table id="store_table">
+                    <tr>
+                        <th>Date</th>
+                        <th>Trolley</th>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Time In</th>
+                        <th>Duration</th>
+                        <th>Complete Time</th>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="Reports" class="tabcontent">
+                <h3 style="text-align: center;">Reports</h3>
+                
+            </div>
+            
+            <div id="Users" class="tabcontent">
+                <div style="display: flex;flex-direction: row;">
+                    <h3 style="text-align: center;">Users</h3>
+                    <div style="margin: auto; margin-right: 55px;">
+                        <button id = "createUserBtn" class="btn btn-lg btn-primary  createBtn disabled" >Create User</button>
+                        <button id = "updateUserBtn" class="btn btn-lg btn-primary  updateBtn" >Update User</button>
+                        <button id = "deleteUserBtn" class="btn btn-lg btn-primary  deleteBtn" >Delete User</button>
+                    </div>    
+                </div>
+                <div style="display: flex;">
+                    <table id="users_table" style="margin-top: 10px;width: 60%;">
+                        
+                    </table>
+
+                    <form class="form-create-user card" id="createUserForm" method = "POST">
+                
+                        <div style="margin-top: 20px;">
+                            <label for="inputUsername" >Username</label>
+                            <input type="text" id="input_username" class="form-control" placeholder="Enter username"  required autofocus>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <label for="inputpassword" >Password</label>
+                            <input type="password" id="input_password" class="form-control" placeholder="Enter password"  required autofocus>
+                        </div>
+
+                        <div style="margin-top: 20px;margin-bottom: 20px;">
+                            <label for="inputDesignation">Designation</label>
+                            <select id="inputDesignation" name="inputDesignation" class="form-control" required autofocus>
+                                <option value="user">User</option>
+                                <option value="supervisor">Supervisor</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-top: 10px;margin-bottom: 20px;">
+                        <label for="inputRole">Role</label>
+                            <select id="inputRole" name="inputRole" class="form-control" required autofocus>
+                                <option value="cooling">Cooling</option>
+                                <option value="production">Production</option>
+                                <option value="store">Store</option>
+                                <option value="system">System</option>
+                            </select>
+                        </div>
+                
+                        <button id = "submitCreateUser" class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+                        <p id="creatingText" style="margin-top: 20px; display: none;">Creating ...</p>
+                    </form>
+
+
+                    <form class="form-update-user card" id="updateUserForm" method = "POST">
+                
+                        <div style="margin-top: 20px;">
+                            <label for="input_update_username" >Username</label>
+                            <select id="input_update_username" name="input_update_username" class="form-control" required autofocus>
+                            
+                            </select>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <label for="inputpassword" >New Password</label>
+                            <input type="password" id="input_update_password" class="form-control" placeholder="Enter password"  required autofocus>
+                        </div>
+
+                        <div style="margin-top: 20px;margin-bottom: 20px;">
+                            <label for="inputUpdateDesignation">New Designation</label>
+                            <select id="inputUpdateDesignation" name="inputUpdateDesignation" class="form-control" required autofocus>
+                                <option value="user">User</option>
+                                <option value="supervisor">Supervisor</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-top: 10px;margin-bottom: 20px;">
+                            <label for="inputUpdateRole">New Role</label>
+                            <select id="inputUpdateRole" name="inputUpdateRole" class="form-control" required autofocus>
+                                <option value="cooling">Cooling</option>
+                                <option value="production">Production</option>
+                                <option value="store">Store</option>
+                                <option value="system">System</option>
+                            </select>
+                        </div>
+                
+                        <button id = "submitUpdateUser" class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
+                        <p id="updatingText" style="margin-top: 20px; display: none;">Updating ...</p>
+                    </form>
+
+                    <form class="form-delete-user card" id="deleteUserForm" method = "POST">
+                
+                        <div style="margin-top: 20px;margin-bottom: 20px;">
+                            <label for="input_delete_username" >Username</label>
+                            <select id="input_delete_username" name="input_delete_username" class="form-control" required autofocus>
+                            
+                            </select>
+                        </div>
+                
+                        <button id = "submitDeleteUser" class="btn btn-lg btn-primary btn-block" type="submit">Delete</button>
+                        <p id="deletingText" style="margin-top: 20px; display: none;">Deleting ...</p>
+                    </form>
+
+                </div>
+            </div>
+            
+
+    </div>
 
         <script>
 

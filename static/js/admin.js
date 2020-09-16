@@ -10,25 +10,20 @@ if(navigator.onLine)
       
          checkLogin();
 
-         $("#Logout").click(function(event){
-            event.preventDefault();
-            sessionStorage.clear();
-            window.location.pathname = "/";
-         });
+        var loaded = false
 
-         function msToTime(duration) {
-            var milliseconds = parseInt((duration % 1000) / 100),
-              seconds = Math.floor((duration / 1000) % 60),
-              minutes = Math.floor((duration / (1000 * 60)) % 60),
-              hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
-          
-            hours = (hours < 10) ? "0" + hours : hours;
-            minutes = (minutes < 10) ? "0" + minutes : minutes;
-          
-            return hours + ":" + minutes ;
-          }
+         function dataLoad(){
+             if(sessionStorage.getItem("tableData")){
+                loaded = true
+                document.getElementById("admin-main").style.display = "inline";
+                document.getElementById("loader").style.display = "none";
+             }
+         }
 
-          function getCoolingData(){
+         setInterval(dataLoad , 3000);
+
+         
+         function getCoolingData(){
 
             const socket = io('http://34.122.82.176:9001/');
             socket.on('conn', data => {
@@ -44,43 +39,6 @@ if(navigator.onLine)
                     sessionStorage.setItem("prodData" , JSON.stringify(dp));
                     sessionStorage.setItem("storeData" , JSON.stringify(ds));
 
-                    var table_row = `<tr>
-                        <th>Date</th>
-                        <th>Trolley</th>
-                        <th>Product</th>
-                        <th>Qty</th>
-                        <th>Time In</th>
-                        <th>Duration</th>
-                        <th>Complete Time</th>
-                        <th>Packaging Complete </th>
-                    </tr>`;
-
-                    var data = sessionStorage.getItem("tableData");
-                    var m = JSON.parse(data);
-
-                    for(var i = 0; i < m.data.length; i++){
-
-                        if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
-
-                                var date = new Date(m.data[i][0]);
-                                var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
-                                table_row += 
-                                '<tr>'+
-                                    '<td>'+ finalD +'</td>'+
-                                    '<td>'+m.data[i][1]+'</td>'+
-                                    '<td>'+m.data[i][2]+'</td>'+
-                                    '<td>'+m.data[i][3]+'</td>'+
-                                    '<td>'+msToTime(m.data[i][4])+'</td>'+
-                                    '<td>'+msToTime(m.data[i][5])+'</td>'+
-                                    '<td>'+msToTime(m.data[i][6])+'</td>'+
-                                    '<td>'+m.data[i][7]+'</td>'+
-                                '</tr>';
-                        }
-                    }
-
-                    document.getElementById('cooling_table').innerHTML = table_row;
-
-
                 } catch (err) {
                     console.error(err)
                 }
@@ -90,404 +48,432 @@ if(navigator.onLine)
 
         getCoolingData()
 
-        function localCoolingData(){
+        function display(){
 
-            if(sessionStorage.getItem("tableData")){
-                var table_row = `<tr>
-                            <th>Date</th>
-                            <th>Trolley</th>
-                            <th>Product</th>
-                            <th>Qty</th>
-                            <th>Time In</th>
-                            <th>Duration</th>
-                            <th>Complete Time</th>
-                            <th>Packaging Complete </th>
-                        </tr>`;
+                if( loaded ) {
 
-                        var data = sessionStorage.getItem("tableData");
-                        var m = JSON.parse(data);
+                        $("#Logout").click(function(event){
+                            event.preventDefault();
+                            sessionStorage.clear();
+                            window.location.pathname = "/";
+                        });
 
-                        for(var i = 0; i < m.data.length; i++){
-
-                            if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
-
-                                    var date = new Date(m.data[i][0]);
-                                    var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
-                                    table_row += 
-                                    '<tr>'+
-                                        '<td>'+ finalD +'</td>'+
-                                        '<td>'+m.data[i][1]+'</td>'+
-                                        '<td>'+m.data[i][2]+'</td>'+
-                                        '<td>'+m.data[i][3]+'</td>'+
-                                        '<td>'+msToTime(m.data[i][4])+'</td>'+
-                                        '<td>'+msToTime(m.data[i][5])+'</td>'+
-                                        '<td>'+msToTime(m.data[i][6])+'</td>'+
-                                        '<td>'+m.data[i][7]+'</td>'+
-                                    '</tr>';
-                            }
+                        function msToTime(duration) {
+                            var milliseconds = parseInt((duration % 1000) / 100),
+                            seconds = Math.floor((duration / 1000) % 60),
+                            minutes = Math.floor((duration / (1000 * 60)) % 60),
+                            hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+                        
+                            hours = (hours < 10) ? "0" + hours : hours;
+                            minutes = (minutes < 10) ? "0" + minutes : minutes;
+                        
+                            return hours + ":" + minutes ;
                         }
 
-                        document.getElementById('cooling_table').innerHTML = table_row;
-                }
-        }
 
-        setInterval(localCoolingData , 3000);
-        setInterval(getUsersData , 3000);
+                        function localCoolingData(){
 
-        function localProductionData(){
-            if(sessionStorage.getItem("prodData")){
-                        var table_row = `<tr>    
-                        <th>Date</th>
-                        <th>Product</th>
-                        <th>Flour</th>
-                        <th>Shift</th>
-                        <th>Remix</th>
-                        <th>Yeast</th>
-                        <th>Mixing Time</th>
-                        <th>Baking Time</th>
-                        <th>Batch</th>
-                        <th>Status</th>
-                        <th>Yield Value </th>
-                        <th>Batch Recall</th>
-                        <th>Recall Time</th>
-                    </tr>`;
+                            if(sessionStorage.getItem("tableData")){
+                                var table_row = `<tr>
+                                            <th>Date</th>
+                                            <th>Trolley</th>
+                                            <th>Product</th>
+                                            <th>Qty</th>
+                                            <th>Time In</th>
+                                            <th>Duration</th>
+                                            <th>Complete Time</th>
+                                            <th>Packaging Complete </th>
+                                        </tr>`;
 
-                    var data = sessionStorage.getItem("prodData");
-                    var m = JSON.parse(data);
-                    console.log(m.data);
+                                        var data = sessionStorage.getItem("tableData");
+                                        var m = JSON.parse(data);
 
-                    for(var i = 0; i < m.data.length; i++){
+                                        for(var i = 0; i < m.data.length; i++){
 
-                                var date = new Date(m.data[i][0]);
-                                var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                                            if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
+
+                                                    var date = new Date(m.data[i][0]);
+                                                    var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                                                    table_row += 
+                                                    '<tr>'+
+                                                        '<td>'+ finalD +'</td>'+
+                                                        '<td>'+m.data[i][1]+'</td>'+
+                                                        '<td>'+m.data[i][2]+'</td>'+
+                                                        '<td>'+m.data[i][3]+'</td>'+
+                                                        '<td>'+msToTime(m.data[i][4])+'</td>'+
+                                                        '<td>'+msToTime(m.data[i][5])+'</td>'+
+                                                        '<td>'+msToTime(m.data[i][6])+'</td>'+
+                                                        '<td>'+m.data[i][7]+'</td>'+
+                                                    '</tr>';
+                                            }
+                                        }
+
+                                        document.getElementById('cooling_table').innerHTML = table_row;
+                                }
+                        }
+
+                        setInterval(localCoolingData , 3000);
+                        setInterval(getUsersData , 3000);
+
+                        function localProductionData(){
+                            if(sessionStorage.getItem("prodData")){
+                                        var table_row = `<tr>    
+                                        <th>Date</th>
+                                        <th>Product</th>
+                                        <th>Flour</th>
+                                        <th>Shift</th>
+                                        <th>Remix</th>
+                                        <th>Yeast</th>
+                                        <th>Mixing Time</th>
+                                        <th>Baking Time</th>
+                                        <th>Batch</th>
+                                        <th>Status</th>
+                                        <th>Yield Value </th>
+                                        <th>Batch Recall</th>
+                                        <th>Recall Time</th>
+                                    </tr>`;
+
+                                    var data = sessionStorage.getItem("prodData");
+                                    var m = JSON.parse(data);
+                                    console.log(m.data);
+
+                                    for(var i = 0; i < m.data.length; i++){
+                                            if( m.data[i][9] === "Unbaked"){
+                                                var date = new Date(m.data[i][0]);
+                                                var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                                                table_row += 
+                                                '<tr>'+
+                                                    '<td>'+ finalD +'</td>'+
+                                                    '<td>'+m.data[i][13]+'</td>'+
+                                                    '<td>'+m.data[i][1]+'</td>'+
+                                                    '<td>'+m.data[i][2]+'</td>'+
+                                                    '<td>'+m.data[i][3]+'</td>'+
+                                                    '<td>'+m.data[i][4]+'</td>'+
+                                                    '<td>'+msToTime(m.data[i][5])+'</td>'+
+                                                    '<td>'+msToTime(m.data[i][6])+'</td>'+
+                                                    '<td>'+m.data[i][8]+'</td>'+
+                                                    '<td>'+m.data[i][9]+'</td>'+
+                                                    '<td>'+m.data[i][10]+'</td>'+
+                                                    '<td>'+m.data[i][11]+'</td>'+
+                                                    '<td>'+msToTime(m.data[i][12])+'</td>'+
+                                                '</tr>';
+                                            }
+                                        
+                                    }
+
+                                    document.getElementById('production_table').innerHTML = table_row;
+                                }
+                        }
+
+                        setInterval(localProductionData , 3000);
+
+                        function localStoreData(){
+
+                            if(sessionStorage.getItem("storeData")){
+                                var table_row = `<tr>
+                                            <th> DATE </th>
+                                            <th> PRODUCT </th>
+                                            <th>QTY RECEIVED STANDARD</th>
+                                            <th>QTY RECEIVED ROUGH</th>
+                                            <th>DISPATCHED STANDARD</th>
+                                            <th>DISPATCHED ROUGH</th>
+                                            <th>ROUGH RETURNED BREAD</th>
+                                            <th>BREAD IN STORE</th>
+                                            <th>ROUGH BREAD IN STORE</th>
+                                        </tr>`;
+
+                                        var data = sessionStorage.getItem("storeData");
+                                        var m = JSON.parse(data);
+
+                                        var bis = [];
+                                        var rbis = [];
+                                        for(var i= 0 ; i < m.data.length;i++){
+                                            if( i === 0){
+                                                bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6]);
+                                                rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
+                                            }
+                                            else{
+                                                bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6] + bis[i-1]);
+                                                rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
+                                            }
+                                        }
+
+                                        for(var i = 0; i < m.data.length; i++){
+
+
+                                                    var date = new Date(m.data[i][0]);
+                                                    var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                                                    table_row += 
+                                                    '<tr>'+
+                                                        '<td>'+ finalD +'</td>'+
+                                                        '<td>'+m.data[i][1]+'</td>'+
+                                                        '<td>'+m.data[i][2]+'</td>'+
+                                                        '<td>'+m.data[i][3]+'</td>'+
+                                                        '<td>'+m.data[i][4]+'</td>'+
+                                                        '<td>'+m.data[i][5]+'</td>'+
+                                                        '<td>'+m.data[i][6]+'</td>'+
+                                                        '<td>'+bis[i]+'</td>'+
+                                                        '<td>'+rbis[i]+'</td>'+
+                                                    '</tr>';
+                                        }
+
+                                        document.getElementById('store_table').innerHTML = table_row;
+                                }
+                        }
+
+                        setInterval(localStoreData , 3000);
+
+                        function getUsersData(){
+
+                            var settings = {
+                                "url": "http://34.122.82.176:9001/get/allusers",
+                                "method": "GET",
+                            };
+                            
+                            $.ajax(settings).done(function (response) {
+                                var d = JSON.parse(response);
+                                sessionStorage.setItem("usersData" , JSON.stringify(d));
+                                displayUsers();
+                            });
+                        }
+                        getUsersData();
+
+                        function displayUsers(){
+                            
+                                var table_row = `<tr>
+                                    <th>Username</th>
+                                    <th>Designation</th>
+                                    <th>Role</th>
+                                </tr>`;
+
+                                var data = sessionStorage.getItem("usersData");
+                                var m = JSON.parse(data);
+
+                                for(var i = 0; i < m.data.length; i++){
+                                    table_row += 
+                                    '<tr>'+
+                                        '<td>'+m.data[i][0]+'</td>'+
+                                        '<td>'+m.data[i][2]+'</td>'+
+                                        '<td>'+m.data[i][3]+'</td>'+
+                                    '</tr>';
+                                }
+
+
+                                document.getElementById('users_table').innerHTML = table_row;
+                        }
+
+                        function getConfigData(){
+
+                            var settings = {
+                                "url": "http://34.122.82.176:9001/get/configparams",
+                                "method": "GET",
+                            };
+                            
+                            $.ajax(settings).done(function (response) {
+                                var d = JSON.parse(response);
+                                sessionStorage.setItem("configData" , JSON.stringify(d));
+                                displayConfigData();
+                            });
+
+                        }
+
+                        getConfigData();
+
+                        function displayConfigData(){
+                            
+                                var table_row = `<tr>
+                                    <th>Name</th>
+                                    <th>Code</th>
+                                    <th>Cooling Duration (in mins)</th>
+                                </tr>`;
+
+                            var data = sessionStorage.getItem("configData");
+                            var m = JSON.parse(data);
+
+                            for(var i = 0; i < m.data.length; i++){
                                 table_row += 
                                 '<tr>'+
-                                    '<td>'+ finalD +'</td>'+
-                                    '<td>'+m.data[i][13]+'</td>'+
+                                    '<td>'+m.data[i][0]+'</td>'+
                                     '<td>'+m.data[i][1]+'</td>'+
-                                    '<td>'+m.data[i][2]+'</td>'+
-                                    '<td>'+m.data[i][3]+'</td>'+
-                                    '<td>'+m.data[i][4]+'</td>'+
-                                    '<td>'+msToTime(m.data[i][5])+'</td>'+
-                                    '<td>'+msToTime(m.data[i][6])+'</td>'+
-                                    '<td>'+m.data[i][8]+'</td>'+
-                                    '<td>'+m.data[i][9]+'</td>'+
-                                    '<td>'+m.data[i][10]+'</td>'+
-                                    '<td>'+m.data[i][11]+'</td>'+
-                                    '<td>'+msToTime(m.data[i][12])+'</td>'+
+                                    '<td>'+msToTime(m.data[i][2])+'</td>'+
                                 '</tr>';
+                            }
+
+
+                            document.getElementById('config_table').innerHTML = table_row;
+                        }
+
                         
+                        $(".form-create-user").submit(function(event) {
+                            event.stopPropagation();
+                            event.preventDefault();
+
+                            const url = "http://34.122.82.176:9001/get/create_user"
+                            document.getElementById("creatingText").style.display = "inline";
+
+                            $.ajax({
+                                url:url,
+                                type:"POST",
+                                data:JSON.stringify({
+                                    "username": $('#input_username').val(),
+                                    "password": $('#input_password').val(),
+                                    "designation": $('#inputDesignation').val(),
+                                    "role": $('#inputRole').val()
+                                }),
+                                statusCode :{
+                                200: function() {
+                                        console.log("success");
+                                }
+                                }
+                                ,
+                                contentType:"application/json; charset=utf-8",
+                                success: function(data, textStatus, jqXHR)
+                                {
+                                    getUsersData();
+                                    alert(data);
+                                    document.getElementById("creatingText").style.display = "none";
+                                },
+                                error: function (e)
+                                {
+                                    console.log(e);
+                                }
+                            });
+
+                        });
+
+                        
+
+                        $(".form-update-user").submit(function(event) {
+                            event.stopPropagation();
+                            event.preventDefault();
+
+                            const url = "http://34.122.82.176:9001/get/update_user"
+                            document.getElementById("updatingText").style.display = "inline";
+
+                            $.ajax({
+                                url:url,
+                                type:"POST",
+                                data:JSON.stringify({
+                                    "username": $('#input_update_username').val(),
+                                    "password": $('#input_update_password').val(),
+                                    "designation": $('#inputUpdateDesignation').val(),
+                                    "role": $('#inputUpdateRole').val()
+                                }),
+                                statusCode :{
+                                200: function() {
+                                        console.log("success");
+                                }
+                                }
+                                ,
+                                contentType:"application/json; charset=utf-8",
+                                success: function(data, textStatus, jqXHR)
+                                {
+                                    getUsersData();
+                                    alert(data);
+                                    document.getElementById("updatingText").style.display = "none";
+                                },
+                                error: function (e)
+                                {
+                                    console.log(e);
+                                }
+                            });
+
+                        });
+
+                        $(".form-delete-user").submit(function(event) {
+                            event.stopPropagation();
+                            event.preventDefault();
+
+                            const url = "http://34.122.82.176:9001/get/delete_user"
+                            document.getElementById("deletingText").style.display = "inline";
+
+                            $.ajax({
+                                url:url,
+                                type:"POST",
+                                data:JSON.stringify({
+                                    "username": $('#input_delete_username').val()
+                                }),
+                                statusCode :{
+                                200: function() {
+                                        console.log("success");
+                                }
+                                }
+                                ,
+                                contentType:"application/json; charset=utf-8",
+                                success: function(data, textStatus, jqXHR)
+                                {
+                                    getUsersData();
+                                    alert(data);
+                                    document.getElementById("deletingText").style.display = "none";
+                                },
+                                error: function (e)
+                                {
+                                    console.log(e);
+                                }
+                            });
+
+                        });
+
+                        $("#createUserBtn").click(function(){
+                            $(this).addClass("disabled");
+                            $("#updateUserBtn").removeClass("disabled");
+                            $("#deleteUserBtn").removeClass("disabled");
+                            document.getElementById("createUserForm").style.display = "inline";
+                            document.getElementById("updateUserForm").style.display = "none";
+                            document.getElementById("deleteUserForm").style.display = "none";
+
+                        });
+
+                        $("#updateUserBtn").click(function(){
+                            $(this).addClass("disabled");
+                            $("#createUserBtn").removeClass("disabled");
+                            $("#deleteUserBtn").removeClass("disabled");
+                            document.getElementById("createUserForm").style.display = "none";
+                            document.getElementById("updateUserForm").style.display = "inline";
+                            document.getElementById("deleteUserForm").style.display = "none";
+
+                            var data = sessionStorage.getItem("usersData");
+                            var m = JSON.parse(data);
+                            console.log(m.data);
+
+                            var options = '';
+                            
+
+                            for(var i = 0; i < m.data.length; i++)
+                                options += '<option value="'+m.data[i][0]+'">'+m.data[i][0]+'</option>';
+
+                            document.getElementById('input_update_username').innerHTML = options;
+
+                        });
+
+                        $("#deleteUserBtn").click(function(){
+                            $(this).addClass("disabled");
+                            $("#createUserBtn").removeClass("disabled");
+                            $("#updateUserBtn").removeClass("disabled");
+                            document.getElementById("createUserForm").style.display = "none";
+                            document.getElementById("updateUserForm").style.display = "none";
+                            document.getElementById("deleteUserForm").style.display = "inline";
+
+                            var data = sessionStorage.getItem("usersData");
+                            var m = JSON.parse(data);
+                            console.log(m.data);
+
+                            var options = '';
+                            
+
+                            for(var i = 0; i < m.data.length; i++)
+                                options += '<option value="'+m.data[i][0]+'">'+m.data[i][0]+'</option>';
+
+                            document.getElementById('input_delete_username').innerHTML = options;
+
+
+                        });
                     }
-
-                    document.getElementById('production_table').innerHTML = table_row;
-                }
-        }
-
-        setInterval(localProductionData , 3000);
-
-        function localStoreData(){
-
-            if(sessionStorage.getItem("storeData")){
-                var table_row = `<tr>
-                            <th> DATE </th>
-                            <th> PRODUCT </th>
-                            <th>QTY RECEIVED STANDARD</th>
-                            <th>QTY RECEIVED ROUGH</th>
-                            <th>DISPATCHED STANDARD</th>
-                            <th>DISPATCHED ROUGH</th>
-                            <th>ROUGH RETURNED BREAD</th>
-                            <th>BREAD IN STORE</th>
-                            <th>ROUGH BREAD IN STORE</th>
-                        </tr>`;
-
-                        var data = sessionStorage.getItem("storeData");
-                        var m = JSON.parse(data);
-
-                        var bis = [];
-                        var rbis = [];
-                        for(var i= 0 ; i < m.data.length;i++){
-                            if( i === 0){
-                                bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6]);
-                                rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
-                            }
-                            else{
-                                bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6] + bis[i-1]);
-                                rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
-                            }
-                        }
-
-                        for(var i = 0; i < m.data.length; i++){
-
-
-                                    var date = new Date(m.data[i][0]);
-                                    var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
-                                    table_row += 
-                                    '<tr>'+
-                                        '<td>'+ finalD +'</td>'+
-                                        '<td>'+m.data[i][1]+'</td>'+
-                                        '<td>'+m.data[i][2]+'</td>'+
-                                        '<td>'+m.data[i][3]+'</td>'+
-                                        '<td>'+m.data[i][4]+'</td>'+
-                                        '<td>'+m.data[i][5]+'</td>'+
-                                        '<td>'+m.data[i][6]+'</td>'+
-                                        '<td>'+bis[i]+'</td>'+
-                                        '<td>'+rbis[i]+'</td>'+
-                                    '</tr>';
-                        }
-
-                        document.getElementById('store_table').innerHTML = table_row;
-                }
-        }
-
-        setInterval(localStoreData , 3000);
-
-         function getUsersData(){
-
-            var settings = {
-                "url": "http://34.122.82.176:9001/get/allusers",
-                "method": "GET",
-              };
-              
-              $.ajax(settings).done(function (response) {
-                var d = JSON.parse(response);
-                sessionStorage.setItem("usersData" , JSON.stringify(d));
-                displayUsers();
-              });
-        }
-        getUsersData();
-
-        function displayUsers(){
-            
-                var table_row = `<tr>
-                    <th>Username</th>
-                    <th>Designation</th>
-                    <th>Role</th>
-                </tr>`;
-
-                var data = sessionStorage.getItem("usersData");
-                var m = JSON.parse(data);
-
-                for(var i = 0; i < m.data.length; i++){
-                    table_row += 
-                    '<tr>'+
-                        '<td>'+m.data[i][0]+'</td>'+
-                        '<td>'+m.data[i][2]+'</td>'+
-                        '<td>'+m.data[i][3]+'</td>'+
-                    '</tr>';
                 }
 
-
-                document.getElementById('users_table').innerHTML = table_row;
-        }
-
-        function getConfigData(){
-
-            var settings = {
-                "url": "http://34.122.82.176:9001/get/configparams",
-                "method": "GET",
-              };
-              
-              $.ajax(settings).done(function (response) {
-                var d = JSON.parse(response);
-                sessionStorage.setItem("configData" , JSON.stringify(d));
-                displayConfigData();
-              });
-
-        }
-
-        getConfigData();
-
-        function displayConfigData(){
-            
-                var table_row = `<tr>
-                    <th>Name</th>
-                    <th>Code</th>
-                    <th>Cooling Duration (in mins)</th>
-                </tr>`;
-
-            var data = sessionStorage.getItem("configData");
-            var m = JSON.parse(data);
-
-            for(var i = 0; i < m.data.length; i++){
-                table_row += 
-                '<tr>'+
-                    '<td>'+m.data[i][0]+'</td>'+
-                    '<td>'+m.data[i][1]+'</td>'+
-                    '<td>'+msToTime(m.data[i][2])+'</td>'+
-                '</tr>';
-            }
-
-
-            document.getElementById('config_table').innerHTML = table_row;
-        }
-
+                setInterval(display , 3000);
         
-        $(".form-create-user").submit(function(event) {
-            event.stopPropagation();
-            event.preventDefault();
-
-            const url = "http://34.122.82.176:9001/get/create_user"
-            document.getElementById("creatingText").style.display = "inline";
-
-            $.ajax({
-                url:url,
-                type:"POST",
-                data:JSON.stringify({
-                    "username": $('#input_username').val(),
-                    "password": $('#input_password').val(),
-                    "designation": $('#inputDesignation').val(),
-                    "role": $('#inputRole').val()
-                }),
-                statusCode :{
-                   200: function() {
-                        console.log("success");
-                   }
-                }
-                ,
-                contentType:"application/json; charset=utf-8",
-                success: function(data, textStatus, jqXHR)
-                {
-                    getUsersData();
-                    alert(data);
-                    document.getElementById("creatingText").style.display = "none";
-                },
-                error: function (e)
-                {
-                    console.log(e);
-                }
-            });
-
         });
-
-        
-
-        $(".form-update-user").submit(function(event) {
-            event.stopPropagation();
-            event.preventDefault();
-
-            const url = "http://34.122.82.176:9001/get/update_user"
-            document.getElementById("updatingText").style.display = "inline";
-
-            $.ajax({
-                url:url,
-                type:"POST",
-                data:JSON.stringify({
-                    "username": $('#input_update_username').val(),
-                    "password": $('#input_update_password').val(),
-                    "designation": $('#inputUpdateDesignation').val(),
-                    "role": $('#inputUpdateRole').val()
-                }),
-                statusCode :{
-                   200: function() {
-                        console.log("success");
-                   }
-                }
-                ,
-                contentType:"application/json; charset=utf-8",
-                success: function(data, textStatus, jqXHR)
-                {
-                    getUsersData();
-                    alert(data);
-                    document.getElementById("updatingText").style.display = "none";
-                },
-                error: function (e)
-                {
-                    console.log(e);
-                }
-            });
-
-        });
-
-        $(".form-delete-user").submit(function(event) {
-            event.stopPropagation();
-            event.preventDefault();
-
-            const url = "http://34.122.82.176:9001/get/delete_user"
-            document.getElementById("deletingText").style.display = "inline";
-
-            $.ajax({
-                url:url,
-                type:"POST",
-                data:JSON.stringify({
-                    "username": $('#input_delete_username').val()
-                }),
-                statusCode :{
-                   200: function() {
-                        console.log("success");
-                   }
-                }
-                ,
-                contentType:"application/json; charset=utf-8",
-                success: function(data, textStatus, jqXHR)
-                {
-                    getUsersData();
-                    alert(data);
-                    document.getElementById("deletingText").style.display = "none";
-                },
-                error: function (e)
-                {
-                    console.log(e);
-                }
-            });
-
-        });
-
-        $("#createUserBtn").click(function(){
-            $(this).addClass("disabled");
-            $("#updateUserBtn").removeClass("disabled");
-            $("#deleteUserBtn").removeClass("disabled");
-            document.getElementById("createUserForm").style.display = "inline";
-            document.getElementById("updateUserForm").style.display = "none";
-            document.getElementById("deleteUserForm").style.display = "none";
-
-        });
-
-        $("#updateUserBtn").click(function(){
-            $(this).addClass("disabled");
-            $("#createUserBtn").removeClass("disabled");
-            $("#deleteUserBtn").removeClass("disabled");
-            document.getElementById("createUserForm").style.display = "none";
-            document.getElementById("updateUserForm").style.display = "inline";
-            document.getElementById("deleteUserForm").style.display = "none";
-
-            var data = sessionStorage.getItem("usersData");
-            var m = JSON.parse(data);
-            console.log(m.data);
-
-            var options = '';
-            
-
-            for(var i = 0; i < m.data.length; i++)
-                options += '<option value="'+m.data[i][0]+'">'+m.data[i][0]+'</option>';
-
-            document.getElementById('input_update_username').innerHTML = options;
-
-        });
-
-        $("#deleteUserBtn").click(function(){
-            $(this).addClass("disabled");
-            $("#createUserBtn").removeClass("disabled");
-            $("#updateUserBtn").removeClass("disabled");
-            document.getElementById("createUserForm").style.display = "none";
-            document.getElementById("updateUserForm").style.display = "none";
-            document.getElementById("deleteUserForm").style.display = "inline";
-
-            var data = sessionStorage.getItem("usersData");
-            var m = JSON.parse(data);
-            console.log(m.data);
-
-            var options = '';
-            
-
-            for(var i = 0; i < m.data.length; i++)
-                options += '<option value="'+m.data[i][0]+'">'+m.data[i][0]+'</option>';
-
-            document.getElementById('input_delete_username').innerHTML = options;
-
-
-        });
-    
-    });
 }
 else
 {
