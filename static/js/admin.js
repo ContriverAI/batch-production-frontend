@@ -335,7 +335,6 @@ if(navigator.onLine)
                         contentType:"application/json; charset=utf-8",
                         success: function(data, textStatus, jqXHR)
                         {
-                            getUsersData();
                             alert(data);
                             document.getElementById("creatingText").style.display = "none";
                         },
@@ -374,7 +373,6 @@ if(navigator.onLine)
                         contentType:"application/json; charset=utf-8",
                         success: function(data, textStatus, jqXHR)
                         {
-                            getUsersData();
                             alert(data);
                             document.getElementById("updatingText").style.display = "none";
                         },
@@ -408,7 +406,6 @@ if(navigator.onLine)
                         contentType:"application/json; charset=utf-8",
                         success: function(data, textStatus, jqXHR)
                         {
-                            getUsersData();
                             alert(data);
                             document.getElementById("deletingText").style.display = "none";
                         },
