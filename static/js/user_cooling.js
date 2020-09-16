@@ -26,7 +26,7 @@ if(navigator.onLine)
          
         function getCoolingData(){
 
-            const socket = io('http://localhost:9003/');
+            const socket = io('http://34.122.82.176:9001/');
             socket.on('conn', data => {
                 console.log("CONNECTION RESPONSE: ", data)
                 socket.emit('getData', () => { })
@@ -153,7 +153,7 @@ if(navigator.onLine)
                 var modal = document.getElementById("myModal");
                 modal.style.display = "block";
 
-                const url = "http://localhost:9003/get/create_cooling_main"
+                const url = "http://34.122.82.176:9001/get/create_cooling_main"
 
                 $.ajax({
                     url:url,
@@ -199,7 +199,7 @@ if(navigator.onLine)
                 var modal = document.getElementById("myModal");
                 modal.style.display = "block";
 
-                const url = "http://localhost:9003/get/create_cooling_packaging"
+                const url = "http://34.122.82.176:9001/get/create_cooling_packaging"
 
                 $.ajax({
                     url:url,
