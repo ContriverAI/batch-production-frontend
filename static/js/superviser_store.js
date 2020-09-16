@@ -18,7 +18,7 @@ if(navigator.onLine)
         function dataLoad(){
             if(sessionStorage.getItem("storeData")){
                loaded = true
-               document.getElementById("admin-main").style.display = "inline";
+               document.getElementById("superviser-main").style.display = "inline";
                document.getElementById("loader").style.display = "none";
             }
         }
@@ -143,7 +143,7 @@ if(navigator.onLine)
             }
         }
 
-        setInterval(display , 3000);    
+        setInterval(display , 10000);    
 
         
 

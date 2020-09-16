@@ -67,7 +67,7 @@ if(navigator.onLine)
             }
         }
 
-        setInterval(dataLoad , 3000);
+        setInterval(dataLoad ,10000);
 
         
         function getProductionData(){
@@ -147,7 +147,7 @@ if(navigator.onLine)
                             var options = '';
                         
                             for(var i = 0; i < m.data.length; i++){
-                                if(m.data[i][9] === "Baked")
+                                if(m.data[i][9] !== "Baked")
                                     options += '<option value="'+m.data[i][8]+'">'+m.data[i][8]+'</option>';
                             }
                                 
@@ -185,7 +185,7 @@ if(navigator.onLine)
             }
         }
 
-        setInterval(display , 3000);
+        setInterval(display ,10000);
 
 
         $("#Logout").click(function(event){
