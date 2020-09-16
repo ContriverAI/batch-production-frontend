@@ -140,7 +140,6 @@ if(navigator.onLine)
                                     console.log(m.data);
 
                                     for(var i = 0; i < m.data.length; i++){
-                                            if( m.data[i][9] === "Unbaked"){
                                                 var date = new Date(m.data[i][0]);
                                                 var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
                                                 table_row += 
@@ -159,7 +158,6 @@ if(navigator.onLine)
                                                     '<td>'+m.data[i][11]+'</td>'+
                                                     '<td>'+msToTime(m.data[i][12])+'</td>'+
                                                 '</tr>';
-                                            }
                                         
                                     }
 
