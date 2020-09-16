@@ -114,8 +114,7 @@ if(navigator.onLine)
                                 }
                         }
 
-                        setInterval(localCoolingData , 3000);
-                        setInterval(getUsersData , 3000);
+                        setInterval(localCoolingData , 10000);
 
                         function localProductionData(){
                             if(sessionStorage.getItem("prodData")){
@@ -165,7 +164,7 @@ if(navigator.onLine)
                                 }
                         }
 
-                        setInterval(localProductionData , 3000);
+                        setInterval(localProductionData , 10000);
 
                         function localStoreData(){
 
@@ -221,7 +220,7 @@ if(navigator.onLine)
                                 }
                         }
 
-                        setInterval(localStoreData , 3000);
+                        setInterval(localStoreData , 10000);
 
                         function getUsersData(){
 
@@ -236,7 +235,8 @@ if(navigator.onLine)
                                 displayUsers();
                             });
                         }
-                        getUsersData();
+                        
+                        setInterval(getUsersData , 3000);
 
                         function displayUsers(){
                             
@@ -277,7 +277,7 @@ if(navigator.onLine)
 
                         }
 
-                        getConfigData();
+                        setInterval(getConfigData , 3000);
 
                         function displayConfigData(){
                             
@@ -303,175 +303,177 @@ if(navigator.onLine)
                             document.getElementById('config_table').innerHTML = table_row;
                         }
 
-                        
-                        $(".form-create-user").submit(function(event) {
-                            event.stopPropagation();
-                            event.preventDefault();
-
-                            const url = "http://34.122.82.176:9001/get/create_user"
-                            document.getElementById("creatingText").style.display = "inline";
-
-                            $.ajax({
-                                url:url,
-                                type:"POST",
-                                data:JSON.stringify({
-                                    "username": $('#input_username').val(),
-                                    "password": $('#input_password').val(),
-                                    "designation": $('#inputDesignation').val(),
-                                    "role": $('#inputRole').val()
-                                }),
-                                statusCode :{
-                                200: function() {
-                                        console.log("success");
-                                }
-                                }
-                                ,
-                                contentType:"application/json; charset=utf-8",
-                                success: function(data, textStatus, jqXHR)
-                                {
-                                    getUsersData();
-                                    alert(data);
-                                    document.getElementById("creatingText").style.display = "none";
-                                },
-                                error: function (e)
-                                {
-                                    console.log(e);
-                                }
-                            });
-
-                        });
-
-                        
-
-                        $(".form-update-user").submit(function(event) {
-                            event.stopPropagation();
-                            event.preventDefault();
-
-                            const url = "http://34.122.82.176:9001/get/update_user"
-                            document.getElementById("updatingText").style.display = "inline";
-
-                            $.ajax({
-                                url:url,
-                                type:"POST",
-                                data:JSON.stringify({
-                                    "username": $('#input_update_username').val(),
-                                    "password": $('#input_update_password').val(),
-                                    "designation": $('#inputUpdateDesignation').val(),
-                                    "role": $('#inputUpdateRole').val()
-                                }),
-                                statusCode :{
-                                200: function() {
-                                        console.log("success");
-                                }
-                                }
-                                ,
-                                contentType:"application/json; charset=utf-8",
-                                success: function(data, textStatus, jqXHR)
-                                {
-                                    getUsersData();
-                                    alert(data);
-                                    document.getElementById("updatingText").style.display = "none";
-                                },
-                                error: function (e)
-                                {
-                                    console.log(e);
-                                }
-                            });
-
-                        });
-
-                        $(".form-delete-user").submit(function(event) {
-                            event.stopPropagation();
-                            event.preventDefault();
-
-                            const url = "http://34.122.82.176:9001/get/delete_user"
-                            document.getElementById("deletingText").style.display = "inline";
-
-                            $.ajax({
-                                url:url,
-                                type:"POST",
-                                data:JSON.stringify({
-                                    "username": $('#input_delete_username').val()
-                                }),
-                                statusCode :{
-                                200: function() {
-                                        console.log("success");
-                                }
-                                }
-                                ,
-                                contentType:"application/json; charset=utf-8",
-                                success: function(data, textStatus, jqXHR)
-                                {
-                                    getUsersData();
-                                    alert(data);
-                                    document.getElementById("deletingText").style.display = "none";
-                                },
-                                error: function (e)
-                                {
-                                    console.log(e);
-                                }
-                            });
-
-                        });
-
-                        $("#createUserBtn").click(function(){
-                            $(this).addClass("disabled");
-                            $("#updateUserBtn").removeClass("disabled");
-                            $("#deleteUserBtn").removeClass("disabled");
-                            document.getElementById("createUserForm").style.display = "inline";
-                            document.getElementById("updateUserForm").style.display = "none";
-                            document.getElementById("deleteUserForm").style.display = "none";
-
-                        });
-
-                        $("#updateUserBtn").click(function(){
-                            $(this).addClass("disabled");
-                            $("#createUserBtn").removeClass("disabled");
-                            $("#deleteUserBtn").removeClass("disabled");
-                            document.getElementById("createUserForm").style.display = "none";
-                            document.getElementById("updateUserForm").style.display = "inline";
-                            document.getElementById("deleteUserForm").style.display = "none";
-
-                            var data = sessionStorage.getItem("usersData");
-                            var m = JSON.parse(data);
-                            console.log(m.data);
-
-                            var options = '';
-                            
-
-                            for(var i = 0; i < m.data.length; i++)
-                                options += '<option value="'+m.data[i][0]+'">'+m.data[i][0]+'</option>';
-
-                            document.getElementById('input_update_username').innerHTML = options;
-
-                        });
-
-                        $("#deleteUserBtn").click(function(){
-                            $(this).addClass("disabled");
-                            $("#createUserBtn").removeClass("disabled");
-                            $("#updateUserBtn").removeClass("disabled");
-                            document.getElementById("createUserForm").style.display = "none";
-                            document.getElementById("updateUserForm").style.display = "none";
-                            document.getElementById("deleteUserForm").style.display = "inline";
-
-                            var data = sessionStorage.getItem("usersData");
-                            var m = JSON.parse(data);
-                            console.log(m.data);
-
-                            var options = '';
-                            
-
-                            for(var i = 0; i < m.data.length; i++)
-                                options += '<option value="'+m.data[i][0]+'">'+m.data[i][0]+'</option>';
-
-                            document.getElementById('input_delete_username').innerHTML = options;
-
-
-                        });
                     }
                 }
 
                 setInterval(display , 3000);
+
+                
+                        
+                $(".form-create-user").submit(function(event) {
+                    event.stopPropagation();
+                    event.preventDefault();
+
+                    const url = "http://34.122.82.176:9001/get/create_user"
+                    document.getElementById("creatingText").style.display = "inline";
+
+                    $.ajax({
+                        url:url,
+                        type:"POST",
+                        data:JSON.stringify({
+                            "username": $('#input_username').val(),
+                            "password": $('#input_password').val(),
+                            "designation": $('#inputDesignation').val(),
+                            "role": $('#inputRole').val()
+                        }),
+                        statusCode :{
+                        200: function() {
+                                console.log("success");
+                        }
+                        }
+                        ,
+                        contentType:"application/json; charset=utf-8",
+                        success: function(data, textStatus, jqXHR)
+                        {
+                            getUsersData();
+                            alert(data);
+                            document.getElementById("creatingText").style.display = "none";
+                        },
+                        error: function (e)
+                        {
+                            console.log(e);
+                        }
+                    });
+
+                });
+
+                
+
+                $(".form-update-user").submit(function(event) {
+                    event.stopPropagation();
+                    event.preventDefault();
+
+                    const url = "http://34.122.82.176:9001/get/update_user"
+                    document.getElementById("updatingText").style.display = "inline";
+
+                    $.ajax({
+                        url:url,
+                        type:"POST",
+                        data:JSON.stringify({
+                            "username": $('#input_update_username').val(),
+                            "password": $('#input_update_password').val(),
+                            "designation": $('#inputUpdateDesignation').val(),
+                            "role": $('#inputUpdateRole').val()
+                        }),
+                        statusCode :{
+                        200: function() {
+                                console.log("success");
+                        }
+                        }
+                        ,
+                        contentType:"application/json; charset=utf-8",
+                        success: function(data, textStatus, jqXHR)
+                        {
+                            getUsersData();
+                            alert(data);
+                            document.getElementById("updatingText").style.display = "none";
+                        },
+                        error: function (e)
+                        {
+                            console.log(e);
+                        }
+                    });
+
+                });
+
+                $(".form-delete-user").submit(function(event) {
+                    event.stopPropagation();
+                    event.preventDefault();
+
+                    const url = "http://34.122.82.176:9001/get/delete_user"
+                    document.getElementById("deletingText").style.display = "inline";
+
+                    $.ajax({
+                        url:url,
+                        type:"POST",
+                        data:JSON.stringify({
+                            "username": $('#input_delete_username').val()
+                        }),
+                        statusCode :{
+                        200: function() {
+                                console.log("success");
+                        }
+                        }
+                        ,
+                        contentType:"application/json; charset=utf-8",
+                        success: function(data, textStatus, jqXHR)
+                        {
+                            getUsersData();
+                            alert(data);
+                            document.getElementById("deletingText").style.display = "none";
+                        },
+                        error: function (e)
+                        {
+                            console.log(e);
+                        }
+                    });
+
+                });
+
+                $("#createUserBtn").click(function(){
+                    $(this).addClass("disabled");
+                    $("#updateUserBtn").removeClass("disabled");
+                    $("#deleteUserBtn").removeClass("disabled");
+                    document.getElementById("createUserForm").style.display = "inline";
+                    document.getElementById("updateUserForm").style.display = "none";
+                    document.getElementById("deleteUserForm").style.display = "none";
+
+                });
+
+                $("#updateUserBtn").click(function(){
+                    $(this).addClass("disabled");
+                    $("#createUserBtn").removeClass("disabled");
+                    $("#deleteUserBtn").removeClass("disabled");
+                    document.getElementById("createUserForm").style.display = "none";
+                    document.getElementById("updateUserForm").style.display = "inline";
+                    document.getElementById("deleteUserForm").style.display = "none";
+
+                    var data = sessionStorage.getItem("usersData");
+                    var m = JSON.parse(data);
+                    console.log(m.data);
+
+                    var options = '';
+                    
+
+                    for(var i = 0; i < m.data.length; i++)
+                        options += '<option value="'+m.data[i][0]+'">'+m.data[i][0]+'</option>';
+
+                    document.getElementById('input_update_username').innerHTML = options;
+
+                });
+
+                $("#deleteUserBtn").click(function(){
+                    $(this).addClass("disabled");
+                    $("#createUserBtn").removeClass("disabled");
+                    $("#updateUserBtn").removeClass("disabled");
+                    document.getElementById("createUserForm").style.display = "none";
+                    document.getElementById("updateUserForm").style.display = "none";
+                    document.getElementById("deleteUserForm").style.display = "inline";
+
+                    var data = sessionStorage.getItem("usersData");
+                    var m = JSON.parse(data);
+                    console.log(m.data);
+
+                    var options = '';
+                    
+
+                    for(var i = 0; i < m.data.length; i++)
+                        options += '<option value="'+m.data[i][0]+'">'+m.data[i][0]+'</option>';
+
+                    document.getElementById('input_delete_username').innerHTML = options;
+
+
+                });
         
         });
 }
