@@ -185,81 +185,92 @@ if(navigator.onLine)
                 window.location.pathname = "/";
             });
 
-            
-            $(".form-cooling-main").submit(function(event) {
-                event.stopPropagation();
-                event.preventDefault();
-
-                const url = "http://34.122.82.176:9001/get/users"
-
-                $.ajax({
-                    url:url,
-                    type:"POST",
-                    data:JSON.stringify({
-                        "u_key": sessionStorage.getItem("ukey"), 
-                        "date": $('#input_main_date').val(),
-                        "trolleyNo": $('#input_main_trolley').val(),
-                        "product": $('#input_main_product').val(),
-                        "shiftProduced": $('#input_main_shift_produced').val(),
-                        "quantity": $('#input_main_quantity').val(),
-                        "coolingTime": new Date().toLocaleTimeString()
-                    }),
-                    statusCode :{
-                    200: function() {
-                            console.log("success");
-                    }
-                    }
-                    ,
-                    contentType:"application/json; charset=utf-8",
-                    success: function(data, textStatus, jqXHR)
-                    {
-                        alert(data);
-                    },
-                    error: function (e)
-                    {
-                        console.log(e);
-                    }
-                });
-
-            });
-
-            $(".form-cooling-packaging").submit(function(event) {
-                event.stopPropagation();
-                event.preventDefault();
-
-                const url = "http://34.122.82.176:9001/get/users"
-
-                $.ajax({
-                    url:url,
-                    type:"POST",
-                    data:JSON.stringify({
-                        "u_key": sessionStorage.getItem("ukey"), 
-                        "trolleyNo": $('#input_packaging_trolley').val(),
-                        "status": $('#input_packaging_status').val(),
-                        "time": new Date().toLocaleTimeString()
-                    }),
-                    statusCode :{
-                    200: function() {
-                            console.log("success");
-                    }
-                    }
-                    ,
-                    contentType:"application/json; charset=utf-8",
-                    success: function(data, textStatus, jqXHR)
-                    {
-                        alert(data);
-                    },
-                    error: function (e)
-                    {
-                        console.log(e);
-                    }
-                });
-
-            });
         }
     }
 
-        setInterval(display , 3000);
+     setInterval(display , 3000);
+
+     
+            
+     $(".form-cooling-main").submit(function(event) {
+        event.stopPropagation();
+        event.preventDefault();
+
+        
+        var modal = document.getElementById("myModal");
+        modal.style.display = "block";
+
+        const url = "http://34.122.82.176:9001/get/users"
+
+        $.ajax({
+            url:url,
+            type:"POST",
+            data:JSON.stringify({
+                "u_key": sessionStorage.getItem("ukey"), 
+                "date": $('#input_main_date').val(),
+                "trolleyNo": $('#input_main_trolley').val(),
+                "product": $('#input_main_product').val(),
+                "shiftProduced": $('#input_main_shift_produced').val(),
+                "quantity": $('#input_main_quantity').val(),
+                "coolingTime": new Date().toLocaleTimeString()
+            }),
+            statusCode :{
+            200: function() {
+                    console.log("success");
+            }
+            }
+            ,
+            contentType:"application/json; charset=utf-8",
+            success: function(data, textStatus, jqXHR)
+            {
+                alert(data);
+            },
+            error: function (e)
+            {
+                console.log(e);
+            }
+        });
+
+    });
+
+    $(".form-cooling-packaging").submit(function(event) {
+        event.stopPropagation();
+        event.preventDefault();
+
+        
+        var modal = document.getElementById("myModal");
+        modal.style.display = "block";
+
+        const url = "http://34.122.82.176:9001/get/users"
+
+        $.ajax({
+            url:url,
+            type:"POST",
+            data:JSON.stringify({
+                "u_key": sessionStorage.getItem("ukey"), 
+                "trolleyNo": $('#input_packaging_trolley').val(),
+                "status": $('#input_packaging_status').val(),
+                "time": new Date().toLocaleTimeString()
+            }),
+            statusCode :{
+            200: function() {
+                    console.log("success");
+            }
+            }
+            ,
+            contentType:"application/json; charset=utf-8",
+            success: function(data, textStatus, jqXHR)
+            {
+                modal.style.display = "none";
+                alert(data);
+            },
+            error: function (e)
+            {
+                console.log(e);
+            }
+        });
+
+    });
     
     });
 }

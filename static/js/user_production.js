@@ -53,103 +53,112 @@ if(navigator.onLine)
 
             if(loaded){
 
-            function setDateForm(){
-                var today = new Date();
-                var dd = String(today.getDate()).padStart(2, '0');
-                var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-                var yyyy = today.getFullYear();
+                function setDateForm(){
+                    var today = new Date();
+                    var dd = String(today.getDate()).padStart(2, '0');
+                    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                    var yyyy = today.getFullYear();
 
-                today =  yyyy + '-' + mm + '-'+ dd;
-                $("#input_main_date").val(today);
-            }
+                    today =  yyyy + '-' + mm + '-'+ dd;
+                    $("#input_main_date").val(today);
+                }
 
-            setDateForm()
+                setDateForm()
 
-            function msToTime(duration) {
-                var milliseconds = parseInt((duration % 1000) / 100),
-                seconds = Math.floor((duration / 1000) % 60),
-                minutes = Math.floor((duration / (1000 * 60)) % 60),
-                hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
-            
-                hours = (hours < 10) ? "0" + hours : hours;
-                minutes = (minutes < 10) ? "0" + minutes : minutes;
-            
-                return hours + ":" + minutes ;
-            }
+                function msToTime(duration) {
+                    var milliseconds = parseInt((duration % 1000) / 100),
+                    seconds = Math.floor((duration / 1000) % 60),
+                    minutes = Math.floor((duration / (1000 * 60)) % 60),
+                    hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+                
+                    hours = (hours < 10) ? "0" + hours : hours;
+                    minutes = (minutes < 10) ? "0" + minutes : minutes;
+                
+                    return hours + ":" + minutes ;
+                }
 
-            
+                
 
-            function localProductionData(){
-                if(sessionStorage.getItem("prodData")){
-                        var table_row = `<tr>    
-                            <th>Date</th>
-                            <th>Product</th>
-                            <th>Flour</th>
-                            <th>Shift</th>
-                            <th>Remix</th>
-                            <th>Yeast</th>
-                            <th>Mixing Time</th>
-                            <th>Baking Time</th>
-                            <th>Batch</th>
-                            <th>Status</th>
-                            <th>Yield Value </th>
-                            <th>Batch Recall</th>
-                            <th>Recall Time</th>
-                        </tr>`;
+                function localProductionData(){
+                    if(sessionStorage.getItem("prodData")){
+                            var table_row = `<tr>    
+                                <th>Date</th>
+                                <th>Product</th>
+                                <th>Flour</th>
+                                <th>Shift</th>
+                                <th>Remix</th>
+                                <th>Yeast</th>
+                                <th>Mixing Time</th>
+                                <th>Baking Time</th>
+                                <th>Batch</th>
+                                <th>Status</th>
+                                <th>Yield Value </th>
+                                <th>Batch Recall</th>
+                                <th>Recall Time</th>
+                            </tr>`;
 
-                        var data = sessionStorage.getItem("prodData");
-                        var m = JSON.parse(data);
-                        console.log(m.data);
+                            var data = sessionStorage.getItem("prodData");
+                            var m = JSON.parse(data);
+                            console.log(m.data);
 
-                        for(var i = 0; i < m.data.length; i++){
+                            for(var i = 0; i < m.data.length; i++){
 
-                                    var date = new Date(m.data[i][0]);
-                                    var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
-                                    table_row += 
-                                    '<tr>'+
-                                        '<td>'+ finalD +'</td>'+
-                                        '<td>'+m.data[i][13]+'</td>'+
-                                        '<td>'+m.data[i][1]+'</td>'+
-                                        '<td>'+m.data[i][2]+'</td>'+
-                                        '<td>'+m.data[i][3]+'</td>'+
-                                        '<td>'+m.data[i][4]+'</td>'+
-                                        '<td>'+msToTime(m.data[i][5])+'</td>'+
-                                        '<td>'+msToTime(m.data[i][6])+'</td>'+
-                                        '<td>'+m.data[i][8]+'</td>'+
-                                        '<td>'+m.data[i][9]+'</td>'+
-                                        '<td>'+m.data[i][10]+'</td>'+
-                                        '<td>'+m.data[i][11]+'</td>'+
-                                        '<td>'+msToTime(m.data[i][12])+'</td>'+
-                                    '</tr>';
-                            
+                                        var date = new Date(m.data[i][0]);
+                                        var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                                        table_row += 
+                                        '<tr>'+
+                                            '<td>'+ finalD +'</td>'+
+                                            '<td>'+m.data[i][13]+'</td>'+
+                                            '<td>'+m.data[i][1]+'</td>'+
+                                            '<td>'+m.data[i][2]+'</td>'+
+                                            '<td>'+m.data[i][3]+'</td>'+
+                                            '<td>'+m.data[i][4]+'</td>'+
+                                            '<td>'+msToTime(m.data[i][5])+'</td>'+
+                                            '<td>'+msToTime(m.data[i][6])+'</td>'+
+                                            '<td>'+m.data[i][8]+'</td>'+
+                                            '<td>'+m.data[i][9]+'</td>'+
+                                            '<td>'+m.data[i][10]+'</td>'+
+                                            '<td>'+m.data[i][11]+'</td>'+
+                                            '<td>'+msToTime(m.data[i][12])+'</td>'+
+                                        '</tr>';
+                                
+                            }
+
+                            document.getElementById('user_production_table').innerHTML = table_row;
+
+                            var options = ''
+
+                            for(var i = 0; i < m.data.length; i++)
+                                options += '<option value="'+m.data[i][8]+'">'+m.data[i][8]+'</option>';
+                                
+
+                            document.getElementById('input_recall_batch').innerHTML = options;
+                            document.getElementById('input_bake_batch').innerHTML = options;
                         }
+                }
 
-                        document.getElementById('user_production_table').innerHTML = table_row;
+                setInterval(localProductionData , 10000);
 
-                        var options = ''
 
-                        for(var i = 0; i < m.data.length; i++)
-                            options += '<option value="'+m.data[i][8]+'">'+m.data[i][8]+'</option>';
-                            
-
-                        document.getElementById('input_recall_batch').innerHTML = options;
-                        document.getElementById('input_bake_batch').innerHTML = options;
-                    }
+                $("#Logout").click(function(event){
+                    event.preventDefault();
+                    sessionStorage.clear();
+                    window.location.pathname = "/";
+                });
             }
+        }
+        setInterval(display , 3000);
 
-            setInterval(localProductionData , 10000);
-
-
-            $("#Logout").click(function(event){
-                event.preventDefault();
-                sessionStorage.clear();
-                window.location.pathname = "/";
-            });
+        
 
             //change tables
             $(".form-production-main").submit(function(event) {
                 event.stopPropagation();
                 event.preventDefault();
+
+                
+                var modal = document.getElementById("myModal");
+                modal.style.display = "block";
 
                 //API required
                 const url = "http://34.122.82.176:9001/get/production_main_screen"
@@ -179,6 +188,7 @@ if(navigator.onLine)
                     contentType:"application/json; charset=utf-8",
                     success: function(data, textStatus, jqXHR)
                     {
+                        modal.style.display = "none";
                         alert(data);                    
                     },
                     error: function (e)
@@ -195,6 +205,10 @@ if(navigator.onLine)
             $(".form-production-recall").submit(function(event) {
                 event.stopPropagation();
                 event.preventDefault();
+
+                
+                var modal = document.getElementById("myModal");
+                modal.style.display = "block";
 
                 //API required
                 const url = "http://34.122.82.176:9001/get/production_recall_screen"
@@ -217,6 +231,7 @@ if(navigator.onLine)
                     contentType:"application/json; charset=utf-8",
                     success: function(data, textStatus, jqXHR)
                     {
+                        modal.style.display = "none";
                         alert(data);
                     },
                     error: function (e)
@@ -233,6 +248,10 @@ if(navigator.onLine)
             $(".form-production-bake").submit(function(event) {
                 event.stopPropagation();
                 event.preventDefault();
+
+                
+                var modal = document.getElementById("myModal");
+                modal.style.display = "block";
 
                 const url = "http://34.122.82.176:9001/get/production_bake_screen"
 
@@ -254,6 +273,7 @@ if(navigator.onLine)
                     contentType:"application/json; charset=utf-8",
                     success: function(data, textStatus, jqXHR)
                     {
+                        modal.style.display = "none";
                         alert(data);                    
                     },
                     error: function (e)
@@ -262,13 +282,7 @@ if(navigator.onLine)
                     }
                 });
 
-                
-
             });
-        }
-    }
-
-        setInterval(display , 3000);
     
     });
 }

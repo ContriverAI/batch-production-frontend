@@ -180,139 +180,149 @@ if(navigator.onLine)
                 
                     return hours + ":" + minutes ;
                 }
-
-                
-
-
-                $("#Logout").click(function(event){
-                    event.preventDefault();
-                    sessionStorage.clear();
-                    window.location.pathname = "/";
-                });
-
-                //change tables
-                $(".form-production-main").submit(function(event) {
-                    event.stopPropagation();
-                    event.preventDefault();
-
-                    //API required
-                    const url = "http://34.122.82.176:9001/get/production_main_screen"
-
-                    $.ajax({
-                        url:url,
-                        type:"POST",
-                        data:JSON.stringify({
-                            "u_key": sessionStorage.getItem("ukey"), 
-                            "date": $('#input_main_date').val(),
-                            "batch": $('#input_main_Batch').val(),
-                            "yeast": $('#input_main_yeastused').val(),
-                            "flour": $('#input_main_floorused').val(),
-                            "yield_val": $('#input_main_yield_value').val(),
-                            "shift": $('#input_main_shift').val(),
-                            "product": $('#input_main_product').val(),
-                            "remix": $('#input_main_remixused').val(),
-                            "time": new Date().toLocaleTimeString(),
-                    
-                        }),
-                        statusCode :{
-                        200: function() {
-                                console.log("success");
-                        }
-                        }
-                        ,
-                        contentType:"application/json; charset=utf-8",
-                        success: function(data, textStatus, jqXHR)
-                        {
-                            alert(data);                    
-                        },
-                        error: function (e)
-                        {
-                            console.log(e);
-                        }
-                    });
-
-                    
-
-                });
-                
-                //change tables
-                $(".form-production-recall").submit(function(event) {
-                    event.stopPropagation();
-                    event.preventDefault();
-
-                    //API required
-                    const url = "http://34.122.82.176:9001/get/production_recall_screen"
-
-                    $.ajax({
-                        url:url,
-                        type:"POST",
-                        data:JSON.stringify({
-                            "u_key": sessionStorage.getItem("ukey"), 
-                            "batch": $('#input_recall_batch').val(),
-                            "cancel": $('#input_recall_cancelbatch').val(),
-                            "time": new Date().toLocaleTimeString(),
-                        }),
-                        statusCode :{
-                        200: function() {
-                                console.log("success");
-                        }
-                        }
-                        ,
-                        contentType:"application/json; charset=utf-8",
-                        success: function(data, textStatus, jqXHR)
-                        {
-                            alert(data);
-                        },
-                        error: function (e)
-                        {
-                            console.log(e);
-                        }
-                    });
-
-                    
-
-                });
-                
-                //change tables
-                $(".form-production-bake").submit(function(event) {
-                    event.stopPropagation();
-                    event.preventDefault();
-
-                    const url = "http://34.122.82.176:9001/get/production_bake_screen"
-
-                    $.ajax({
-                        url:url,
-                        type:"POST",
-                        data:JSON.stringify({
-                            "u_key": sessionStorage.getItem("ukey"), 
-                            "batch": $('#input_bake_batch').val(),
-                            "status": $('#input_bake_status').val(),
-                            "time": new Date().toLocaleTimeString(),
-                        }),
-                        statusCode :{
-                        200: function() {
-                                console.log("success");
-                        }
-                        }
-                        ,
-                        contentType:"application/json; charset=utf-8",
-                        success: function(data, textStatus, jqXHR)
-                        {
-                            alert(data);                    
-                        },
-                        error: function (e)
-                        {
-                            console.log(e);
-                        }
-                    });
-
-                    
-
-                });
             }
         }
 
-            setInterval(display , 3000);
+        setInterval(display , 3000);
+
+
+        $("#Logout").click(function(event){
+            event.preventDefault();
+            sessionStorage.clear();
+            window.location.pathname = "/";
+        });
+
+        //change tables
+        $(".form-production-main").submit(function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+
+            var modal = document.getElementById("myModal");
+            modal.style.display = "block";
+
+            //API required
+            const url = "http://34.122.82.176:9001/get/production_main_screen"
+
+            $.ajax({
+                url:url,
+                type:"POST",
+                data:JSON.stringify({
+                    "u_key": sessionStorage.getItem("ukey"), 
+                    "date": $('#input_main_date').val(),
+                    "batch": $('#input_main_Batch').val(),
+                    "yeast": $('#input_main_yeastused').val(),
+                    "flour": $('#input_main_floorused').val(),
+                    "yield_val": $('#input_main_yield_value').val(),
+                    "shift": $('#input_main_shift').val(),
+                    "product": $('#input_main_product').val(),
+                    "remix": $('#input_main_remixused').val(),
+                    "time": new Date().toLocaleTimeString(),
+            
+                }),
+                statusCode :{
+                200: function() {
+                        console.log("success");
+                }
+                }
+                ,
+                contentType:"application/json; charset=utf-8",
+                success: function(data, textStatus, jqXHR)
+                {
+                    modal.style.display = "none";
+                    alert(data);                    
+                },
+                error: function (e)
+                {
+                    console.log(e);
+                }
+            });
+
+            
+
+        });
+        
+        //change tables
+        $(".form-production-recall").submit(function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+
+            var modal = document.getElementById("myModal");
+            modal.style.display = "block";
+
+            //API required
+            const url = "http://34.122.82.176:9001/get/production_recall_screen"
+
+            $.ajax({
+                url:url,
+                type:"POST",
+                data:JSON.stringify({
+                    "u_key": sessionStorage.getItem("ukey"), 
+                    "batch": $('#input_recall_batch').val(),
+                    "cancel": $('#input_recall_cancelbatch').val(),
+                    "time": new Date().toLocaleTimeString(),
+                }),
+                statusCode :{
+                200: function() {
+                        console.log("success");
+                }
+                }
+                ,
+                contentType:"application/json; charset=utf-8",
+                success: function(data, textStatus, jqXHR)
+                {
+                    modal.style.display = "none";
+                    alert(data);
+                },
+                error: function (e)
+                {
+                    console.log(e);
+                }
+            });
+
+            
+
+        });
+        
+        //change tables
+        $(".form-production-bake").submit(function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+
+            var modal = document.getElementById("myModal");
+            modal.style.display = "block";
+
+            const url = "http://34.122.82.176:9001/get/production_bake_screen"
+
+            
+
+            $.ajax({
+                url:url,
+                type:"POST",
+                data:JSON.stringify({
+                    "u_key": sessionStorage.getItem("ukey"), 
+                    "batch": $('#input_bake_batch').val(),
+                    "status": $('#input_bake_status').val(),
+                    "time": new Date().toLocaleTimeString(),
+                }),
+                statusCode :{
+                200: function() {
+                        console.log("success");
+                }
+                }
+                ,
+                contentType:"application/json; charset=utf-8",
+                success: function(data, textStatus, jqXHR)
+                {
+                    modal.style.display = "none";
+                    alert(data);                    
+                },
+                error: function (e)
+                {
+                    console.log(e);
+                }
+            });
+
+        });
 
     
     });

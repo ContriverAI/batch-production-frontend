@@ -139,88 +139,97 @@ if(navigator.onLine)
                     sessionStorage.clear();
                     window.location.pathname = "/";
                 });
-
-                
-                $(".form-store-receiving").submit(function(event) {
-                    event.stopPropagation();
-                    event.preventDefault();
-
-                    //API required
-                    const url = "http://34.122.82.176:9001/get/store_receiving_screen"
-
-                    $.ajax({
-                        url:url,
-                        type:"POST",
-                        data:JSON.stringify({
-                            "u_key": sessionStorage.getItem("ukey"), 
-                            "date": $('#input_receiving_date').val(),
-                            "product": $('#input_receiving_product').val(),
-                            "standard_qty_recv": $('#input_receiving_standard_qty_received').val(),
-                            "supervisor": $('#input_receiving_pkg_superviser').val(),
-                            "rough_qty_recv": $('#input_receiving_rough_qty_received').val(),
-                        }),
-                        statusCode :{
-                        200: function() {
-                                console.log("success");
-                        }
-                        }
-                        ,
-                        contentType:"application/json; charset=utf-8",
-                        success: function(data, textStatus, jqXHR)
-                        {
-                            alert(data);                    
-                        },
-                        error: function (e)
-                        {
-                            console.log(e);
-                        }
-                    });
-
-                    
-
-                });
-
-                $(".form-store-dispatching").submit(function(event) {
-                    event.stopPropagation();
-                    event.preventDefault();
-
-                    const url = "http://34.122.82.176:9001/get/store_dispatch_screen"
-
-                    $.ajax({
-                        url:url,
-                        type:"POST",
-                        data:JSON.stringify({
-                            "u_key": sessionStorage.getItem("ukey"), 
-                            "date": $('#input_dispatching_date').val(),
-                            "product": $('#input_dispatching_product').val(),
-                            "std_dispatched": $('#input_dispatching_standard_dispatched').val(),
-                            "rough_dispatched": $('#input_dispatching_rough_dispatched').val(),
-                            "rough_returned": $('#input_dispatching_rough_returned').val(),
-                            "dsp_supervisor": $('#input_dispatching_dsp_superviser').val(),
-                        }),
-                        statusCode :{
-                        200: function() {
-                                console.log("success");
-                        }
-                        }
-                        ,
-                        contentType:"application/json; charset=utf-8",
-                        success: function(data, textStatus, jqXHR)
-                        {
-                            alert(data);
-                        },
-                        error: function (e)
-                        {
-                            console.log(e);
-                        }
-                    });
-
-                });
                 
             }
         }
 
-            setInterval(display , 3000);
+        setInterval(display , 3000);
+        
+            $(".form-store-receiving").submit(function(event) {
+                event.stopPropagation();
+                event.preventDefault();
+
+                
+                var modal = document.getElementById("myModal");
+                modal.style.display = "block";
+
+                //API required
+                const url = "http://34.122.82.176:9001/get/store_receiving_screen"
+
+                $.ajax({
+                    url:url,
+                    type:"POST",
+                    data:JSON.stringify({
+                        "u_key": sessionStorage.getItem("ukey"), 
+                        "date": $('#input_receiving_date').val(),
+                        "product": $('#input_receiving_product').val(),
+                        "standard_qty_recv": $('#input_receiving_standard_qty_received').val(),
+                        "supervisor": $('#input_receiving_pkg_superviser').val(),
+                        "rough_qty_recv": $('#input_receiving_rough_qty_received').val(),
+                    }),
+                    statusCode :{
+                    200: function() {
+                            console.log("success");
+                    }
+                    }
+                    ,
+                    contentType:"application/json; charset=utf-8",
+                    success: function(data, textStatus, jqXHR)
+                    {
+                        modal.style.display = "none";
+                        alert(data);                    
+                    },
+                    error: function (e)
+                    {
+                        console.log(e);
+                    }
+                });
+
+                
+
+            });
+
+            $(".form-store-dispatching").submit(function(event) {
+                event.stopPropagation();
+                event.preventDefault();
+
+                
+                var modal = document.getElementById("myModal");
+                modal.style.display = "block";
+
+                const url = "http://34.122.82.176:9001/get/store_dispatch_screen"
+
+                $.ajax({
+                    url:url,
+                    type:"POST",
+                    data:JSON.stringify({
+                        "u_key": sessionStorage.getItem("ukey"), 
+                        "date": $('#input_dispatching_date').val(),
+                        "product": $('#input_dispatching_product').val(),
+                        "std_dispatched": $('#input_dispatching_standard_dispatched').val(),
+                        "rough_dispatched": $('#input_dispatching_rough_dispatched').val(),
+                        "rough_returned": $('#input_dispatching_rough_returned').val(),
+                        "dsp_supervisor": $('#input_dispatching_dsp_superviser').val(),
+                    }),
+                    statusCode :{
+                    200: function() {
+                            console.log("success");
+                    }
+                    }
+                    ,
+                    contentType:"application/json; charset=utf-8",
+                    success: function(data, textStatus, jqXHR)
+                    {
+                        modal.style.display = "none";
+                        alert(data);
+                    },
+                    error: function (e)
+                    {
+                        console.log(e);
+                    }
+                });
+
+            });
     
     });
 }
