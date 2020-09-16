@@ -49,6 +49,8 @@ if(navigator.onLine)
 
         function display(){
 
+            if(loaded){
+
                 function localStoreData(){
 
                     if(sessionStorage.getItem("storeData")){
@@ -216,6 +218,7 @@ if(navigator.onLine)
                 });
                 
             }
+        }
 
             setInterval(display , 3000);
     

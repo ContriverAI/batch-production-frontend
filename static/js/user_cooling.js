@@ -49,6 +49,7 @@ if(navigator.onLine)
 
         function display(){
 
+            if(loaded){
 
                 function localCoolingData(){
 
@@ -202,6 +203,7 @@ if(navigator.onLine)
 
                 });
             }
+        }
 
             setInterval(display , 3000);
     

@@ -95,6 +95,8 @@ if(navigator.onLine)
 
         function display(){
 
+            if(loaded) {
+
                 function localProductionData(){
                     if(sessionStorage.getItem("prodData")){
                             var table_row = `<tr>    
@@ -308,6 +310,7 @@ if(navigator.onLine)
 
                 });
             }
+        }
 
             setInterval(display , 3000);
 

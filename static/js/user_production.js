@@ -51,6 +51,8 @@ if(navigator.onLine)
          
         function display(){
 
+            if(loaded){
+
             function setDateForm(){
                 var today = new Date();
                 var dd = String(today.getDate()).padStart(2, '0');
@@ -264,6 +266,7 @@ if(navigator.onLine)
 
             });
         }
+    }
 
         setInterval(display , 3000);
     
