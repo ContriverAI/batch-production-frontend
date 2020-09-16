@@ -57,6 +57,7 @@ if(navigator.onLine)
                         var table_row = `<tr>
                                     <th>Date</th>
                                     <th>Trolley</th>
+                                    <th>Shift </th>
                                     <th>Product</th>
                                     <th>Qty</th>
                                     <th>Time In</th>
@@ -79,6 +80,7 @@ if(navigator.onLine)
                                             '<tr>'+
                                                 '<td>'+ finalD +'</td>'+
                                                 '<td>'+m.data[i][1]+'</td>'+
+                                                '<td>'+m.data[i][9]+'</td>'+
                                                 '<td>'+m.data[i][2]+'</td>'+
                                                 '<td>'+m.data[i][3]+'</td>'+
                                                 '<td>'+msToTime(m.data[i][4])+'</td>'+

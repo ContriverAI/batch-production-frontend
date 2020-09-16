@@ -120,25 +120,25 @@ if(navigator.onLine)
                             console.log(m.data);
 
                             for(var i = 0; i < m.data.length; i++){
-
-                                var date = new Date(m.data[i][0]);
-                                var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
-                                table_row += 
-                                '<tr>'+
-                                    '<td>'+ finalD +'</td>'+
-                                    '<td>'+m.data[i][13]+'</td>'+
-                                    '<td>'+m.data[i][1]+'</td>'+
-                                    '<td>'+m.data[i][2]+'</td>'+
-                                    '<td>'+m.data[i][3]+'</td>'+
-                                    '<td>'+m.data[i][4]+'</td>'+
-                                    '<td>'+msToTime(m.data[i][5])+'</td>'+
-                                    '<td>'+msToTime(m.data[i][6])+'</td>'+
-                                    '<td>'+m.data[i][8]+'</td>'+
-                                    '<td>'+m.data[i][9]+'</td>'+
-                                    '<td>'+m.data[i][10]+'</td>'+
-                                    '<td>'+m.data[i][11]+'</td>'+
-                                    '<td>'+msToTime(m.data[i][12])+'</td>'+
-                                '</tr>';
+                                
+                                    var date = new Date(m.data[i][0]);
+                                    var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                                    table_row += 
+                                    '<tr>'+
+                                        '<td>'+ finalD +'</td>'+
+                                        '<td>'+m.data[i][13]+'</td>'+
+                                        '<td>'+m.data[i][1]+'</td>'+
+                                        '<td>'+m.data[i][2]+'</td>'+
+                                        '<td>'+m.data[i][3]+'</td>'+
+                                        '<td>'+m.data[i][4]+'</td>'+
+                                        '<td>'+msToTime(m.data[i][5])+'</td>'+
+                                        '<td>'+msToTime(m.data[i][6])+'</td>'+
+                                        '<td>'+m.data[i][8]+'</td>'+
+                                        '<td>'+m.data[i][9]+'</td>'+
+                                        '<td>'+m.data[i][10]+'</td>'+
+                                        '<td>'+m.data[i][11]+'</td>'+
+                                        '<td>'+msToTime(m.data[i][12])+'</td>'+
+                                    '</tr>';
                                 
                             }
 
@@ -147,7 +147,7 @@ if(navigator.onLine)
                             var options = '';
                         
                             for(var i = 0; i < m.data.length; i++){
-                                if(m.data[i][9] !== "Baked")
+                                if(m.data[i][9] === "Unbaked")
                                     options += '<option value="'+m.data[i][8]+'">'+m.data[i][8]+'</option>';
                             }
                                 
