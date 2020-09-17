@@ -112,6 +112,7 @@ if(navigator.onLine)
                                 <th>Time In</th>
                                 <th>Duration</th>
                                 <th>Complete Time</th>
+                                <th>Remaining Time</th>
                                 <th>Packaging Complete </th>
                             </tr>`;
 
@@ -125,6 +126,8 @@ if(navigator.onLine)
 
                                         var date = new Date(m.data[i][0]);
                                         var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                                        var remTime = msToTime(m.data[i][11]) === "00:00"? "Done" : msToTime(m.data[i][11]);
+
                                         table_row += 
                                         '<tr>'+
                                             '<td>'+ finalD +'</td>'+
@@ -135,6 +138,7 @@ if(navigator.onLine)
                                             '<td>'+msToTime(m.data[i][4])+'</td>'+
                                             '<td>'+msToTime(m.data[i][5])+'</td>'+
                                             '<td>'+msToTime(m.data[i][6])+'</td>'+
+                                            '<td>'+remTime+'</td>'+
                                             '<td>'+m.data[i][7]+'</td>'+
                                         '</tr>';
                                 }
