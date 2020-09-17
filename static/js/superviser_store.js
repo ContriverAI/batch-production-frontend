@@ -88,7 +88,7 @@ if(navigator.onLine)
 
 
                                         var date = new Date(m.data[i][0]);
-                                        var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                                        var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
                                         table_row += 
                                         '<tr>'+
                                             '<td>'+ finalD +'</td>'+
@@ -106,6 +106,8 @@ if(navigator.onLine)
                             document.getElementById('superviser_store_table').innerHTML = table_row;
                         }
                 }
+
+                localStoreData();
 
                 setInterval(localStoreData ,10000);
 

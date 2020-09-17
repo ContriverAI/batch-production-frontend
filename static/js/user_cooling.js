@@ -16,8 +16,6 @@ if(navigator.onLine)
          function dataLoad(){
              if(sessionStorage.getItem("tableData")){
                 loaded = true
-                document.getElementById("user-main").style.display = "inline";
-                document.getElementById("loader").style.display = "none";
              }
          }
 
@@ -50,6 +48,9 @@ if(navigator.onLine)
         function display(){
 
             if(loaded){
+                
+                document.getElementById("user-main").style.display = "inline";
+                document.getElementById("loader").style.display = "none";
 
                 function localCoolingData(){
 
@@ -76,7 +77,7 @@ if(navigator.onLine)
                                     if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
 
                                             var date = new Date(m.data[i][0]);
-                                            var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                                            var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
                                             var remTime = msToTime(m.data[i][11]) === "00:00"? "Done" : msToTime(m.data[i][11]);
 
                                             table_row += 
@@ -107,6 +108,7 @@ if(navigator.onLine)
                         }
                 }
 
+                localCoolingData();
                 setInterval(localCoolingData , 10000);
 
                 function localCoolingLiveData(){
@@ -131,7 +133,7 @@ if(navigator.onLine)
                                     if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
 
                                             var date = new Date(m.data[i][0]);
-                                            var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                                            var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
                                             var remTime = msToTime(m.data[i][11]) === "00:00"? "Done" : msToTime(m.data[i][11]);
 
                                             table_row += 
@@ -151,6 +153,7 @@ if(navigator.onLine)
                         }
                 }
 
+                localCoolingLiveData();
                 setInterval(localCoolingLiveData , 10000);
 
 
@@ -188,7 +191,7 @@ if(navigator.onLine)
             }
         }
 
-            setInterval(display ,10000);
+        setInterval(display ,10000);
 
 
             

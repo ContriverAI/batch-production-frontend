@@ -95,8 +95,7 @@ if(navigator.onLine)
                                             if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
 
                                                     var date = new Date(m.data[i][0]);
-                                                    var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
-                                                    
+                                                    var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
                                                     var remTime = msToTime(m.data[i][11]) === "00:00"? "Done" : msToTime(m.data[i][11]);
 
                                                     table_row += 
@@ -119,6 +118,7 @@ if(navigator.onLine)
                                 }
                         }
 
+                        localCoolingData();
                         setInterval(localCoolingData , 10000);
 
                         function localProductionData(){
@@ -145,7 +145,8 @@ if(navigator.onLine)
 
                                     for(var i = 0; i < m.data.length; i++){
                                                 var date = new Date(m.data[i][0]);
-                                                var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                                                var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
+
                                                 table_row += 
                                                 '<tr>'+
                                                     '<td>'+ finalD +'</td>'+
@@ -169,6 +170,7 @@ if(navigator.onLine)
                                 }
                         }
 
+                        localProductionData();
                         setInterval(localProductionData , 10000);
 
                         function localStoreData(){
@@ -206,7 +208,7 @@ if(navigator.onLine)
 
 
                                                     var date = new Date(m.data[i][0]);
-                                                    var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                                                    var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
                                                     table_row += 
                                                     '<tr>'+
                                                         '<td>'+ finalD +'</td>'+
@@ -225,6 +227,7 @@ if(navigator.onLine)
                                 }
                         }
 
+                        localStoreData();
                         setInterval(localStoreData , 10000);
 
                         function getUsersData(){

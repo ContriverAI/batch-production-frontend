@@ -104,7 +104,7 @@ if(navigator.onLine)
                             for(var i = 0; i < m.data.length; i++){
 
                                         var date = new Date(m.data[i][0]);
-                                        var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                                        var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
                                         table_row += 
                                         '<tr>'+
                                             '<td>'+ finalD +'</td>'+
@@ -124,6 +124,7 @@ if(navigator.onLine)
                                 
                             }
 
+
                             document.getElementById('user_production_table').innerHTML = table_row;
 
                             var options = ''
@@ -139,6 +140,7 @@ if(navigator.onLine)
                         }
                 }
 
+                localProductionData();
                 setInterval(localProductionData , 10000);
 
 
