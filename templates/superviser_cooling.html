@@ -33,6 +33,7 @@
         <div class="tab">
             <button class="tablinks" onclick="openCity(event, 'Main')" id="defaultOpen" >Main</button>
             <button class="tablinks" onclick="openCity(event, 'Packaging')">Packaging</button>
+            <button class="tablinks" onclick="openCity(event, 'Cooling_Table')">Cooling Table</button>
             <button class="tablinks" onclick="openCity(event, 'Live_Table')">Live Table</button>
             <button class="tablinks" onclick="openCity(event, 'Reports')">Reports</button>
             <button class="tablinks" id="Logout" onclick="" style="margin-right: 0px;">Logout</button>
@@ -109,6 +110,13 @@
                 <button id = "submitPackaging" class="btn btn-lg btn-primary btn-block" type="submit">Submit</button>
               </form>
 
+        </div>
+
+        <div id="Cooling_Table" class="tabcontent">
+            <h3 style="text-align: center;">Cooling Table</h3>
+            <table id="user_live_table">
+                
+            </table>
         </div>
         
         <div id="Live_Table" class="tabcontent">

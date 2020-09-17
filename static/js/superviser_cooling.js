@@ -159,6 +159,50 @@ if(navigator.onLine)
 
             setInterval(localCoolingData , 10000);
 
+            function localCoolingLiveData(){
+
+                if(sessionStorage.getItem("tableData")){
+                    var table_row = `<tr>
+                                <th>Date</th>
+                                <th>Trolley</th>
+                                <th>Product</th>
+                                <th>Qty</th>
+                                <th>Time In</th>
+                                <th>Complete Time</th>
+                                <th>Remaining Time</th>
+                            </tr>`;
+
+                            var data = sessionStorage.getItem("tableData");
+                            var m = JSON.parse(data);
+                            console.log(m.data);
+
+                            for(var i = 0; i < m.data.length; i++){
+
+                                if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
+
+                                        var date = new Date(m.data[i][0]);
+                                        var finalD = date.getFullYear()+'-' + (date.getMonth()+1) + '-'+date.getDate();
+                                        var remTime = msToTime(m.data[i][11]) === "00:00"? "Done" : msToTime(m.data[i][11]);
+
+                                        table_row += 
+                                        '<tr>'+
+                                            '<td>'+ finalD +'</td>'+
+                                            '<td>'+m.data[i][1]+'</td>'+
+                                            '<td>'+m.data[i][2]+'</td>'+
+                                            '<td>'+m.data[i][3]+'</td>'+
+                                            '<td>'+msToTime(m.data[i][4])+'</td>'+
+                                            '<td>'+msToTime(m.data[i][6])+'</td>'+
+                                            '<td>'+remTime+'</td>'+
+                                        '</tr>';
+                                }
+                            }
+
+                            document.getElementById('user_live_table').innerHTML = table_row;
+                    }
+            }
+
+            setInterval(localCoolingLiveData , 10000);
+
             function setDateForm(){
                 var today = new Date();
                 var dd = String(today.getDate()).padStart(2, '0');
