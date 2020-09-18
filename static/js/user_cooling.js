@@ -126,7 +126,6 @@ if(navigator.onLine)
 
                                 var data = sessionStorage.getItem("tableData");
                                 var m = JSON.parse(data);
-                                console.log(m.data);
 
                                 for(var i = 0; i < m.data.length; i++){
 
@@ -168,7 +167,6 @@ if(navigator.onLine)
 
                                 var data = sessionStorage.getItem("tableData");
                                 var m = JSON.parse(data);
-                                console.log(m.data);
 
                                 for(var i = 0; i < m.data.length; i++){
 
