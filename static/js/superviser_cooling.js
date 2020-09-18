@@ -146,14 +146,14 @@ if(navigator.onLine)
 
                             document.getElementById('superviser_cooling_table').innerHTML = table_row;
 
-                            var options = '';
+                            // var options = '';
                     
-                            for(var i = 0; i < m.data.length; i++)
-                                if(m.data[i][7] === "No"){
-                                    options += '<option value="'+m.data[i][1]+'">'+m.data[i][1]+'</option>';
-                                }
+                            // for(var i = 0; i < m.data.length; i++)
+                            //     if(m.data[i][7] === "No"){
+                            //         options += '<option value="'+m.data[i][1]+'">'+m.data[i][1]+'</option>';
+                            //     }
 
-                            document.getElementById('input_packaging_trolley').innerHTML = options;
+                            // document.getElementById('input_packaging_trolley').innerHTML = options;
                     }
             }
 
