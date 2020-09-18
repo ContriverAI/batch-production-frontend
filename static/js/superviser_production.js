@@ -153,7 +153,7 @@ if(navigator.onLine)
                                 
 
                             document.getElementById('input_recall_batch').innerHTML = options;
-                            document.getElementById('input_bake_batch').innerHTML = options;
+                            // document.getElementById('input_bake_batch').innerHTML = options;
                         }
                     }
                 
