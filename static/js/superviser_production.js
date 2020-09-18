@@ -101,16 +101,16 @@ if(navigator.onLine)
                     if(sessionStorage.getItem("prodData")){
                             var table_row = `<tr>    
                                 <th>Date</th>
-                                <th>Product</th>
-                                <th>Flour</th>
                                 <th>Shift</th>
+                                <th>Batch</th>
+                                <th>Flour</th>
                                 <th>Remix</th>
                                 <th>Yeast</th>
-                                <th>Mixing Time</th>
-                                <th>Baking Time</th>
-                                <th>Batch</th>
-                                <th>Status</th>
+                                <th>Product</th>
                                 <th>Yield Value </th>
+                                <th>Mixing Time</th>
+                                <th>Status</th>
+                                <th>Baking Time</th>
                                 <th>Batch Recall</th>
                                 <th>Recall Time</th>
                             </tr>`;
@@ -126,16 +126,16 @@ if(navigator.onLine)
                                     table_row += 
                                     '<tr>'+
                                         '<td>'+ finalD +'</td>'+
-                                        '<td>'+m.data[i][13]+'</td>'+
-                                        '<td>'+m.data[i][1]+'</td>'+
                                         '<td>'+m.data[i][2]+'</td>'+
+                                        '<td>'+m.data[i][8]+'</td>'+
+                                        '<td>'+m.data[i][1]+'</td>'+
                                         '<td>'+m.data[i][3]+'</td>'+
                                         '<td>'+m.data[i][4]+'</td>'+
-                                        '<td>'+msToTime(m.data[i][5])+'</td>'+
-                                        '<td>'+msToTime(m.data[i][6])+'</td>'+
-                                        '<td>'+m.data[i][8]+'</td>'+
-                                        '<td>'+m.data[i][9]+'</td>'+
+                                        '<td>'+m.data[i][13]+'</td>'+
                                         '<td>'+m.data[i][10]+'</td>'+
+                                        '<td>'+msToTime(m.data[i][5])+'</td>'+
+                                        '<td>'+m.data[i][9]+'</td>'+
+                                        '<td>'+msToTime(m.data[i][6])+'</td>'+
                                         '<td>'+m.data[i][11]+'</td>'+
                                         '<td>'+msToTime(m.data[i][12])+'</td>'+
                                     '</tr>';
@@ -159,6 +159,39 @@ if(navigator.onLine)
                 
                 localProductionData();
                 setInterval(localProductionData , 10000);
+
+                function localProductionBakeData(){
+                    if(sessionStorage.getItem("prodData")){
+                            var table_row = `<tr>  
+                                <th>Batch</th>
+                                <th>Mixing Time</th>
+                                <th>Status</th>
+                            </tr>`;
+
+                            var data = sessionStorage.getItem("prodData");
+                            var m = JSON.parse(data);
+                            // console.log(m.data);
+
+                            for(var i = 0; i < m.data.length; i++){
+                                if(m.data[i][9] === "Unbaked"){
+                                        table_row += 
+                                        '<tr id='+m.data[i][8]+'>'+
+                                            '<td>'+m.data[i][8]+'</td>'+
+                                            '<td>'+msToTime(m.data[i][5])+'</td>'+
+                                            '<td><button id = "Bak" class="btn btn-lg btn-primary btn-block" type="button">Baked</button></td>'+
+                                        '</tr>';
+                                }
+                                
+                            }
+
+
+                            document.getElementById('superviser_production_bake_table').innerHTML = table_row;
+
+                        }
+                }
+
+                localProductionBakeData();
+                setInterval(localProductionBakeData , 10000);
 
                 function setDateForm(){
                     var today = new Date();
@@ -192,6 +225,47 @@ if(navigator.onLine)
             event.preventDefault();
             sessionStorage.clear();
             window.location.pathname = "/";
+        });
+
+        $(document).on("click" , "#Bak"  ,  function(e) {
+            e.preventDefault();
+            var pid = $(this).parent().parent().attr("id");
+            console.log(pid); 
+
+            var modal = document.getElementById("myModal");
+            modal.style.display = "block";
+
+            const url = "http://34.122.82.176:9001/get/production_bake_screen"
+
+            $.ajax({
+                url:url,
+                type:"POST",
+                data:JSON.stringify({
+                    "u_key": sessionStorage.getItem("ukey"), 
+                    "batch": pid,
+                    "status": "Baked",
+                    "time": new Date().toLocaleTimeString(),
+                }),
+                statusCode :{
+                200: function() {
+                        console.log("success");
+                }
+                }
+                ,
+                contentType:"application/json; charset=utf-8",
+                success: function(data, textStatus, jqXHR)
+                {
+                    modal.style.display = "none";
+                    alert(data);   
+                    var id = "#" + pid;   
+                    $(id).remove();                    
+                },
+                error: function (e)
+                {
+                    console.log(e);
+                }
+            });
+        
         });
 
         //change tables

@@ -124,20 +124,20 @@ if(navigator.onLine)
                         function localProductionData(){
                             if(sessionStorage.getItem("prodData")){
                                         var table_row = `<tr>    
-                                        <th>Date</th>
-                                        <th>Product</th>
-                                        <th>Flour</th>
-                                        <th>Shift</th>
-                                        <th>Remix</th>
-                                        <th>Yeast</th>
-                                        <th>Mixing Time</th>
-                                        <th>Baking Time</th>
-                                        <th>Batch</th>
-                                        <th>Status</th>
-                                        <th>Yield Value </th>
-                                        <th>Batch Recall</th>
-                                        <th>Recall Time</th>
-                                    </tr>`;
+                                            <th>Date</th>
+                                            <th>Shift</th>
+                                            <th>Batch</th>
+                                            <th>Flour</th>
+                                            <th>Remix</th>
+                                            <th>Yeast</th>
+                                            <th>Product</th>
+                                            <th>Yield Value </th>
+                                            <th>Mixing Time</th>
+                                            <th>Status</th>
+                                            <th>Baking Time</th>
+                                            <th>Batch Recall</th>
+                                            <th>Recall Time</th>
+                                        </tr>`;
 
                                     var data = sessionStorage.getItem("prodData");
                                     var m = JSON.parse(data);
@@ -150,16 +150,16 @@ if(navigator.onLine)
                                                 table_row += 
                                                 '<tr>'+
                                                     '<td>'+ finalD +'</td>'+
-                                                    '<td>'+m.data[i][13]+'</td>'+
-                                                    '<td>'+m.data[i][1]+'</td>'+
                                                     '<td>'+m.data[i][2]+'</td>'+
+                                                    '<td>'+m.data[i][8]+'</td>'+
+                                                    '<td>'+m.data[i][1]+'</td>'+
                                                     '<td>'+m.data[i][3]+'</td>'+
                                                     '<td>'+m.data[i][4]+'</td>'+
-                                                    '<td>'+msToTime(m.data[i][5])+'</td>'+
-                                                    '<td>'+msToTime(m.data[i][6])+'</td>'+
-                                                    '<td>'+m.data[i][8]+'</td>'+
-                                                    '<td>'+m.data[i][9]+'</td>'+
+                                                    '<td>'+m.data[i][13]+'</td>'+
                                                     '<td>'+m.data[i][10]+'</td>'+
+                                                    '<td>'+msToTime(m.data[i][5])+'</td>'+
+                                                    '<td>'+m.data[i][9]+'</td>'+
+                                                    '<td>'+msToTime(m.data[i][6])+'</td>'+
                                                     '<td>'+m.data[i][11]+'</td>'+
                                                     '<td>'+msToTime(m.data[i][12])+'</td>'+
                                                 '</tr>';
