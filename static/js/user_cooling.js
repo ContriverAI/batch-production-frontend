@@ -97,14 +97,14 @@ if(navigator.onLine)
                                 }
 
                                 document.getElementById('user_cooling_table').innerHTML = table_row;
-                                var options = '';
+                                // var options = '';
                     
-                                for(var i = 0; i < m.data.length; i++)
-                                    if(m.data[i][7] === "No"){
-                                        options += '<option value="'+m.data[i][1]+'">'+m.data[i][1]+'</option>';
-                                    }
+                                // for(var i = 0; i < m.data.length; i++)
+                                //     if(m.data[i][7] === "No"){
+                                //         options += '<option value="'+m.data[i][1]+'">'+m.data[i][1]+'</option>';
+                                //     }
 
-                            document.getElementById('input_packaging_trolley').innerHTML = options;
+                                // document.getElementById('input_packaging_trolley').innerHTML = options;
                         }
                 }
 
@@ -156,7 +156,41 @@ if(navigator.onLine)
                 localCoolingLiveData();
                 setInterval(localCoolingLiveData , 10000);
 
+                function localPackageData(){
 
+                    if(sessionStorage.getItem("tableData")){
+                        var table_row = `<tr>
+                                    <th>Trolley</th>
+                                    <th>Product</th>
+                                    <th>Qty</th>
+                                    <th>Packaging Complete </th>
+                                </tr>`;
+
+                                var data = sessionStorage.getItem("tableData");
+                                var m = JSON.parse(data);
+                                console.log(m.data);
+
+                                for(var i = 0; i < m.data.length; i++){
+
+                                    if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
+                                            table_row += 
+                                            '<tr id='+m.data[i][1]+'>'+
+                                                '<td>'+m.data[i][1]+'</td>'+
+                                                '<td>'+m.data[i][2]+'</td>'+
+                                                '<td>'+m.data[i][3]+'</td>'+
+                                                '<td><button id = "Pak" class="btn btn-lg btn-primary btn-block" type="button">Yes</button></td>'+
+                                            '</tr>';
+                                    }
+                                }
+
+                                document.getElementById('user_cooling_packaging_table').innerHTML = table_row;
+                        }
+                }
+
+                localPackageData();
+                setInterval(localPackageData , 10000);
+
+                
                 function setDateForm(){
                     var today = new Date();
                     var dd = String(today.getDate()).padStart(2, '0');
@@ -193,6 +227,47 @@ if(navigator.onLine)
 
         setInterval(display ,10000);
 
+
+            $(document).on("click" , "#Pak" ,  function(e) {
+                e.preventDefault();
+                var pid = $(this).parent().parent().attr("id");
+                console.log(pid); 
+
+                var modal = document.getElementById("myModal");
+                modal.style.display = "block";
+
+                const url = "http://34.122.82.176:9001/get/create_cooling_packaging"
+
+                    $.ajax({
+                        url:url,
+                        type:"POST",
+                        data:JSON.stringify({
+                            "u_key": sessionStorage.getItem("ukey"), 
+                            "trolleyNo": pid,
+                            "status": "Yes",
+                            "time": new Date().toLocaleTimeString()
+                        }),
+                        statusCode :{
+                        200: function() {
+                                console.log("success");
+                        }
+                        }
+                        ,
+                        contentType:"application/json; charset=utf-8",
+                        success: function(data, textStatus, jqXHR)
+                        {
+                            modal.style.display = "none";
+                            alert(data);
+                            var id = "#" + pid;   
+                            $(id).remove();  
+                        },
+                        error: function (e)
+                        {
+                            console.log(e);
+                        }
+                    });
+            
+                });
 
             
                 
