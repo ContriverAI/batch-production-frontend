@@ -328,7 +328,7 @@ if(navigator.onLine)
                         type:"POST",
                         data:JSON.stringify({
                             "productCode": $('#input_main_product').val(),
-                            "duration": $('#input_duration').val()
+                            "duration": $('#input_duration').val()+":00",
                         }),
                         statusCode :{
                         200: function() {
