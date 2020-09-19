@@ -244,7 +244,7 @@ if(navigator.onLine)
                             });
                         }
                         
-                        setInterval(getUsersData , 3000);
+                        setInterval(getUsersData , 7000);
 
                         function displayUsers(){
                             
@@ -285,7 +285,7 @@ if(navigator.onLine)
 
                         }
 
-                        setInterval(getConfigData , 3000);
+                        setInterval(getConfigData , 7000);
 
                         function displayConfigData(){
                             
@@ -314,7 +314,7 @@ if(navigator.onLine)
                     }
                 }
 
-                setInterval(display , 3000);
+                setInterval(display , 10000);
 
                 $(".form-create-config").submit(function(event) {
                     event.stopPropagation();
@@ -380,6 +380,7 @@ if(navigator.onLine)
                         {
                             alert(data);
                             document.getElementById("creatingText").style.display = "none";
+                            display();
                         },
                         error: function (e)
                         {
@@ -418,6 +419,7 @@ if(navigator.onLine)
                         {
                             alert(data);
                             document.getElementById("updatingText").style.display = "none";
+                            display();
                         },
                         error: function (e)
                         {
@@ -451,6 +453,7 @@ if(navigator.onLine)
                         {
                             alert(data);
                             document.getElementById("deletingText").style.display = "none";
+                            display();
                         },
                         error: function (e)
                         {
