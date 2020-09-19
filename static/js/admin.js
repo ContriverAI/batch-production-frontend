@@ -316,6 +316,40 @@ if(navigator.onLine)
 
                 setInterval(display , 3000);
 
+                $(".form-create-config").submit(function(event) {
+                    event.stopPropagation();
+                    event.preventDefault();
+
+                    const url = "API_END_POINT"
+                    document.getElementById("updatingText").style.display = "inline";
+
+                    $.ajax({
+                        url:url,
+                        type:"POST",
+                        data:JSON.stringify({
+                            "product": $('#input_main_product').val(),
+                            "duration": $('#input_duration').val()
+                        }),
+                        statusCode :{
+                        200: function() {
+                                console.log("success");
+                        }
+                        }
+                        ,
+                        contentType:"application/json; charset=utf-8",
+                        success: function(data, textStatus, jqXHR)
+                        {
+                            alert(data);
+                            document.getElementById("updatingText").style.display = "none";
+                        },
+                        error: function (e)
+                        {
+                            console.log(e);
+                        }
+                    });
+
+                });
+
                 
                         
                 $(".form-create-user").submit(function(event) {

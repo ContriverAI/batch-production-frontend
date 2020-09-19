@@ -100,6 +100,17 @@ tr:nth-child(even) {
   padding: 50px;
 }
 
+.form-create-config{
+  max-height: 550px;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-right: 80px;
+  width: 25%;
+  text-align: center;
+  background: white;
+}
+
 .form-create-user{
   max-height: 550px;
   margin: auto;

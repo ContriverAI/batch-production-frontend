@@ -48,12 +48,7 @@
                 </table>
             </div>
 
-            <div id="Configuration" class="tabcontent">
-                <h3 style="text-align: center;">Configuration Table</h3>
-                <table id="config_table">
-                    
-                </table>
-            </div>
+            
             
             <div id="Cooling" class="tabcontent">
                 <h3 style="text-align: center;">Cooling Table</h3>
@@ -79,6 +74,45 @@
             <div id="Reports" class="tabcontent">
                 <h3 style="text-align: center;">Reports</h3>
                 
+            </div>
+
+            <div id="Configuration" class="tabcontent">
+
+                <div style="display: flex;flex-direction: row;">
+                    <h3 style="text-align: center;">Configuration Table</h3>
+                    <div style="margin: auto; margin-right: 150px;">
+                        <button id = "changeConfigBtn" class="btn btn-lg btn-primary  createBtn disabled" >Change Configuration</button>
+                    </div> 
+                </div>
+
+                <div style="display: flex;">
+                    <table id="config_table" style="margin-top: 10px;width: 60%;">
+                        
+                    </table>
+
+                        <form class="form-create-config card" id="createConfigForm" method = "POST">
+                        
+                            <div style="margin-top: 20px;">
+                                <label for="input_main_product" >Product name</label>
+                                <select id="input_main_product" name="input_main_product" class="form-control" required autofocus>
+                                        <option value="JSP">Jumbo Special</option>
+                                        <option value="JMX">Jumbo Max</option>
+                                        <option value="ECO">Economy Sliced</option>
+                                        <option value="OYK">Oyokun Unsliced</option>
+                                        <option value="LMD">Long Midi</option>
+                                </select>
+                            </div>
+
+                            <div style="margin-top: 20px;margin-bottom: 20px;">
+                                <label for="inputDuration" >Product Code</label>
+                                <input type="time" id="input_duration" class="form-control" placeholder="Enter time"  required autofocus>
+                                
+                            </div>
+                    
+                            <button id = "submitCreateConfig" class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
+                            <p id="updatingText" style="margin-top: 20px; display: none;">Updating ...</p>
+                        </form>
+                </div>
             </div>
             
             <div id="Users" class="tabcontent">
