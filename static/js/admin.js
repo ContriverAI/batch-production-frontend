@@ -341,7 +341,7 @@ if(navigator.onLine)
                         {
                             alert(data);
                             document.getElementById("updatingText").style.display = "none";
-                            getConfigData();
+                            display();
                         },
                         error: function (e)
                         {
