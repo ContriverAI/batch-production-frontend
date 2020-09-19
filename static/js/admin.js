@@ -320,14 +320,14 @@ if(navigator.onLine)
                     event.stopPropagation();
                     event.preventDefault();
 
-                    const url = "API_END_POINT"
+                    const url = "http://34.122.82.176:9001/get/updateconfigparams"
                     document.getElementById("updatingText").style.display = "inline";
 
                     $.ajax({
                         url:url,
                         type:"POST",
                         data:JSON.stringify({
-                            "product": $('#input_main_product').val(),
+                            "productCode": $('#input_main_product').val(),
                             "duration": $('#input_duration').val()
                         }),
                         statusCode :{
@@ -341,6 +341,7 @@ if(navigator.onLine)
                         {
                             alert(data);
                             document.getElementById("updatingText").style.display = "none";
+                            getConfigData();
                         },
                         error: function (e)
                         {
