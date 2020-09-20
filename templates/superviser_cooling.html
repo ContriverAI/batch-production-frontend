@@ -9,6 +9,14 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Lilita One' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/superviser_cooling.css')}}">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+    <!-- Google Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
     <title>PIMS</title>
    
   </head>
@@ -160,7 +168,7 @@
                     
                         <div style="margin-top: 20px;">
                             <label for="input_main_product_filter" >Product name</label>
-                            <select id="input_main_product_filter" name="input_main_product_filter" class="form-control" multiple required autofocus>
+                            <select id="input_main_product_filter" name="input_main_product_filter" class="mdb-select colorful-select dropdown-primary md-form form-control" multiple required autofocus>
                                     <option value="JSP">Jumbo Special</option>
                                     <option value="JMX">Jumbo Max</option>
                                     <option value="ECO">Economy Sliced</option>
@@ -222,7 +230,14 @@
     
     <script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script>
     <script src = "{{url_for('static',filename='js/superviser_cooling.js')}}" ></script>
-
+    <!-- JQuery -->
+    <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <!-- Bootstrap tooltips -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.4/umd/popper.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <!-- MDB core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 
     
     

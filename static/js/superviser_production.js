@@ -24,25 +24,25 @@ if(navigator.onLine)
             
             // });
 
-            $("td").on("click"  ,  function(e) {
-                e.preventDefault();
-                console.log($(this).parent().attr("id"));
-                console.log($(this).attr('id'));
-                var td_value = $(this).html();
-                var input_field = '<input type="text" id="edit" value="' + td_value + '" />'
-                $(this).empty().append(input_field);
-                $('input').focus();
+            // $("td").on("click"  ,  function(e) {
+            //     e.preventDefault();
+            //     console.log($(this).parent().attr("id"));
+            //     console.log($(this).attr('id'));
+            //     var td_value = $(this).html();
+            //     var input_field = '<input type="text" id="edit" value="' + td_value + '" />'
+            //     $(this).empty().append(input_field);
+            //     $('input').focus();
             
-                $('td').off('click');
+            //     $('td').off('click');
             
-                $(this).find('input').blur(function(){
-                    var new_text = $(this).val();
-                    $(this).parent().html(new_text);
-                    console.log(new_text);
-                    TableEdit();
-                })
+            //     $(this).find('input').blur(function(){
+            //         var new_text = $(this).val();
+            //         $(this).parent().html(new_text);
+            //         console.log(new_text);
+            //         TableEdit();
+            //     })
             
-            });
+            // });
 
         }
 

@@ -2,8 +2,6 @@ if(navigator.onLine)
 {
     $(document).ready(function(){
 
-        
-
         function checkLogin() {
             if(!(sessionStorage.getItem("designation") === "supervisor") && !(sessionStorage.getItem("role") === "store")){
                 window.location.pathname = "/";

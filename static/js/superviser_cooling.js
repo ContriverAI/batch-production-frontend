@@ -46,7 +46,7 @@ if(navigator.onLine)
             });
         }
 
-        TableEdit();
+        //TableEdit();
         
         function checkLogin() {
             if(!(sessionStorage.getItem("designation") === "supervisor") && !(sessionStorage.getItem("role") === "cooling")){
