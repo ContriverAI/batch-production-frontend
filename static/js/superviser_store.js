@@ -234,8 +234,6 @@ if(navigator.onLine)
 
         });
 
-        date_time,product,`qty received standard`,`qty received rough`, `dispatched standard`, 
-        `dispatched rough`, `rough returned`, `bread in store`, `rough bread in store`, pkg_supervisor, dsp_supervisor
 
         function showFilterData(){
             if(sessionStorage.getItem("filterData")){
