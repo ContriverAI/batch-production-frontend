@@ -72,7 +72,110 @@
             </div>
 
             <div id="Reports" class="tabcontent">
-                <h3 style="text-align: center;">Reports</h3>
+
+                <div style="display: flex;flex-direction: row;">
+                    <h3 style="text-align: center;">Users</h3>
+                    <div style="margin: auto; margin-right: 55px;">
+                        <button id = "coolingBtn" class="btn btn-lg btn-primary  createBtn disabled" >Cooling</button>
+                        <button id = "productionBtn" class="btn btn-lg btn-primary  updateBtn" >Production</button>
+                        <button id = "storeBtn" class="btn btn-lg btn-primary  deleteBtn" >Store</button>
+                    </div>    
+                </div>
+                <div style="display: flex;">
+                    <table id="filter_table" style="margin-top: 10px;width: 60%;">
+                        
+                    </table>
+
+                    <form class="form-create-cooling card" id="createCoolingForm" method = "POST">
+                
+                        <div style="margin-top: 20px;">
+                            <label for="inputUsername" >Username</label>
+                            <input type="text" id="input_username" class="form-control" placeholder="Enter username"  required autofocus>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <label for="inputpassword" >Password</label>
+                            <input type="password" id="input_password" class="form-control" placeholder="Enter password"  required autofocus>
+                        </div>
+
+                        <div style="margin-top: 20px;margin-bottom: 20px;">
+                            <label for="inputDesignation">Designation</label>
+                            <select id="inputDesignation" name="inputDesignation" class="form-control" required autofocus>
+                                <option value="user">User</option>
+                                <option value="supervisor">Supervisor</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-top: 10px;margin-bottom: 20px;">
+                        <label for="inputRole">Role</label>
+                            <select id="inputRole" name="inputRole" class="form-control" required autofocus>
+                                <option value="cooling">Cooling</option>
+                                <option value="production">Production</option>
+                                <option value="store">Store</option>
+                                <option value="system">System</option>
+                            </select>
+                        </div>
+                
+                        <button id = "submitCreateUser" class="btn btn-lg btn-primary btn-block" type="submit">Create</button>
+                        <p id="creatingText" style="margin-top: 20px; display: none;">Creating ...</p>
+                    </form>
+
+
+                    <form class="form-create-production card" id="createProductionForm" method = "POST">
+                
+                        <div style="margin-top: 20px;">
+                            <label for="input_update_username" >Username</label>
+                            <select id="input_update_username" name="input_update_username" class="form-control" required autofocus>
+                            
+                            </select>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <label for="inputpassword" >New Password</label>
+                            <input type="password" id="input_update_password" class="form-control" placeholder="Enter password"  required autofocus>
+                        </div>
+
+                        <div style="margin-top: 20px;margin-bottom: 20px;">
+                            <label for="inputUpdateDesignation">New Designation</label>
+                            <select id="inputUpdateDesignation" name="inputUpdateDesignation" class="form-control" required autofocus>
+                                <option value="user">User</option>
+                                <option value="supervisor">Supervisor</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+
+                        <div style="margin-top: 10px;margin-bottom: 20px;">
+                            <label for="inputUpdateRole">New Role</label>
+                            <select id="inputUpdateRole" name="inputUpdateRole" class="form-control" required autofocus>
+                                <option value="cooling">Cooling</option>
+                                <option value="production">Production</option>
+                                <option value="store">Store</option>
+                                <option value="system">System</option>
+                            </select>
+                        </div>
+                
+                        <button id = "submitUpdateUser" class="btn btn-lg btn-primary btn-block" type="submit">Update</button>
+                        <p id="updatingText" style="margin-top: 20px; display: none;">Updating ...</p>
+                    </form>
+
+                    <form class="form-create-store card" id="deleteUserForm" method = "POST">
+                
+                        <div style="margin-top: 20px;margin-bottom: 20px;">
+                            <label for="input_delete_username" >Username</label>
+                            <select id="input_delete_username" name="input_delete_username" class="form-control" required autofocus>
+                            
+                            </select>
+                        </div>
+                
+                        <button id = "submitDeleteUser" class="btn btn-lg btn-primary btn-block" type="submit">Delete</button>
+                        <p id="deletingText" style="margin-top: 20px; display: none;">Deleting ...</p>
+                    </form>
+
+                </div>
+
+
+
                 
             </div>
 

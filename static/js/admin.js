@@ -518,40 +518,33 @@ if(navigator.onLine)
 
                 });
 
-                // function UserUpdate(){
+                $("#coolingBtn").click(function(){
+                    $(this).addClass("disabled");
+                    $("#productionBtn").removeClass("disabled");
+                    $("#storeBtn").removeClass("disabled");
+                    document.getElementById("createCoolingForm").style.display = "inline";
+                    document.getElementById("createProductionForm").style.display = "none";
+                    document.getElementById("createStoreForm").style.display = "none";
+                });
 
-                //     //DELETE USER
+                $("#productionBtn").click(function(){
+                    $(this).addClass("disabled");
+                    $("#coolingBtn").removeClass("disabled");
+                    $("#storeBtn").removeClass("disabled");
+                    document.getElementById("createCoolingForm").style.display = "none";
+                    document.getElementById("createProductionForm").style.display = "inline";
+                    document.getElementById("createStoreForm").style.display = "none";
+                });
 
-                //     var data = sessionStorage.getItem("usersData");
-                //     var m = JSON.parse(data);
-                //     console.log(m.data);
+                $("#storeBtn").click(function(){
+                    $(this).addClass("disabled");
+                    $("#coolingBtn").removeClass("disabled");
+                    $("#productionBtn").removeClass("disabled");
+                    document.getElementById("createCoolingForm").style.display = "none";
+                    document.getElementById("createProductionForm").style.display = "none";
+                    document.getElementById("createStoreForm").style.display = "inline";
+                });
 
-                //     var options = '';
-                    
-
-                //     for(var i = 0; i < m.data.length; i++)
-                //         options += '<option value="'+m.data[i][0]+'">'+m.data[i][0]+'</option>';
-
-                //     document.getElementById('input_delete_username').innerHTML = options;
-
-
-                //     //UPDATE USER
-
-                //     var data = sessionStorage.getItem("usersData");
-                //     var m = JSON.parse(data);
-                //     console.log(m.data);
-
-                //     var options = '';
-                    
-
-                //     for(var i = 0; i < m.data.length; i++)
-                //         options += '<option value="'+m.data[i][0]+'">'+m.data[i][0]+'</option>';
-
-                //     document.getElementById('input_update_username').innerHTML = options;
-
-                // }
-
-                // setInterval(UserUpdate , 10000);
         
         });
 }
