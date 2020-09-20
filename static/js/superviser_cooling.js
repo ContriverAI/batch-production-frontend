@@ -400,25 +400,25 @@ if(navigator.onLine)
 
         function showFilterData(){
             if(sessionStorage.getItem("filterData")){
-                var table_row = `<tr>
-                            <th>Date</th>
-                            <th>Trolley</th>
-                            <th>Product</th>
-                            <th>Qty</th>
-                            <th>Time In</th>
-                            <th>Complete Time</th>
-                            <th>Remaining Time</th>
-                        </tr>`;
+                
+                var data = sessionStorage.getItem("filterData");
+                var m = JSON.parse(data);
 
-                        var data = sessionStorage.getItem("filterData");
-                        var m = JSON.parse(data);
-                        console.log(m.data);
+                var table_row = `<tr>`;
+
+                        for(var i = 0; i < m.columns.length; i++){
+
+                            table_row += '<th>'+ m.columns[i] +'</th>';
+                        
+                        }
+
+                    table_row += `</tr>`
+
 
                         for(var i = 0; i < m.data.length; i++){
 
                                     var date = new Date(m.data[i][0]);
                                     var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
-                                    var remTime = msToTime(m.data[i][11]) === "00:00"? "Done" : msToTime(m.data[i][11]);
 
                                     table_row += 
                                     '<tr>'+
@@ -426,9 +426,6 @@ if(navigator.onLine)
                                         '<td>'+m.data[i][1]+'</td>'+
                                         '<td>'+m.data[i][2]+'</td>'+
                                         '<td>'+m.data[i][3]+'</td>'+
-                                        '<td>'+msToTime(m.data[i][4])+'</td>'+
-                                        '<td>'+msToTime(m.data[i][6])+'</td>'+
-                                        '<td>'+remTime+'</td>'+
                                     '</tr>';
                             
                         }
