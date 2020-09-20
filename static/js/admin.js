@@ -186,6 +186,9 @@ if(navigator.onLine)
                                             <th>ROUGH RETURNED BREAD</th>
                                             <th>BREAD IN STORE</th>
                                             <th>ROUGH BREAD IN STORE</th>
+                                            <th>Pkg Supervisor</th>
+                                            <th>Dispatched Date</th>
+                                            <th>Dispatch Supervisor</th>
                                         </tr>`;
 
                                         var data = sessionStorage.getItem("storeData");
@@ -220,6 +223,9 @@ if(navigator.onLine)
                                                         '<td>'+m.data[i][6]+'</td>'+
                                                         '<td>'+bis[i]+'</td>'+
                                                         '<td>'+rbis[i]+'</td>'+
+                                                        '<td>'+m.data[i][10]+'</td>'+
+                                                        '<td>'+msToTime(m.data[i][11])+'</td>'+
+                                                        '<td>'+m.data[i][12]+'</td>'+
                                                     '</tr>';
                                         }
 
