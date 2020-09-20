@@ -212,6 +212,9 @@ if(navigator.onLine)
 
                                                     var date = new Date(m.data[i][0]);
                                                     var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
+                                                    var date_1 = new Date(m.data[i][11])
+                                                    var finalD_1 = date_1.getDate()+'-' + (date_1.getMonth()+1) + '-'+date_1.getFullYear();
+                                                    
                                                     table_row += 
                                                     '<tr>'+
                                                         '<td>'+ finalD +'</td>'+
@@ -224,7 +227,7 @@ if(navigator.onLine)
                                                         '<td>'+bis[i]+'</td>'+
                                                         '<td>'+rbis[i]+'</td>'+
                                                         '<td>'+m.data[i][10]+'</td>'+
-                                                        '<td>'+msToTime(m.data[i][11])+'</td>'+
+                                                        '<td>'+finalD_1+'</td>'+
                                                         '<td>'+m.data[i][12]+'</td>'+
                                                     '</tr>';
                                         }
@@ -709,17 +712,19 @@ if(navigator.onLine)
                 function showFilterStoreData(){
                     if(sessionStorage.getItem("filterStoreData")){
                                 var table_row = `<tr>
-                                <th> DATE </th>
-                                <th> PRODUCT </th>
-                                <th>QTY RECEIVED STANDARD</th>
-                                <th>QTY RECEIVED ROUGH</th>
-                                <th>DISPATCHED STANDARD</th>
-                                <th>DISPATCHED ROUGH</th>
-                                <th>ROUGH RETURNED BREAD</th>
-                                <th>BREAD IN STORE</th>
-                                <th>ROUGH BREAD IN STORE</th>
-                            </tr>`;
-        
+                                    <th> DATE </th>
+                                    <th> PRODUCT </th>
+                                    <th>QTY RECEIVED STANDARD</th>
+                                    <th>QTY RECEIVED ROUGH</th>
+                                    <th>DISPATCHED STANDARD</th>
+                                    <th>DISPATCHED ROUGH</th>
+                                    <th>ROUGH RETURNED BREAD</th>
+                                    <th>BREAD IN STORE</th>
+                                    <th>ROUGH BREAD IN STORE</th>
+                                    <th>Pkg Supervisor</th>
+                                    <th>Dispatch Supervisor</th>
+                                </tr>`;
+            
                             var data = sessionStorage.getItem("filterStoreData");
                             var m = JSON.parse(data);
                             console.log(m.data);
@@ -753,6 +758,8 @@ if(navigator.onLine)
                                             '<td>'+m.data[i][6]+'</td>'+
                                             '<td>'+bis[i]+'</td>'+
                                             '<td>'+rbis[i]+'</td>'+
+                                            '<td>'+m.data[i][9]+'</td>'+
+                                            '<td>'+m.data[i][10]+'</td>'+
                                         '</tr>';
                             }
         
@@ -765,7 +772,7 @@ if(navigator.onLine)
                     event.stopPropagation();
                     event.preventDefault();
         
-                    const url = "http://34.122.82.176:9001/get/coolingreport"
+                    const url = "http://34.122.82.176:9001/get/storereport"
                     document.getElementById("storeText").style.display = "inline";
         
                     $.ajax({

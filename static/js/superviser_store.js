@@ -234,6 +234,9 @@ if(navigator.onLine)
 
         });
 
+        date_time,product,`qty received standard`,`qty received rough`, `dispatched standard`, 
+        `dispatched rough`, `rough returned`, `bread in store`, `rough bread in store`, pkg_supervisor, dsp_supervisor
+
         function showFilterData(){
             if(sessionStorage.getItem("filterData")){
                         var table_row = `<tr>
@@ -246,6 +249,8 @@ if(navigator.onLine)
                         <th>ROUGH RETURNED BREAD</th>
                         <th>BREAD IN STORE</th>
                         <th>ROUGH BREAD IN STORE</th>
+                        <th>Pkg Supervisor</th>
+                        <th>Dispatch Supervisor</th>
                     </tr>`;
 
                     var data = sessionStorage.getItem("filterData");
@@ -281,6 +286,8 @@ if(navigator.onLine)
                                     '<td>'+m.data[i][6]+'</td>'+
                                     '<td>'+bis[i]+'</td>'+
                                     '<td>'+rbis[i]+'</td>'+
+                                    '<td>'+m.data[i][9]+'</td>'+
+                                    '<td>'+m.data[i][10]+'</td>'+
                                 '</tr>';
                     }
 
@@ -293,7 +300,7 @@ if(navigator.onLine)
             event.stopPropagation();
             event.preventDefault();
 
-            const url = "http://34.122.82.176:9001/get/coolingreport"
+            const url = "http://34.122.82.176:9001/get/storereport"
             document.getElementById("filterText").style.display = "inline";
 
             $.ajax({
