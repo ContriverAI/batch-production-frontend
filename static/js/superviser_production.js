@@ -469,8 +469,7 @@ if(navigator.onLine)
                 200: function() {
                         console.log("success");
                 }
-                }
-                ,
+                },
                 contentType:"application/json; charset=utf-8",
                 success: function(data, textStatus, jqXHR)
                 {

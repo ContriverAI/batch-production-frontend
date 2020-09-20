@@ -146,7 +146,50 @@
         </div>
 
         <div id="Reports" class="tabcontent">
-            <h3 style="text-align: center;">Reports</h3>
+            
+            <div style="display: flex;flex-direction: row;">
+                <h3 style="text-align: center;">Reports</h3>
+                <div style="margin: auto; margin-right: 150px;">
+                    <button id = "changeFilterBtn" class="btn btn-lg btn-primary  createBtn disabled" >Filters</button>
+                </div> 
+            </div>
+
+            <div style="display: flex;">
+                <table id="filter_table" style="margin-top: 10px;width: 60%;">
+                    
+                </table>
+
+                <form class="form-create-filter card" id="createFilterForm" method = "POST">
+
+                    <div>
+                        <label for="input_main_date_from" >From</label>
+                        <input type="date" id="input_main_date_from" class="form-control" placeholder="Enter Date"  required autofocus>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <label for="input_main_date_to" >To</label>
+                        <input type="date" id="input_main_date_to" class="form-control" placeholder="Enter Date"  required autofocus>
+                    </div>
+                
+                    <div style="margin-top: 20px;margin-bottom: 20px;">
+                        <label for="input_main_product_filter" >Product name</label>
+                        <select id="input_main_product_filter" name="input_main_product_filter" class="form-control" multiple required autofocus>
+                                <option value="JSP">Jumbo Special</option>
+                                <option value="JMX">Jumbo Max</option>
+                                <option value="ECO">Economy Sliced</option>
+                                <option value="OYK">Oyokun Unsliced</option>
+                                <option value="LMD">Long Midi</option>
+                        </select>
+                    </div>
+    
+                  
+                    <button id = "submitCreateFilter" class="btn btn-lg btn-primary btn-block" type="submit">Get Data</button>
+                    <p id="filterText" style="margin-top: 20px; display: none;">Getting Data ...</p>
+                </form>
+            </div>
+
+
+
         </div>
     </div>
     

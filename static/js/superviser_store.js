@@ -55,56 +55,56 @@ if(navigator.onLine)
                 function localStoreData(){
 
                     if(sessionStorage.getItem("storeData")){
-                    var table_row = `<tr>
-                                <th> DATE </th>
-                                <th> PRODUCT </th>
-                                <th>QTY RECEIVED STANDARD</th>
-                                <th>QTY RECEIVED ROUGH</th>
-                                <th>DISPATCHED STANDARD</th>
-                                <th>DISPATCHED ROUGH</th>
-                                <th>ROUGH RETURNED BREAD</th>
-                                <th>BREAD IN STORE</th>
-                                <th>ROUGH BREAD IN STORE</th>
-                            </tr>`;
+                        var table_row = `<tr>
+                                    <th> DATE </th>
+                                    <th> PRODUCT </th>
+                                    <th>QTY RECEIVED STANDARD</th>
+                                    <th>QTY RECEIVED ROUGH</th>
+                                    <th>DISPATCHED STANDARD</th>
+                                    <th>DISPATCHED ROUGH</th>
+                                    <th>ROUGH RETURNED BREAD</th>
+                                    <th>BREAD IN STORE</th>
+                                    <th>ROUGH BREAD IN STORE</th>
+                                </tr>`;
 
-                            var data = sessionStorage.getItem("storeData");
-                            var m = JSON.parse(data);
-                            console.log(m.data);
+                                var data = sessionStorage.getItem("storeData");
+                                var m = JSON.parse(data);
+                                console.log(m.data);
 
-                            var bis = [];
-                            var rbis = [];
-                            for(var i= 0 ; i < m.data.length;i++){
-                                if( i === 0){
-                                    bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6]);
-                                    rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
+                                var bis = [];
+                                var rbis = [];
+                                for(var i= 0 ; i < m.data.length;i++){
+                                    if( i === 0){
+                                        bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6]);
+                                        rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
+                                    }
+                                    else{
+                                        bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6] + bis[i-1]);
+                                        rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
+                                    }
                                 }
-                                else{
-                                    bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6] + bis[i-1]);
-                                    rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
+
+                                for(var i = 0; i < m.data.length; i++){
+
+
+                                            var date = new Date(m.data[i][0]);
+                                            var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
+                                            table_row += 
+                                            '<tr>'+
+                                                '<td>'+ finalD +'</td>'+
+                                                '<td>'+m.data[i][1]+'</td>'+
+                                                '<td>'+m.data[i][2]+'</td>'+
+                                                '<td>'+m.data[i][3]+'</td>'+
+                                                '<td>'+m.data[i][4]+'</td>'+
+                                                '<td>'+m.data[i][5]+'</td>'+
+                                                '<td>'+m.data[i][6]+'</td>'+
+                                                '<td>'+bis[i]+'</td>'+
+                                                '<td>'+rbis[i]+'</td>'+
+                                            '</tr>';
                                 }
+
+                                document.getElementById('superviser_store_table').innerHTML = table_row;
                             }
-
-                            for(var i = 0; i < m.data.length; i++){
-
-
-                                        var date = new Date(m.data[i][0]);
-                                        var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
-                                        table_row += 
-                                        '<tr>'+
-                                            '<td>'+ finalD +'</td>'+
-                                            '<td>'+m.data[i][1]+'</td>'+
-                                            '<td>'+m.data[i][2]+'</td>'+
-                                            '<td>'+m.data[i][3]+'</td>'+
-                                            '<td>'+m.data[i][4]+'</td>'+
-                                            '<td>'+m.data[i][5]+'</td>'+
-                                            '<td>'+m.data[i][6]+'</td>'+
-                                            '<td>'+bis[i]+'</td>'+
-                                            '<td>'+rbis[i]+'</td>'+
-                                        '</tr>';
-                            }
-
-                            document.getElementById('superviser_store_table').innerHTML = table_row;
-                        }
                 }
 
                 localStoreData();
@@ -227,6 +227,97 @@ if(navigator.onLine)
                 {
                     modal.style.display = "none";
                     alert(data);
+                },
+                error: function (e)
+                {
+                    console.log(e);
+                }
+            });
+
+        });
+
+        function showFilterData(){
+            if(sessionStorage.getItem("filterData")){
+                        var table_row = `<tr>
+                        <th> DATE </th>
+                        <th> PRODUCT </th>
+                        <th>QTY RECEIVED STANDARD</th>
+                        <th>QTY RECEIVED ROUGH</th>
+                        <th>DISPATCHED STANDARD</th>
+                        <th>DISPATCHED ROUGH</th>
+                        <th>ROUGH RETURNED BREAD</th>
+                        <th>BREAD IN STORE</th>
+                        <th>ROUGH BREAD IN STORE</th>
+                    </tr>`;
+
+                    var data = sessionStorage.getItem("filterData");
+                    var m = JSON.parse(data);
+                    console.log(m.data);
+
+                    var bis = [];
+                    var rbis = [];
+                    for(var i= 0 ; i < m.data.length;i++){
+                        if( i === 0){
+                            bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6]);
+                            rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
+                        }
+                        else{
+                            bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6] + bis[i-1]);
+                            rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
+                        }
+                    }
+
+                    for(var i = 0; i < m.data.length; i++){
+
+
+                                var date = new Date(m.data[i][0]);
+                                var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
+                                table_row += 
+                                '<tr>'+
+                                    '<td>'+ finalD +'</td>'+
+                                    '<td>'+m.data[i][1]+'</td>'+
+                                    '<td>'+m.data[i][2]+'</td>'+
+                                    '<td>'+m.data[i][3]+'</td>'+
+                                    '<td>'+m.data[i][4]+'</td>'+
+                                    '<td>'+m.data[i][5]+'</td>'+
+                                    '<td>'+m.data[i][6]+'</td>'+
+                                    '<td>'+bis[i]+'</td>'+
+                                    '<td>'+rbis[i]+'</td>'+
+                                '</tr>';
+                    }
+
+                document.getElementById('filter_table').innerHTML = table_row;
+
+            }
+        }
+
+        $(".form-create-filter").submit(function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+
+            const url = "http://34.122.82.176:9001/get/coolingreport"
+            document.getElementById("filterText").style.display = "inline";
+
+            $.ajax({
+                url:url,
+                type:"POST",
+                data:JSON.stringify({
+                    "date_from": $('#input_main_date_from').val(),
+                    "date_to": $('#input_main_date_to').val(),
+                    "product": $('#input_main_product_filter').val(),
+                }),
+                statusCode :{
+                200: function() {
+                        console.log("success");
+                }
+                },
+                contentType:"application/json; charset=utf-8",
+                success: function(data, textStatus, jqXHR)
+                {
+                    sessionStorage.setItem("filterData" , data);
+                    alert(data);
+                    document.getElementById("filterText").style.display = "none";
+                    showFilterData();
                 },
                 error: function (e)
                 {
