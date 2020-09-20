@@ -183,3 +183,38 @@ tr:nth-child(even) {
   text-decoration: none;
   cursor: pointer;
 }
+
+.form-create-cooling{
+  max-height: 650px;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-right: 80px;
+  width: 25%;
+  text-align: center;
+  background: white;
+}
+
+.form-create-production{
+  max-height: 650px;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-right: 80px;
+  width: 25%;
+  text-align: center;
+  background: white;
+  display: none;
+}
+
+.form-create-cooling{
+  max-height: 650px;
+  margin: auto;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-right: 80px;
+  width: 25%;
+  text-align: center;
+  background: white;
+  display: none;
+}

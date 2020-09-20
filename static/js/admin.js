@@ -545,6 +545,241 @@ if(navigator.onLine)
                     document.getElementById("createStoreForm").style.display = "inline";
                 });
 
+                function showFilterCoolingData(){
+                    if(sessionStorage.getItem("filterCoolingData")){
+                        
+                        var data = sessionStorage.getItem("filterCoolingData");
+                        var m = JSON.parse(data);
+        
+                        var table_row = `<tr>`;
+        
+                                for(var i = 0; i < m.columns.length; i++){
+        
+                                    table_row += '<th>'+ m.columns[i] +'</th>';
+                                
+                                }
+        
+                            table_row += `</tr>`
+        
+        
+                                for(var i = 0; i < m.data.length; i++){
+        
+                                            var date = new Date(m.data[i][0]);
+                                            var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
+        
+                                            table_row += 
+                                            '<tr>'+
+                                                '<td>'+ finalD +'</td>'+
+                                                '<td>'+m.data[i][1]+'</td>'+
+                                                '<td>'+m.data[i][2]+'</td>'+
+                                                '<td>'+m.data[i][3]+'</td>'+
+                                            '</tr>';
+                                    
+                                }
+        
+                                document.getElementById('filter_table').innerHTML = table_row;
+                        }
+                }
+        
+        
+                $(".form-create-cooling").submit(function(event) {
+                    event.stopPropagation();
+                    event.preventDefault();
+        
+                    const url = "http://34.122.82.176:9001/get/coolingreport"
+                    document.getElementById("coolingText").style.display = "inline";
+        
+                    $.ajax({
+                        url:url,
+                        type:"POST",
+                        data:JSON.stringify({
+                            "date_from": $('#input_main_date_from_cooling').val(),
+                            "date_to": $('#input_main_date_to_cooling').val(),
+                            "product": $('#input_main_product_filter_cooling').val(),
+                            "packaging": $('#input_packaging_status_filter_cooling').val(),
+                        }),
+                        statusCode :{
+                        200: function() {
+                                console.log("success");
+                        }
+                        }
+                        ,
+                        contentType:"application/json; charset=utf-8",
+                        success: function(data, textStatus, jqXHR)
+                        {
+                            sessionStorage.setItem("filterCoolingData" , data);
+                            alert(data);
+                            document.getElementById("coolingText").style.display = "none";
+                            showFilterCoolingData();
+                        },
+                        error: function (e)
+                        {
+                            console.log(e);
+                        }
+                    });
+        
+                });
+
+                function showFilterProductionData(){
+                    if(sessionStorage.getItem("filterProductionData")){
+                                var table_row = `<tr>    
+                                    <th>Date</th>
+                                    <th>Shift</th>
+                                    <th>Batch</th>
+                                    <th>Product</th>
+                                    <th>Status</th>
+                                </tr>`;
+        
+                                var data = sessionStorage.getItem("filterProductionData");
+                                var m = JSON.parse(data);
+                                console.log(m.data);
+        
+                                for(var i = 0; i < m.data.length; i++){
+                                        var date = new Date(m.data[i][0]);
+                                        var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
+                                        table_row += 
+                                        '<tr>'+
+                                            '<td>'+ finalD +'</td>'+
+                                            '<td>'+m.data[i][1]+'</td>'+
+                                            '<td>'+m.data[i][2]+'</td>'+
+                                            '<td>'+m.data[i][3]+'</td>'+
+                                            '<td>'+m.data[i][4]+'</td>'+
+                                        '</tr>';
+                                    
+                                }
+        
+                                document.getElementById('filter_table').innerHTML = table_row;
+        
+                    }
+                }
+
+                $(".form-create-production").submit(function(event) {
+                    event.stopPropagation();
+                    event.preventDefault();
+        
+                    const url = "http://34.122.82.176:9001/get/coolingreport"
+                    document.getElementById("productionText").style.display = "inline";
+        
+                    $.ajax({
+                        url:url,
+                        type:"POST",
+                        data:JSON.stringify({
+                            "date_from": $('#input_main_date_from_production').val(),
+                            "date_to": $('#input_main_date_to_production').val(),
+                            "product": $('#input_main_product_filter_production').val(),
+                            "status": $('#input_packaging_status_filter_production').val(),
+                        }),
+                        statusCode :{
+                        200: function() {
+                                console.log("success");
+                        }
+                        },
+                        contentType:"application/json; charset=utf-8",
+                        success: function(data, textStatus, jqXHR)
+                        {
+                            sessionStorage.setItem("filterProductionData" , data);
+                            alert(data);
+                            document.getElementById("productionText").style.display = "none";
+                            showFilterProductionData();
+                        },
+                        error: function (e)
+                        {
+                            console.log(e);
+                        }
+                    });
+        
+                });
+
+                function showFilterStoreData(){
+                    if(sessionStorage.getItem("filterStoreData")){
+                                var table_row = `<tr>
+                                <th> DATE </th>
+                                <th> PRODUCT </th>
+                                <th>QTY RECEIVED STANDARD</th>
+                                <th>QTY RECEIVED ROUGH</th>
+                                <th>DISPATCHED STANDARD</th>
+                                <th>DISPATCHED ROUGH</th>
+                                <th>ROUGH RETURNED BREAD</th>
+                                <th>BREAD IN STORE</th>
+                                <th>ROUGH BREAD IN STORE</th>
+                            </tr>`;
+        
+                            var data = sessionStorage.getItem("filterStoreData");
+                            var m = JSON.parse(data);
+                            console.log(m.data);
+        
+                            var bis = [];
+                            var rbis = [];
+                            for(var i= 0 ; i < m.data.length;i++){
+                                if( i === 0){
+                                    bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6]);
+                                    rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
+                                }
+                                else{
+                                    bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6] + bis[i-1]);
+                                    rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
+                                }
+                            }
+        
+                            for(var i = 0; i < m.data.length; i++){
+        
+        
+                                        var date = new Date(m.data[i][0]);
+                                        var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
+                                        table_row += 
+                                        '<tr>'+
+                                            '<td>'+ finalD +'</td>'+
+                                            '<td>'+m.data[i][1]+'</td>'+
+                                            '<td>'+m.data[i][2]+'</td>'+
+                                            '<td>'+m.data[i][3]+'</td>'+
+                                            '<td>'+m.data[i][4]+'</td>'+
+                                            '<td>'+m.data[i][5]+'</td>'+
+                                            '<td>'+m.data[i][6]+'</td>'+
+                                            '<td>'+bis[i]+'</td>'+
+                                            '<td>'+rbis[i]+'</td>'+
+                                        '</tr>';
+                            }
+        
+                        document.getElementById('filter_table').innerHTML = table_row;
+        
+                    }
+                }
+
+                $(".form-create-store").submit(function(event) {
+                    event.stopPropagation();
+                    event.preventDefault();
+        
+                    const url = "http://34.122.82.176:9001/get/coolingreport"
+                    document.getElementById("storeText").style.display = "inline";
+        
+                    $.ajax({
+                        url:url,
+                        type:"POST",
+                        data:JSON.stringify({
+                            "date_from": $('#input_main_date_from_store').val(),
+                            "date_to": $('#input_main_date_to_store').val(),
+                            "product": $('#input_main_product_filter_store').val(),
+                        }),
+                        statusCode :{
+                        200: function() {
+                                console.log("success");
+                        }
+                        },
+                        contentType:"application/json; charset=utf-8",
+                        success: function(data, textStatus, jqXHR)
+                        {
+                            sessionStorage.setItem("filterStoreData" , data);
+                            alert(data);
+                            document.getElementById("storeText").style.display = "none";
+                            showFilterStoreData();
+                        },
+                        error: function (e)
+                        {
+                            console.log(e);
+                        }
+                    });
+        
+                });
         
         });
 }
