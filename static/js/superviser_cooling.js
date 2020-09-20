@@ -401,29 +401,39 @@ if(navigator.onLine)
         function showFilterData(){
             if(sessionStorage.getItem("filterData")){
                 var table_row = `<tr>
+                            <th>Date</th>
                             <th>Trolley</th>
                             <th>Product</th>
                             <th>Qty</th>
-                            <th>Packaging Complete </th>
+                            <th>Time In</th>
+                            <th>Complete Time</th>
+                            <th>Remaining Time</th>
                         </tr>`;
 
                         var data = sessionStorage.getItem("filterData");
                         var m = JSON.parse(data);
+                        console.log(m.data);
 
                         for(var i = 0; i < m.data.length; i++){
 
-                            if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
+                                    var date = new Date(m.data[i][0]);
+                                    var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
+                                    var remTime = msToTime(m.data[i][11]) === "00:00"? "Done" : msToTime(m.data[i][11]);
+
                                     table_row += 
-                                    '<tr id='+m.data[i][1]+'>'+
+                                    '<tr>'+
+                                        '<td>'+ finalD +'</td>'+
                                         '<td>'+m.data[i][1]+'</td>'+
                                         '<td>'+m.data[i][2]+'</td>'+
                                         '<td>'+m.data[i][3]+'</td>'+
-                                        '<td><button id = "Pak" class="btn btn-lg btn-primary btn-block" type="button">Yes</button></td>'+
+                                        '<td>'+msToTime(m.data[i][4])+'</td>'+
+                                        '<td>'+msToTime(m.data[i][6])+'</td>'+
+                                        '<td>'+remTime+'</td>'+
                                     '</tr>';
-                            }
+                            
                         }
 
-                        document.getElementById('user_cooling_packaging_table').innerHTML = table_row;
+                        document.getElementById('filter_table').innerHTML = table_row;
                 }
         }
 
@@ -432,15 +442,17 @@ if(navigator.onLine)
             event.stopPropagation();
             event.preventDefault();
 
-            const url = "http://34.122.82.176:9001/"
+            const url = "http://34.122.82.176:9001/get/coolingreport"
             document.getElementById("filterText").style.display = "inline";
 
             $.ajax({
                 url:url,
                 type:"POST",
                 data:JSON.stringify({
-                    "productCode": $('#input_main_product').val(),
-                    "duration": $('#input_duration').val()+":00",
+                    "date_from": $('#input_main_date_from').val(),
+                    "date_to": $('#input_main_date_to').val(),
+                    "product": $('#input_main_product_filter').val(),
+                    "packaging": $('#input_packaging_status_filter').val(),
                 }),
                 statusCode :{
                 200: function() {

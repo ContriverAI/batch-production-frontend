@@ -147,10 +147,20 @@
                     </table>
 
                     <form class="form-create-filter card" id="createFilterForm" method = "POST">
+
+                        <div style="margin-top: 20px;">
+                            <label for="input_main_date_from" >From</label>
+                            <input type="date" id="input_main_date_from" class="form-control" placeholder="Enter Date"  required autofocus>
+                        </div>
+
+                        <div style="margin-top: 20px;">
+                            <label for="input_main_date_to" >To</label>
+                            <input type="date" id="input_main_date_to" class="form-control" placeholder="Enter Date"  required autofocus>
+                        </div>
                     
                         <div style="margin-top: 20px;">
-                            <label for="input_main_product" >Product name</label>
-                            <select id="input_main_product" name="input_main_product" class="form-control" required autofocus>
+                            <label for="input_main_product_filter" >Product name</label>
+                            <select id="input_main_product_filter" name="input_main_product_filter" class="form-control" multiple required autofocus>
                                     <option value="JSP">Jumbo Special</option>
                                     <option value="JMX">Jumbo Max</option>
                                     <option value="ECO">Economy Sliced</option>
@@ -159,11 +169,16 @@
                             </select>
                         </div>
 
+
                         <div style="margin-top: 20px;margin-bottom: 20px;">
-                            <label for="inputDuration" >Duration</label>
-                            <input type="time" id="input_duration" class="form-control" placeholder="Enter time"  required autofocus>
+                            <label for="input_packaging_status_filter" >Status</label>
+                            <select id="input_packaging_status_filter" name="input_packaging_status_filter" class="form-control" multiple required autofocus>
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
                         </div>
-                
+        
+                      
                         <button id = "submitCreateFilter" class="btn btn-lg btn-primary btn-block" type="submit">Get Data</button>
                         <p id="filterText" style="margin-top: 20px; display: none;">Getting Data ...</p>
                     </form>
