@@ -404,10 +404,15 @@ if(navigator.onLine)
             if(sessionStorage.getItem("filterData")){
                         var table_row = `<tr>    
                             <th>Date</th>
+                            <th>Product</th>
                             <th>Shift</th>
                             <th>Batch</th>
-                            <th>Product</th>
-                            <th>Status</th>
+                            <th>sum(flour)</th>
+                            <th>sum(remix)</th>
+                            <th>sum(yeast)</th>
+                            <th>sum(yield)</th>
+                            <th>status</th>
+                            <th>Batch Recall</th>
                         </tr>`;
 
                         var data = sessionStorage.getItem("filterData");
@@ -424,6 +429,11 @@ if(navigator.onLine)
                                     '<td>'+m.data[i][2]+'</td>'+
                                     '<td>'+m.data[i][3]+'</td>'+
                                     '<td>'+m.data[i][4]+'</td>'+
+                                    '<td>'+m.data[i][5]+'</td>'+
+                                    '<td>'+m.data[i][6]+'</td>'+
+                                    '<td>'+m.data[i][7]+'</td>'+
+                                    '<td>'+m.data[i][8]+'</td>'+
+                                    '<td>'+m.data[i][9]+'</td>'+
                                 '</tr>';
                             
                         }
@@ -437,7 +447,7 @@ if(navigator.onLine)
             event.stopPropagation();
             event.preventDefault();
 
-            const url = "http://34.122.82.176:9001/get/coolingreport"
+            const url = "http://34.122.82.176:9001/get/productionreport"
             document.getElementById("filterText").style.display = "inline";
 
             $.ajax({
