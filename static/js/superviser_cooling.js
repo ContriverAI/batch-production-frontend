@@ -359,44 +359,110 @@ if(navigator.onLine)
 
     });
 
-    $(".form-cooling-packaging").submit(function(event) {
-        event.stopPropagation();
-        event.preventDefault();
+        $(".form-cooling-packaging").submit(function(event) {
+            event.stopPropagation();
+            event.preventDefault();
 
-        
-        var modal = document.getElementById("myModal");
-        modal.style.display = "block";
+            
+            var modal = document.getElementById("myModal");
+            modal.style.display = "block";
 
-        const url = "http://34.122.82.176:9001/get/users"
+            const url = "http://34.122.82.176:9001/get/users"
 
-        $.ajax({
-            url:url,
-            type:"POST",
-            data:JSON.stringify({
-                "u_key": sessionStorage.getItem("ukey"), 
-                "trolleyNo": $('#input_packaging_trolley').val(),
-                "status": $('#input_packaging_status').val(),
-                "time": new Date().toLocaleTimeString()
-            }),
-            statusCode :{
-            200: function() {
-                    console.log("success");
-            }
-            }
-            ,
-            contentType:"application/json; charset=utf-8",
-            success: function(data, textStatus, jqXHR)
-            {
-                modal.style.display = "none";
-                alert(data);
-            },
-            error: function (e)
-            {
-                console.log(e);
-            }
+            $.ajax({
+                url:url,
+                type:"POST",
+                data:JSON.stringify({
+                    "u_key": sessionStorage.getItem("ukey"), 
+                    "trolleyNo": $('#input_packaging_trolley').val(),
+                    "status": $('#input_packaging_status').val(),
+                    "time": new Date().toLocaleTimeString()
+                }),
+                statusCode :{
+                200: function() {
+                        console.log("success");
+                }
+                }
+                ,
+                contentType:"application/json; charset=utf-8",
+                success: function(data, textStatus, jqXHR)
+                {
+                    modal.style.display = "none";
+                    alert(data);
+                },
+                error: function (e)
+                {
+                    console.log(e);
+                }
+            });
+
         });
 
-    });
+        function showFilterData(){
+            if(sessionStorage.getItem("filterData")){
+                var table_row = `<tr>
+                            <th>Trolley</th>
+                            <th>Product</th>
+                            <th>Qty</th>
+                            <th>Packaging Complete </th>
+                        </tr>`;
+
+                        var data = sessionStorage.getItem("filterData");
+                        var m = JSON.parse(data);
+
+                        for(var i = 0; i < m.data.length; i++){
+
+                            if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
+                                    table_row += 
+                                    '<tr id='+m.data[i][1]+'>'+
+                                        '<td>'+m.data[i][1]+'</td>'+
+                                        '<td>'+m.data[i][2]+'</td>'+
+                                        '<td>'+m.data[i][3]+'</td>'+
+                                        '<td><button id = "Pak" class="btn btn-lg btn-primary btn-block" type="button">Yes</button></td>'+
+                                    '</tr>';
+                            }
+                        }
+
+                        document.getElementById('user_cooling_packaging_table').innerHTML = table_row;
+                }
+        }
+
+
+        $(".form-create-filter").submit(function(event) {
+            event.stopPropagation();
+            event.preventDefault();
+
+            const url = "http://34.122.82.176:9001/"
+            document.getElementById("filterText").style.display = "inline";
+
+            $.ajax({
+                url:url,
+                type:"POST",
+                data:JSON.stringify({
+                    "productCode": $('#input_main_product').val(),
+                    "duration": $('#input_duration').val()+":00",
+                }),
+                statusCode :{
+                200: function() {
+                        console.log("success");
+                }
+                }
+                ,
+                contentType:"application/json; charset=utf-8",
+                success: function(data, textStatus, jqXHR)
+                {
+                    sessionStorage.setItem("filterData" , data);
+                    alert(data);
+                    document.getElementById("filterText").style.display = "none";
+                    showFilterData();
+                },
+                error: function (e)
+                {
+                    console.log(e);
+                }
+            });
+
+        });
     
     });
 }
