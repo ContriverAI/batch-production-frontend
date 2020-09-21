@@ -58,6 +58,7 @@ if(navigator.onLine)
                     var yyyy = today.getFullYear();
 
                     today =  dd + '-' + mm + '-'+ yyyy;
+                    console.log(today);
                     $("#input_main_date").val(today);
                 }
 
@@ -97,7 +98,6 @@ if(navigator.onLine)
 
                             var data = sessionStorage.getItem("prodData");
                             var m = JSON.parse(data);
-                            // console.log(m.data);
 
                             for(var i = 0; i < m.data.length; i++){
 
@@ -152,7 +152,6 @@ if(navigator.onLine)
 
                             var data = sessionStorage.getItem("prodData");
                             var m = JSON.parse(data);
-                            // console.log(m.data);
 
                             for(var i = 0; i < m.data.length; i++){
                                 if(m.data[i][9] === "Unbaked"){
@@ -160,7 +159,7 @@ if(navigator.onLine)
                                         '<tr id='+m.data[i][8]+'>'+
                                             '<td>'+m.data[i][8]+'</td>'+
                                             '<td>'+msToTime(m.data[i][5])+'</td>'+
-                                            '<td><button id = "Bak" class="btn btn-lg btn-primary btn-block" type="button">Baked</button></td>'+
+                                            '<td><button style="width: 200px" id = "Bak" class="btn btn-lg btn-primary btn-block" type="button">Baked</button></td>'+
                                         '</tr>';
                                 }
                                 
@@ -187,7 +186,6 @@ if(navigator.onLine)
             $(document).on("click" , "#Bak"  ,  function(e) {
                 e.preventDefault();
                 var pid = $(this).parent().parent().attr("id");
-                console.log(pid); 
 
                 var modal = document.getElementById("myModal");
                 modal.style.display = "block";

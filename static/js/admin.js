@@ -141,7 +141,6 @@ if(navigator.onLine)
 
                                     var data = sessionStorage.getItem("prodData");
                                     var m = JSON.parse(data);
-                                    console.log(m.data);
 
                                     for(var i = 0; i < m.data.length; i++){
                                                 var date = new Date(m.data[i][0]);
@@ -491,8 +490,7 @@ if(navigator.onLine)
                     document.getElementById("deleteUserForm").style.display = "none";
 
                     var data = sessionStorage.getItem("usersData");
-                    var m = JSON.parse(data);
-                    console.log(m.data);
+                    var m = JSON.parse(data)
 
                     var options = '';
                     
@@ -514,7 +512,6 @@ if(navigator.onLine)
 
                     var data = sessionStorage.getItem("usersData");
                     var m = JSON.parse(data);
-                    console.log(m.data);
 
                     var options = '';
                     
@@ -597,15 +594,52 @@ if(navigator.onLine)
         
                     const url = "http://34.122.82.176:9001/get/coolingreport"
                     document.getElementById("coolingText").style.display = "inline";
-        
+
+                    var JSP = $('#input_main_product_filter_cooling_JS:checkbox:checked').val();
+                    var JMX = $('#input_main_product_filter_cooling_JM:checkbox:checked').val();
+                    var EC = $('#input_main_product_filter_cooling_EC:checkbox:checked').val();
+                    var OY = $('#input_main_product_filter_cooling_OY:checkbox:checked').val();
+                    var LM = $('#input_main_product_filter_cooling_LM:checkbox:checked').val();
+                    
+                    var checks_prod = []
+
+                    if(JSP){
+                        checks_prod.push(JSP);
+                    }
+                    if(JMX){
+                        checks_prod.push(JMX);
+                    }
+                    if(EC){
+                        checks_prod.push(EC);
+                    }
+                    if(OY){
+                        checks_prod.push(OY);
+                    }
+                    if(LM){
+                        checks_prod.push(LM);
+                    }
+
+                    var check_pack = []
+
+                    var Y = $('#input_packaging_status_filter_cooling_Y:checkbox:checked').val();
+                    var N = $('#input_packaging_status_filter_cooling_N:checkbox:checked').val();
+                    
+                    
+                    if(Y){
+                        check_pack.push(Y);
+                    }
+                    if(N){
+                        check_pack.push(N);
+                    }
+
                     $.ajax({
                         url:url,
                         type:"POST",
                         data:JSON.stringify({
                             "date_from": $('#input_main_date_from_cooling').val(),
                             "date_to": $('#input_main_date_to_cooling').val(),
-                            "product": $('#input_main_product_filter_cooling').val(),
-                            "packaging": $('#input_packaging_status_filter_cooling').val(),
+                            "product": checks_prod,
+                            "packaging": check_pack,
                         }),
                         statusCode :{
                         200: function() {
@@ -617,12 +651,13 @@ if(navigator.onLine)
                         success: function(data, textStatus, jqXHR)
                         {
                             sessionStorage.setItem("filterCoolingData" , data);
-                            alert(data);
+                            alert("Successfull");
                             document.getElementById("coolingText").style.display = "none";
                             showFilterCoolingData();
                         },
                         error: function (e)
                         {
+                            alert("Something Went Wrong");
                             console.log(e);
                         }
                     });
@@ -678,15 +713,52 @@ if(navigator.onLine)
         
                     const url = "http://34.122.82.176:9001/get/productionreport"
                     document.getElementById("productionText").style.display = "inline";
-        
+
+                    var JSP = $('#input_main_product_filter_production_JS:checkbox:checked').val();
+                    var JMX = $('#input_main_product_filter_production_JM:checkbox:checked').val();
+                    var EC = $('#input_main_product_filter_production_EC:checkbox:checked').val();
+                    var OY = $('#input_main_product_filter_production_OY:checkbox:checked').val();
+                    var LM = $('#input_main_product_filter_production_LM:checkbox:checked').val();
+                    
+                    var checks_prod = []
+
+                    if(JSP){
+                        checks_prod.push(JSP);
+                    }
+                    if(JMX){
+                        checks_prod.push(JMX);
+                    }
+                    if(EC){
+                        checks_prod.push(EC);
+                    }
+                    if(OY){
+                        checks_prod.push(OY);
+                    }
+                    if(LM){
+                        checks_prod.push(LM);
+                    }
+                    
+                    var check_pack = []
+
+                    var Y = $('#input_packaging_status_filter_cooling_B:checkbox:checked').val();
+                    var N = $('#input_packaging_status_filter_cooling_U:checkbox:checked').val();
+                    
+                    
+                    if(Y){
+                        check_pack.push(Y);
+                    }
+                    if(N){
+                        check_pack.push(N);
+                    }
+
                     $.ajax({
                         url:url,
                         type:"POST",
                         data:JSON.stringify({
                             "date_from": $('#input_main_date_from_production').val(),
                             "date_to": $('#input_main_date_to_production').val(),
-                            "product": $('#input_main_product_filter_production').val(),
-                            "status": $('#input_packaging_status_filter_production').val(),
+                            "product": checks_prod,
+                            "status": check_pack,
                         }),
                         statusCode :{
                         200: function() {
@@ -697,12 +769,13 @@ if(navigator.onLine)
                         success: function(data, textStatus, jqXHR)
                         {
                             sessionStorage.setItem("filterProductionData" , data);
-                            alert(data);
+                            alert("Sucessfull");
                             document.getElementById("productionText").style.display = "none";
                             showFilterProductionData();
                         },
                         error: function (e)
                         {
+                            alert("Something Went Wrong");
                             console.log(e);
                         }
                     });
@@ -774,6 +847,30 @@ if(navigator.onLine)
         
                     const url = "http://34.122.82.176:9001/get/storereport"
                     document.getElementById("storeText").style.display = "inline";
+
+                    var JSP = $('#input_main_product_filter_store_JS:checkbox:checked').val();
+                    var JMX = $('#input_main_product_filter_store_JM:checkbox:checked').val();
+                    var EC = $('#input_main_product_filter_store_EC:checkbox:checked').val();
+                    var OY = $('#input_main_product_filter_store_OY:checkbox:checked').val();
+                    var LM = $('#input_main_product_filter_store_LM:checkbox:checked').val();
+                    
+                    var checks_prod = []
+
+                    if(JSP){
+                        checks_prod.push(JSP);
+                    }
+                    if(JMX){
+                        checks_prod.push(JMX);
+                    }
+                    if(EC){
+                        checks_prod.push(EC);
+                    }
+                    if(OY){
+                        checks_prod.push(OY);
+                    }
+                    if(LM){
+                        checks_prod.push(LM);
+                    }
         
                     $.ajax({
                         url:url,
@@ -781,7 +878,7 @@ if(navigator.onLine)
                         data:JSON.stringify({
                             "date_from": $('#input_main_date_from_store').val(),
                             "date_to": $('#input_main_date_to_store').val(),
-                            "product": $('#input_main_product_filter_store').val(),
+                            "product": checks_prod,
                         }),
                         statusCode :{
                         200: function() {
@@ -792,12 +889,13 @@ if(navigator.onLine)
                         success: function(data, textStatus, jqXHR)
                         {
                             sessionStorage.setItem("filterStoreData" , data);
-                            alert(data);
+                            alert("Successful");
                             document.getElementById("storeText").style.display = "none";
                             showFilterStoreData();
                         },
                         error: function (e)
                         {
+                            alert("Something Went Wrong");
                             console.log(e);
                         }
                     });

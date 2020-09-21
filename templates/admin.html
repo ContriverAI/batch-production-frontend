@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Lilita One' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/admin.css')}}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
     <title>PIMS</title>
    
   </head>
@@ -101,23 +102,27 @@
                         </div>
                     
                         <div style="margin-top: 20px;">
-                            <label for="input_main_product_filter_cooling" >Product name</label>
-                            <select id="input_main_product_filter_cooling" name="input_main_product_filter_cooling" class="form-control" multiple required autofocus>
-                                    <option value="JSP">Jumbo Special</option>
-                                    <option value="JMX">Jumbo Max</option>
-                                    <option value="ECO">Economy Sliced</option>
-                                    <option value="OYK">Oyokun Unsliced</option>
-                                    <option value="LMD">Long Midi</option>
-                            </select>
+                            <label for="input_main_product_filter_cooling" >Product name</label><br>
+                            <input type="checkbox" name="Jumbo Special" value="JSP" id="input_main_product_filter_cooling_JS" />
+                            <label for="vehicle1"> Jumbo Special</label><br>
+                            <input type="checkbox" name="Jumbo Max" value="JMX" id="input_main_product_filter_cooling_JM" />
+                            <label for="vehicle1"> Jumbo Max</label><br>
+                            <input type="checkbox" name="Economy Sliced" value="ECO" id="input_main_product_filter_cooling_EC" />
+                            <label for="vehicle1"> Economy Sliced</label><br>
+                            <input type="checkbox" name="Oyokun Unsliced" value="OYK" id="input_main_product_filter_cooling_OY" />
+                            <label for="vehicle1"> Oyokun Unsliced</label><br>
+                            <input type="checkbox" name="Long Midi" value="LMD" id="input_main_product_filter_cooling_LM" />
+                            <label for="vehicle1"> Long Midi</label><br>
+                            
                         </div>
 
 
                         <div style="margin-top: 20px;margin-bottom: 20px;">
-                            <label for="input_packaging_status_filter_cooling" >Status</label>
-                            <select id="input_packaging_status_filter_cooling" name="input_packaging_status_filter_cooling" class="form-control" multiple required autofocus>
-                                <option value="Yes">Yes</option>
-                                <option value="No">No</option>
-                            </select>
+                            <label for="input_packaging_status_filter_cooling" >Status</label><br>
+                            <input type="checkbox" name="Oyokun Unsliced" value="Yes" id="input_packaging_status_filter_cooling_Y" />
+                            <label for="vehicle1"> YES</label><br>
+                            <input type="checkbox" name="Long Midi" value="No" id="input_packaging_status_filter_cooling_N" />
+                            <label for="vehicle1"> NO</label><br>
                         </div>
                 
                         <button id = "createCooling" class="btn btn-lg btn-primary btn-block" type="submit">Get Data</button>
@@ -138,23 +143,26 @@
                         </div>
                     
                         <div style="margin-top: 20px;">
-                            <label for="input_main_product_filter_production" >Product name</label>
-                            <select id="input_main_product_filter_production" name="input_main_product_filter_production" class="form-control" multiple required autofocus>
-                                    <option value="JSP">Jumbo Special</option>
-                                    <option value="JMX">Jumbo Max</option>
-                                    <option value="ECO">Economy Sliced</option>
-                                    <option value="OYK">Oyokun Unsliced</option>
-                                    <option value="LMD">Long Midi</option>
-                            </select>
+                            <label for="input_main_product_filter_production" >Product name</label><br>
+                            <input type="checkbox" name="Jumbo Special" value="JSP" id="input_main_product_filter_production_JS" />
+                            <label for="vehicle1"> Jumbo Special</label><br>
+                            <input type="checkbox" name="Jumbo Max" value="JMX" id="input_main_product_filter_production_JM" />
+                            <label for="vehicle1"> Jumbo Max</label><br>
+                            <input type="checkbox" name="Economy Sliced" value="ECO" id="input_main_product_filter_production_EC" />
+                            <label for="vehicle1"> Economy Sliced</label><br>
+                            <input type="checkbox" name="Oyokun Unsliced" value="OYK" id="input_main_product_filter_production_OY" />
+                            <label for="vehicle1"> Oyokun Unsliced</label><br>
+                            <input type="checkbox" name="Long Midi" value="LMD" id="input_main_product_filter_production_LM" />
+                            <label for="vehicle1"> Long Midi</label><br>
                         </div>
     
     
                         <div style="margin-top: 20px;margin-bottom: 20px;">
-                            <label for="input_packaging_status_filter_production" >Status</label>
-                            <select id="input_packaging_status_filter_production" name="input_packaging_status_filter_production" class="form-control" multiple required autofocus>
-                                <option value="Baked">Baked</option>
-                                <option value="Unbaked">Unbaked</option>
-                            </select>
+                            <label for="input_packaging_status_filter_production" >Status</label><br>
+                            <input type="checkbox" name="Oyokun Unsliced" value="Baked" id="input_packaging_status_filter_cooling_B" />
+                            <label for="vehicle1"> Baked</label><br>
+                            <input type="checkbox" name="Long Midi" value="No" id="input_packaging_status_filter_cooling_U" />
+                            <label for="vehicle1"> Unbaked</label><br>
                         </div>
                 
                         <button id = "createProduction" class="btn btn-lg btn-primary btn-block" type="submit">Get Data</button>
@@ -174,14 +182,17 @@
                         </div>
                     
                         <div style="margin-top: 20px;margin-bottom: 20px;">
-                            <label for="input_main_product_filter_store" >Product name</label>
-                            <select id="input_main_product_filter_store" name="input_main_product_filter_store" class="form-control" multiple required autofocus>
-                                    <option value="JSP">Jumbo Special</option>
-                                    <option value="JMX">Jumbo Max</option>
-                                    <option value="ECO">Economy Sliced</option>
-                                    <option value="OYK">Oyokun Unsliced</option>
-                                    <option value="LMD">Long Midi</option>
-                            </select>
+                            <label for="input_main_product_filter_store" >Product name</label><br>
+                            <input type="checkbox" name="Jumbo Special" value="JSP" id="input_main_product_filter_store_JS" />
+                            <label for="vehicle1"> Jumbo Special</label><br>
+                            <input type="checkbox" name="Jumbo Max" value="JMX" id="input_main_product_filter_store_JM" />
+                            <label for="vehicle1"> Jumbo Max</label><br>
+                            <input type="checkbox" name="Economy Sliced" value="ECO" id="input_main_product_filter_store_EC" />
+                            <label for="vehicle1"> Economy Sliced</label><br>
+                            <input type="checkbox" name="Oyokun Unsliced" value="OYK" id="input_main_product_filter_store_OY" />
+                            <label for="vehicle1"> Oyokun Unsliced</label><br>
+                            <input type="checkbox" name="Long Midi" value="LMD" id="input_main_product_filter_store_LM" />
+                            <label for="vehicle1"> Long Midi</label><br>
                         </div>
                 
                         <button id = "createStore" class="btn btn-lg btn-primary btn-block" type="submit">Get Data</button>
@@ -375,6 +386,9 @@
 
     <script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script>
     <script src = "{{url_for('static',filename='js/admin.js')}}" ></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>  -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
+    
 
 
     
