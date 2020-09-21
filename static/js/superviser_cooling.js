@@ -128,19 +128,37 @@ if(navigator.onLine)
                                         var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
                                         var remTime = msToTime(m.data[i][11]) === "00:00"? "Done" : msToTime(m.data[i][11]);
 
-                                        table_row += 
-                                        '<tr>'+
-                                            '<td>'+ finalD +'</td>'+
-                                            '<td>'+m.data[i][1]+'</td>'+
-                                            '<td>'+m.data[i][9]+'</td>'+
-                                            '<td>'+m.data[i][2]+'</td>'+
-                                            '<td>'+m.data[i][3]+'</td>'+
-                                            '<td>'+msToTime(m.data[i][4])+'</td>'+
-                                            '<td>'+msToTime(m.data[i][5])+'</td>'+
-                                            '<td>'+msToTime(m.data[i][6])+'</td>'+
-                                            '<td>'+remTime+'</td>'+
-                                            '<td>'+m.data[i][7]+'</td>'+
-                                        '</tr>';
+
+                                        if( remTime === "Done"){
+                                                table_row += 
+                                                '<tr style="background-color:#C6DEB5">'+
+                                                    '<td>'+ finalD +'</td>'+
+                                                    '<td>'+m.data[i][1]+'</td>'+
+                                                    '<td>'+m.data[i][9]+'</td>'+
+                                                    '<td>'+m.data[i][2]+'</td>'+
+                                                    '<td>'+m.data[i][3]+'</td>'+
+                                                    '<td>'+msToTime(m.data[i][4])+'</td>'+
+                                                    '<td>'+msToTime(m.data[i][5])+'</td>'+
+                                                    '<td>'+msToTime(m.data[i][6])+'</td>'+
+                                                    '<td>'+remTime+'</td>'+
+                                                    '<td>'+m.data[i][7]+'</td>'+
+                                                '</tr>';
+                                            }
+                                            else{
+                                                table_row += 
+                                                '<tr>'+
+                                                    '<td>'+ finalD +'</td>'+
+                                                    '<td>'+m.data[i][1]+'</td>'+
+                                                    '<td>'+m.data[i][9]+'</td>'+
+                                                    '<td>'+m.data[i][2]+'</td>'+
+                                                    '<td>'+m.data[i][3]+'</td>'+
+                                                    '<td>'+msToTime(m.data[i][4])+'</td>'+
+                                                    '<td>'+msToTime(m.data[i][5])+'</td>'+
+                                                    '<td>'+msToTime(m.data[i][6])+'</td>'+
+                                                    '<td>'+remTime+'</td>'+
+                                                    '<td>'+m.data[i][7]+'</td>'+
+                                                '</tr>';
+                                            }
                                 }
                             }
 
