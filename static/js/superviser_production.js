@@ -449,14 +449,51 @@ if(navigator.onLine)
             const url = "http://34.122.82.176:9001/get/productionreport"
             document.getElementById("filterText").style.display = "inline";
 
+                    var JSP = $('#input_main_product_filter_production_JS:checkbox:checked').val();
+                    var JMX = $('#input_main_product_filter_production_JM:checkbox:checked').val();
+                    var EC = $('#input_main_product_filter_production_EC:checkbox:checked').val();
+                    var OY = $('#input_main_product_filter_production_OY:checkbox:checked').val();
+                    var LM = $('#input_main_product_filter_production_LM:checkbox:checked').val();
+                    
+                    var checks_prod = []
+
+                    if(JSP){
+                        checks_prod.push(JSP);
+                    }
+                    if(JMX){
+                        checks_prod.push(JMX);
+                    }
+                    if(EC){
+                        checks_prod.push(EC);
+                    }
+                    if(OY){
+                        checks_prod.push(OY);
+                    }
+                    if(LM){
+                        checks_prod.push(LM);
+                    }
+                    
+                    var check_pack = []
+
+                    var Y = $('#input_packaging_status_filter_cooling_B:checkbox:checked').val();
+                    var N = $('#input_packaging_status_filter_cooling_U:checkbox:checked').val();
+                    
+                    
+                    if(Y){
+                        check_pack.push(Y);
+                    }
+                    if(N){
+                        check_pack.push(N);
+                    }
+
             $.ajax({
                 url:url,
                 type:"POST",
                 data:JSON.stringify({
                     "date_from": $('#input_main_date_from').val(),
                     "date_to": $('#input_main_date_to').val(),
-                    "product": $('#input_main_product_filter').val(),
-                    "status": $('#input_packaging_status_filter').val(),
+                    "product": checks_prod,
+                    "status": check_pack,
                 }),
                 statusCode :{
                 200: function() {
@@ -467,12 +504,13 @@ if(navigator.onLine)
                 success: function(data, textStatus, jqXHR)
                 {
                     sessionStorage.setItem("filterData" , data);
-                    alert(data);
+                    alert("Successfull");
                     document.getElementById("filterText").style.display = "none";
                     showFilterData();
                 },
                 error: function (e)
                 {
+                    alert("Something Went Wrong");
                     console.log(e);
                 }
             });

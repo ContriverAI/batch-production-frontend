@@ -301,13 +301,37 @@ if(navigator.onLine)
             const url = "http://34.122.82.176:9001/get/storereport"
             document.getElementById("filterText").style.display = "inline";
 
+                    var JSP = $('#input_main_product_filter_store_JS:checkbox:checked').val();
+                    var JMX = $('#input_main_product_filter_store_JM:checkbox:checked').val();
+                    var EC = $('#input_main_product_filter_store_EC:checkbox:checked').val();
+                    var OY = $('#input_main_product_filter_store_OY:checkbox:checked').val();
+                    var LM = $('#input_main_product_filter_store_LM:checkbox:checked').val();
+                    
+                    var checks_prod = []
+
+                    if(JSP){
+                        checks_prod.push(JSP);
+                    }
+                    if(JMX){
+                        checks_prod.push(JMX);
+                    }
+                    if(EC){
+                        checks_prod.push(EC);
+                    }
+                    if(OY){
+                        checks_prod.push(OY);
+                    }
+                    if(LM){
+                        checks_prod.push(LM);
+                    }
+
             $.ajax({
                 url:url,
                 type:"POST",
                 data:JSON.stringify({
                     "date_from": $('#input_main_date_from').val(),
                     "date_to": $('#input_main_date_to').val(),
-                    "product": $('#input_main_product_filter').val(),
+                    "product": checks_prod,
                 }),
                 statusCode :{
                 200: function() {
@@ -318,12 +342,13 @@ if(navigator.onLine)
                 success: function(data, textStatus, jqXHR)
                 {
                     sessionStorage.setItem("filterData" , data);
-                    alert(data);
+                    alert("Successfull");
                     document.getElementById("filterText").style.display = "none";
                     showFilterData();
                 },
                 error: function (e)
                 {
+                    alert("Something Went Wrong");
                     console.log(e);
                 }
             });
