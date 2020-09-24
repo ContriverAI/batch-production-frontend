@@ -344,7 +344,7 @@ if(navigator.onLine)
         var modal = document.getElementById("myModal");
         modal.style.display = "block";
 
-        const url = "http://34.122.82.176:9001/get/users"
+        const url = "http://34.122.82.176:9001/get/create_cooling_main"
 
         $.ajax({
             url:url,
@@ -356,7 +356,9 @@ if(navigator.onLine)
                 "product": $('#input_main_product').val(),
                 "shiftProduced": $('#input_main_shift_produced').val(),
                 "quantity": $('#input_main_quantity').val(),
-                "coolingTime": new Date().toLocaleTimeString()
+                "coolingTime": new Date().toLocaleTimeString(),
+                "duration": " ",
+                "completeTime": " "
             }),
             statusCode :{
             200: function() {
@@ -367,6 +369,7 @@ if(navigator.onLine)
             contentType:"application/json; charset=utf-8",
             success: function(data, textStatus, jqXHR)
             {
+                modal.style.display = "none";
                 alert(data);
             },
             error: function (e)
@@ -385,7 +388,7 @@ if(navigator.onLine)
             var modal = document.getElementById("myModal");
             modal.style.display = "block";
 
-            const url = "http://34.122.82.176:9001/get/users"
+            const url = "http://34.122.82.176:9001/get/create_cooling_packaging"
 
             $.ajax({
                 url:url,
