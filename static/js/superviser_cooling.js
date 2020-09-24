@@ -244,7 +244,7 @@ if(navigator.onLine)
                                             '<td>'+m.data[i][1]+'</td>'+
                                             '<td>'+m.data[i][2]+'</td>'+
                                             '<td>'+m.data[i][3]+'</td>'+
-                                            '<td><button id = "Pak" class="btn btn-lg btn-primary btn-block" type="button">Yes</button></td>'+
+                                            '<td><button style="width: 200px" id = "Pak" class="btn btn-lg btn-primary btn-block" type="button">Yes</button></td>'+
                                         '</tr>';
                                 }
                             }

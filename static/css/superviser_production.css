@@ -175,6 +175,6 @@ tr:nth-child(even) {
   margin-bottom: 30px;
   margin-right: 80px;
   width: 25%;
-  text-align: center;
+  text-align: left;
   background: white;
 }
