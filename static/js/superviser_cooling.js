@@ -374,7 +374,8 @@ if(navigator.onLine)
             },
             error: function (e)
             {
-                console.log(e);
+                modal.style.display = "none";
+                alert("Something Went Wrong...");
             }
         });
 
@@ -413,7 +414,8 @@ if(navigator.onLine)
                 },
                 error: function (e)
                 {
-                    console.log(e);
+                    modal.style.display = "none";
+                    alert("Something Went Wrong...");
                 }
             });
 
