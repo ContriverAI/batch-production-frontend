@@ -146,7 +146,7 @@ if(navigator.onLine)
                             var options = '';
                         
                             for(var i = 0; i < m.data.length; i++){
-                                // if(m.data[i][9] !== "Baked")
+                                if(m.data[i][11] !== "Yes")
                                     options += '<option value="'+m.data[i][8]+'">'+m.data[i][8]+'</option>';
                             }
                                 
