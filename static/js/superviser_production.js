@@ -119,7 +119,6 @@ if(navigator.onLine)
                             var m = JSON.parse(data);
 
                             for(var i = 0; i < m.data.length; i++){
-                                
                                     var date = new Date(m.data[i][0]);
                                     var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
                                     table_row += 
