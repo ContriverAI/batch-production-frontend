@@ -22,6 +22,42 @@ if(navigator.onLine)
 
          setInterval(dataLoad , 3000);
 
+         function formatDate(d){
+            var date = new Date(d);
+
+            if ( isNaN( date .getTime() ) ) 
+            {
+                return d;
+            }
+            else
+            {
+            
+                var month = new Array();
+                month[0] = "Jan";
+                month[1] = "Feb";
+                month[2] = "Mar";
+                month[3] = "Apr";
+                month[4] = "May";
+                month[5] = "Jun";
+                month[6] = "Jul";
+                month[7] = "Aug";
+                month[8] = "Sept";
+                month[9] = "Oct";
+                month[10] = "Nov";
+                month[11] = "Dec";
+
+                day = date.getDate();
+                
+                if(day < 10)
+                {
+                    day = "0"+day;
+                }
+                
+                return    day  + "-" +month[date.getMonth()] + "-" + date.getFullYear();
+            }
+    
+        }
+
          
          function getCoolingData(){
 
@@ -95,25 +131,9 @@ if(navigator.onLine)
                                             if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
 
                                                     var date = new Date(m.data[i][0]);
-                                                    var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
+                                                    var finalD = formatDate(m.data[i][0]);
                                                     var remTime = msToTime(m.data[i][11]) === "00:00"? "Done" : msToTime(m.data[i][11]);
 
-                                                    if( remTime === "Done"){
-                                                        table_row += 
-                                                        '<tr style="background-color:#C6DEB5">'+
-                                                            '<td>'+ finalD +'</td>'+
-                                                            '<td>'+m.data[i][1]+'</td>'+
-                                                            '<td>'+m.data[i][9]+'</td>'+
-                                                            '<td>'+m.data[i][2]+'</td>'+
-                                                            '<td>'+m.data[i][3]+'</td>'+
-                                                            '<td>'+msToTime(m.data[i][4])+'</td>'+
-                                                            '<td>'+msToTime(m.data[i][5])+'</td>'+
-                                                            '<td>'+msToTime(m.data[i][6])+'</td>'+
-                                                            '<td>'+remTime+'</td>'+
-                                                            '<td>'+m.data[i][7]+'</td>'+
-                                                        '</tr>';
-                                                    }
-                                                    else{
                                                         table_row += 
                                                         '<tr>'+
                                                             '<td>'+ finalD +'</td>'+
@@ -127,7 +147,7 @@ if(navigator.onLine)
                                                             '<td>'+remTime+'</td>'+
                                                             '<td>'+m.data[i][7]+'</td>'+
                                                         '</tr>';
-                                                    }
+                                                    
                                                     
                                             }
                                         }
@@ -162,7 +182,7 @@ if(navigator.onLine)
 
                                     for(var i = 0; i < m.data.length; i++){
                                                 var date = new Date(m.data[i][0]);
-                                                var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
+                                                var finalD = formatDate(m.data[i][0]);
 
                                                 table_row += 
                                                 '<tr>'+
@@ -228,9 +248,9 @@ if(navigator.onLine)
 
 
                                                     var date = new Date(m.data[i][0]);
-                                                    var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
+                                                    var finalD = formatDate(m.data[i][0]);
                                                     var date_1 = new Date(m.data[i][11])
-                                                    var finalD_1 = date_1.getDate()+'-' + (date_1.getMonth()+1) + '-'+date_1.getFullYear();
+                                                    var finalD_1 = formatDate(m.data[i][11]);
                                                     
                                                     table_row += 
                                                     '<tr>'+
@@ -589,7 +609,7 @@ if(navigator.onLine)
                                 for(var i = 0; i < m.data.length; i++){
         
                                             var date = new Date(m.data[i][0]);
-                                            var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
+                                            var finalD = formatDate(m.data[i][0]);
         
                                             table_row += 
                                             '<tr>'+
@@ -703,7 +723,7 @@ if(navigator.onLine)
         
                                 for(var i = 0; i < m.data.length; i++){
                                         var date = new Date(m.data[i][0]);
-                                        var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
+                                        var finalD = formatDate(m.data[i][0]);
                                         table_row += 
                                         '<tr>'+
                                             '<td>'+ finalD +'</td>'+
@@ -837,7 +857,7 @@ if(navigator.onLine)
         
         
                                         var date = new Date(m.data[i][0]);
-                                        var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
+                                        var finalD = formatDate(m.data[i][0]);
                                         table_row += 
                                         '<tr>'+
                                             '<td>'+ finalD +'</td>'+

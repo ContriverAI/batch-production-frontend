@@ -11,6 +11,42 @@ if(navigator.onLine)
       
          checkLogin();
 
+         function formatDate(d){
+            var date = new Date(d);
+
+            if ( isNaN( date .getTime() ) ) 
+            {
+                return d;
+            }
+            else
+            {
+            
+                var month = new Array();
+                month[0] = "Jan";
+                month[1] = "Feb";
+                month[2] = "Mar";
+                month[3] = "Apr";
+                month[4] = "May";
+                month[5] = "Jun";
+                month[6] = "Jul";
+                month[7] = "Aug";
+                month[8] = "Sept";
+                month[9] = "Oct";
+                month[10] = "Nov";
+                month[11] = "Dec";
+
+                day = date.getDate();
+                
+                if(day < 10)
+                {
+                    day = "0"+day;
+                }
+                
+                return    day  + "-" +month[date.getMonth()] + "-" + date.getFullYear();
+            }
+    
+        }
+
          var loaded = false
 
          function dataLoad(){
@@ -77,7 +113,7 @@ if(navigator.onLine)
                                     if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
 
                                             var date = new Date(m.data[i][0]);
-                                            var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
+                                            var finalD = formatDate(m.data[i][0]);
                                             var remTime = msToTime(m.data[i][11]) === "00:00"? "Done" : msToTime(m.data[i][11]);
                                             
                                                 table_row += 
@@ -132,7 +168,7 @@ if(navigator.onLine)
                                     if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
 
                                             var date = new Date(m.data[i][0]);
-                                            var finalD = date.getDate()+'-' + (date.getMonth()+1) + '-'+date.getFullYear();
+                                            var finalD = formatDate(m.data[i][0]);
                                             var remTime = msToTime(m.data[i][11]) === "00:00"? "Done" : msToTime(m.data[i][11]);
 
                                             if( remTime === "Done"){
