@@ -325,6 +325,8 @@ if(navigator.onLine)
             var modal = document.getElementById("myModal");
             modal.style.display = "block";
 
+            var Yes = $('#input_recall_cancelbatch:checkbox:checked').val();
+
             //API required
             const url = "http://34.122.82.176:9001/get/production_recall_screen"
 
@@ -334,7 +336,7 @@ if(navigator.onLine)
                 data:JSON.stringify({
                     "u_key": sessionStorage.getItem("ukey"), 
                     "batch": $('#input_recall_batch').val(),
-                    "cancel": $('#input_recall_cancelbatch').val(),
+                    "cancel": Yes,
                     "time": new Date().toLocaleTimeString(),
                 }),
                 statusCode :{
