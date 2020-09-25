@@ -525,6 +525,76 @@ if(navigator.onLine)
                         check_pack.push(N);
                     }
 
+                    
+                    var check_recall = []
+
+                    var Yes = $('#input_recall_status_filter_cooling_B:checkbox:checked').val();
+                    var No = $('#input_recall_status_filter_cooling_U:checkbox:checked').val();
+                    
+                    
+                    if(Yes){
+                        check_recall.push(Yes);
+                    }
+                    if(No){
+                        check_recall.push(No);
+                    }
+
+                    var check_shift = []
+
+                    var a = $('#input_shift_1:checkbox:checked').val();
+                    var b = $('#input_shift_2:checkbox:checked').val();
+                    var c = $('#input_shift_3:checkbox:checked').val();
+                    var d = $('#input_shift_4:checkbox:checked').val();
+                    var e = $('#input_shift_5:checkbox:checked').val();
+                    var f = $('#input_shift_6:checkbox:checked').val();
+                    var g = $('#input_shift_7:checkbox:checked').val();
+                    var h = $('#input_shift_8:checkbox:checked').val();
+                    var i = $('#input_shift_9:checkbox:checked').val();
+                    var j = $('#input_shift_10:checkbox:checked').val();
+                    var k = $('#input_shift_11:checkbox:checked').val();
+                    var l = $('#input_shift_12:checkbox:checked').val();
+                    var m = $('#input_shift_13:checkbox:checked').val();
+
+                    if(a){
+                        check_shift.push(a);
+                    }
+                    if(b){
+                        check_shift.push(b);
+                    }
+                    if(c){
+                        check_shift.push(c);
+                    }
+                    if(d){
+                        check_shift.push(d);
+                    }
+                    if(e){
+                        check_shift.push(e);
+                    }
+                    if(f){
+                        check_shift.push(f);
+                    }
+                    if(g){
+                        check_shift.push(g);
+                    }
+                    if(h){
+                        check_shift.push(h);
+                    }
+                    if(i){
+                        check_shift.push(i);
+                    }
+                    if(j){
+                        check_shift.push(j);
+                    }
+                    if(k){
+                        check_shift.push(k);
+                    }
+                    if(l){
+                        check_shift.push(l);
+                    }
+                    if(m){
+                        check_shift.push(m);
+                    }
+
             $.ajax({
                 url:url,
                 type:"POST",
@@ -533,6 +603,8 @@ if(navigator.onLine)
                     "date_to": $('#input_main_date_to').val(),
                     "product": checks_prod,
                     "status": check_pack,
+                    "shift" : check_shift,
+                    "recallStatus": check_recall,
                 }),
                 statusCode :{
                 200: function() {
