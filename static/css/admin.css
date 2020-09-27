@@ -1,6 +1,6 @@
 #loader {
-  border: 16px solid #f3f3f3; /* Light grey */
-  border-top: 16px solid #3498db; /* Blue */
+  border: 16px solid hsl(0, 0%, 95%); /* Light grey */
+  border-top: 16px solid #2e2d2e; /* Black */
   border-radius: 50%;
   width: 120px;
   height: 120px;
@@ -18,18 +18,20 @@
   display: none;
 }
 
+
+
 /* Style the tab */
 .tab {
+    background-color: #000;
     overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #f1f1f1;
     display: flex;
     justify-content: center;
   }
   
   /* Style the buttons that are used to open the tab content */
   .tab button {
-    background-color: inherit;
+    background-color: #000;
+    color: white;
     float: left;
     border: none;
     outline: none;
@@ -40,12 +42,12 @@
   
   /* Change background color of buttons on hover */
   .tab button:hover {
-    background-color: #ddd;
+    background-color: rgb(163, 152, 152);
   }
   
   /* Create an active/current tablink class */
   .tab button.active {
-    background-color: #ccc;
+    background-color: #ffffff87;
   }
   
   /* Style the tab content */
@@ -76,9 +78,9 @@ table{
 }
 
 td, th {
-  border: 1px solid #dddddd;
+  border: 1px solid #b2b4b5;
   text-align: left;
-  padding: 8px;
+  padding: 15px;
 }
 
 tr:nth-child(even) {

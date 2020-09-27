@@ -5,6 +5,56 @@ if(navigator.onLine)
 
     $(document).ready(function(){
 
+        var current = null;
+        document.querySelector('#username').addEventListener('focus', function(e) {
+        if (current) current.pause();
+        current = anime({
+            targets: 'path',
+            strokeDashoffset: {
+            value: 0,
+            duration: 700,
+            easing: 'easeOutQuart'
+            },
+            strokeDasharray: {
+            value: '240 1386',
+            duration: 700,
+            easing: 'easeOutQuart'
+            }
+        });
+        });
+        document.querySelector('#password').addEventListener('focus', function(e) {
+        if (current) current.pause();
+        current = anime({
+            targets: 'path',
+            strokeDashoffset: {
+            value: -336,
+            duration: 700,
+            easing: 'easeOutQuart'
+            },
+            strokeDasharray: {
+            value: '240 1386',
+            duration: 700,
+            easing: 'easeOutQuart'
+            }
+        });
+        });
+        document.querySelector('#submit').addEventListener('focus', function(e) {
+        if (current) current.pause();
+        current = anime({
+            targets: 'path',
+            strokeDashoffset: {
+            value: -730,
+            duration: 700,
+            easing: 'easeOutQuart'
+            },
+            strokeDasharray: {
+            value: '530 1386',
+            duration: 700,
+            easing: 'easeOutQuart'
+            }
+        });
+        });
+
         function checkLogin() {
             if(sessionStorage.getItem("designation") === "user" && sessionStorage.getItem("role") === "cooling"){
                 window.location.pathname = "/user_cooling";
@@ -31,19 +81,19 @@ if(navigator.onLine)
       
          checkLogin();
 
-        $(".form-login").submit(function(event) {
+        $("#submit").click(function(event) {
             event.stopPropagation();
             event.preventDefault();
 
-            const url = "http://34.122.82.176:9001/get/users"
+            const url = "http://34.122.82.176:9001/get/users";
             document.getElementById("loadingText").style.display = "inline";
 
             $.ajax({
                 url:url,
                 type:"POST",
                 data:JSON.stringify({
-                    "username": $('#inputUsername').val(),
-                    "password": $('#inputPassword').val()
+                    "username": $('#username').val(),
+                    "password": $('#password').val()
                 }),
                 statusCode :{
                    200: function() {
@@ -54,9 +104,6 @@ if(navigator.onLine)
                 contentType:"application/json; charset=utf-8",
                 success: function(data, textStatus, jqXHR)
                 {
-                    
-                    console.log($('#inputUsername').val());
-                    console.log($('#inputPassword').val());
 
                     if( data.designation && data.username && data.role){
                         console.log(data);
@@ -67,8 +114,8 @@ if(navigator.onLine)
                     }
                     else{
                         console.log(data);
-                        document.getElementById("loadingText").innerHTML = "Incorrect Username or Password";
-                        document.getElementById("loadingText").style.display = "inline";
+                        document.getElementById("loadingText").style.display = "none";
+                        alert("Incorrect Username or Password...")
                     }
 
                     if(data.role === "system" && data.designation === "admin"){
@@ -106,6 +153,7 @@ if(navigator.onLine)
                 },
                 error: function (e)
                 {
+                    alert("Incorrect Username or Password...")
                     console.log(e);
                 }
             });
