@@ -9,6 +9,14 @@
   margin-top: 300px;
 }
 
+.btn-primary{
+  background-color: #000;
+}
+
+.btn-primary.disabled{
+  background-color: #4b4b4c;
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
@@ -84,8 +92,10 @@ td, th {
 }
 
 tr:nth-child(even) {
-  background-color: #dddddd;
+  /* background-color: #dddddd; */
 }
+
+
 
 .createBtn{
   margin-right: 10px;
@@ -111,6 +121,7 @@ tr:nth-child(even) {
   width: 25%;
   text-align: center;
   background: white;
+  border: 1px solid black;
 }
 
 .form-create-user{
@@ -122,6 +133,7 @@ tr:nth-child(even) {
   width: 25%;
   text-align: center;
   background: white;
+  border: 1px solid black;
 }
 
 .form-update-user{
@@ -134,6 +146,7 @@ tr:nth-child(even) {
   text-align: center;
   background: white;
   display: none;
+  border: 1px solid black;
 }
 
 .form-delete-user{
@@ -146,6 +159,7 @@ tr:nth-child(even) {
   text-align: center;
   background: white;
   display: none;
+  border: 1px solid black;
 }
 
 /* The Modal (background) */
@@ -195,6 +209,7 @@ tr:nth-child(even) {
   width: 25%;
   text-align: left;
   background: white;
+  border: 1px solid black;
 }
 
 .form-create-production{
@@ -207,6 +222,7 @@ tr:nth-child(even) {
   text-align: left;
   background: white;
   display: none;
+  border: 1px solid black;
 }
 
 .form-create-store{
@@ -219,4 +235,9 @@ tr:nth-child(even) {
   text-align: left;
   background: white;
   display: none;
+  border: 1px solid black;
+}
+
+.form-control{
+  background-color: #00000000
 }
