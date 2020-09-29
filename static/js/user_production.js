@@ -50,7 +50,7 @@ if(navigator.onLine)
          
          function getProductionData(){
 
-            const socket = io('http://34.122.82.176:9001/');
+            const socket = io('http://localhost:9001/');
             socket.on('conn', data => {
                 console.log("CONNECTION RESPONSE: ", data)
                 socket.emit('getData', () => { })
@@ -226,7 +226,7 @@ if(navigator.onLine)
                 var modal = document.getElementById("myModal");
                 modal.style.display = "block";
 
-                const url = "http://34.122.82.176:9001/get/production_bake_screen"
+                const url = "http://localhost:9001/get/production_bake_screen"
 
                 $.ajax({
                     url:url,
@@ -270,7 +270,7 @@ if(navigator.onLine)
                 modal.style.display = "block";
 
                 //API required
-                const url = "http://34.122.82.176:9001/get/production_main_screen"
+                const url = "http://localhost:9001/get/production_main_screen"
 
                 $.ajax({
                     url:url,
@@ -321,7 +321,7 @@ if(navigator.onLine)
                 modal.style.display = "block";
 
                 //API required
-                const url = "http://34.122.82.176:9001/get/production_recall_screen"
+                const url = "http://localhost:9001/get/production_recall_screen"
 
                 $.ajax({
                     url:url,
@@ -364,7 +364,7 @@ if(navigator.onLine)
                 var modal = document.getElementById("myModal");
                 modal.style.display = "block";
 
-                const url = "http://34.122.82.176:9001/get/production_bake_screen"
+                const url = "http://localhost:9001/get/production_bake_screen"
 
                 $.ajax({
                     url:url,

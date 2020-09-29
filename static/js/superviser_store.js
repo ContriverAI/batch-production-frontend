@@ -62,7 +62,7 @@ if(navigator.onLine)
         
         function getStoreData(){
 
-            const socket = io('http://34.122.82.176:9001/');
+            const socket = io('http://localhost:9001/');
             socket.on('conn', data => {
                 console.log("CONNECTION RESPONSE: ", data)
                 socket.emit('getData', () => { })
@@ -193,7 +193,7 @@ if(navigator.onLine)
             modal.style.display = "block";
 
             //API required
-            const url = "http://34.122.82.176:9001/get/store_receiving_screen"
+            const url = "http://localhost:9001/get/store_receiving_screen"
 
             $.ajax({
                 url:url,
@@ -237,7 +237,7 @@ if(navigator.onLine)
             var modal = document.getElementById("myModal");
             modal.style.display = "block";
 
-            const url = "http://34.122.82.176:9001/get/store_dispatch_screen"
+            const url = "http://localhost:9001/get/store_dispatch_screen"
 
             $.ajax({
                 url:url,
@@ -336,7 +336,7 @@ if(navigator.onLine)
             event.stopPropagation();
             event.preventDefault();
 
-            const url = "http://34.122.82.176:9001/get/storereport"
+            const url = "http://localhost:9001/get/storereport"
             document.getElementById("filterText").style.display = "inline";
 
                     var JSP = $('#input_main_product_filter_store_JS:checkbox:checked').val();
