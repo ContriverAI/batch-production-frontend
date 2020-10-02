@@ -190,7 +190,7 @@ if(navigator.onLine)
                             var m = JSON.parse(data);
 
                             for(var i = 0; i < m.data.length; i++){
-                                if(m.data[i][9] === "Unbaked"){
+                                if(m.data[i][9] === "Unbaked" && m.data[i][11] === "No"){
                                         table_row += 
                                         '<tr id='+m.data[i][8]+'>'+
                                             '<td>'+m.data[i][8]+'</td>'+
