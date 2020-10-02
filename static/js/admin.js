@@ -144,7 +144,7 @@ if(navigator.onLine)
                                                         msToTime(m.data[i][5]),
                                                         msToTime(m.data[i][6]),
                                                         remTime,
-                                                        msToTime(m.data[i][7]),
+                                                        m.data[i][7],
                                                     ]);
                                                         // table_row += 
                                                         // '<tr>'+
