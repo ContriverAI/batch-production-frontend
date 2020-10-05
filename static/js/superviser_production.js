@@ -108,7 +108,7 @@ if(navigator.onLine)
         
         function getProductionData(){
 
-            const socket = io('http://localhost:9001/');
+            const socket = io('http://34.122.82.176:9001/');
             socket.on('conn', data => {
                 console.log("CONNECTION RESPONSE: ", data)
                 socket.emit('getData', () => { })
@@ -116,8 +116,6 @@ if(navigator.onLine)
             socket.on('data', function (data) {
                 try {
                     var d = JSON.parse(data.proddata);
-                    console.log(d.columns);
-                    console.log(d.data);
                     sessionStorage.setItem("prodData" , JSON.stringify(d));
 
                 } catch (err) {
@@ -177,15 +175,15 @@ if(navigator.onLine)
 
                             document.getElementById('superviser_production_table').innerHTML = table_row;
 
-                            var options = '';
+                            // var options = '';
                         
-                            for(var i = 0; i < m.data.length; i++){
-                                if(m.data[i][11] !== "Yes")
-                                    options += '<option value="'+m.data[i][8]+'">'+m.data[i][8]+'</option>';
-                            }
+                            // for(var i = 0; i < m.data.length; i++){
+                            //     if(m.data[i][11] !== "Yes")
+                            //         options += '<option value="'+m.data[i][8]+'">'+m.data[i][8]+'</option>';
+                            // }
                                 
 
-                            document.getElementById('input_recall_batch').innerHTML = options;
+                            // document.getElementById('input_recall_batch').innerHTML = options;
                             // document.getElementById('input_bake_batch').innerHTML = options;
                         }
             }
@@ -233,7 +231,6 @@ if(navigator.onLine)
                     var yyyy = today.getFullYear();
 
                     today =  dd + '-' + mm + '-'+ yyyy;
-                    console.log(today);
                     $("#input_main_date").val(today);
                 }
 
@@ -269,7 +266,7 @@ if(navigator.onLine)
             var modal = document.getElementById("myModal");
             modal.style.display = "block";
 
-            const url = "http://localhost:9001/get/production_bake_screen"
+            const url = "http://34.122.82.176:9001/get/production_bake_screen"
 
             $.ajax({
                 url:url,
@@ -311,7 +308,7 @@ if(navigator.onLine)
             modal.style.display = "block";
 
             //API required
-            const url = "http://localhost:9001/get/production_main_screen"
+            const url = "http://34.122.82.176:9001/get/production_main_screen"
 
             $.ajax({
                 url:url,
@@ -363,13 +360,15 @@ if(navigator.onLine)
             var Yes = $('#input_recall_cancelbatch:checkbox:checked').val();
 
             //API required
-            const url = "http://localhost:9001/get/production_recall_screen"
+            const url = "http://34.122.82.176:9001/get/production_recall_screen"
 
             $.ajax({
                 url:url,
                 type:"POST",
                 data:JSON.stringify({
                     "u_key": sessionStorage.getItem("ukey"), 
+                    "date": $('#input_recall_date').val(), 
+                    "shift":$('#input_recall_shift').val(),
                     "batch": $('#input_recall_batch').val(),
                     "cancel": Yes,
                     "time": new Date().toLocaleTimeString(),
@@ -405,7 +404,7 @@ if(navigator.onLine)
             var modal = document.getElementById("myModal");
             modal.style.display = "block";
 
-            const url = "http://localhost:9001/get/production_bake_screen"
+            const url = "http://34.122.82.176:9001/get/production_bake_screen"
 
             
 
@@ -485,7 +484,7 @@ if(navigator.onLine)
             event.stopPropagation();
             event.preventDefault();
 
-            const url = "http://localhost:9001/get/productionreport"
+            const url = "http://34.122.82.176:9001/get/productionreport"
             document.getElementById("filterText").style.display = "inline";
 
                     var JSP = $('#input_main_product_filter_production_JS:checkbox:checked').val();
@@ -628,6 +627,44 @@ if(navigator.onLine)
 
         });
 
+        $('#input_recall_shift').change(function(){
+
+            var modal = document.getElementById("myModalRecall");
+            modal.style.display = "block";
+            const url = "http://34.122.82.176:9001/get/datewisebatch"
+            $.ajax({
+                url:url,
+                type:"POST",
+                data:JSON.stringify({
+                    "date": $('#input_recall_date').val(),
+                    "shift": $('#input_recall_shift').val(),
+                }),
+                statusCode :{
+                200: function() {
+                        console.log("success");
+                }
+                },
+                contentType:"application/json; charset=utf-8",
+                success: function(data, textStatus, jqXHR)
+                {
+                    modal.style.display = "none";
+                    console.log(data);
+                    var d = JSON.parse(data);    
+                    var options = '';
+                        
+                            for(var i = 0; i < d.data.length; i++)
+                                options += '<option value="'+d.data[i]+'">'+ d.data[i]+'</option>';
+                                
+
+                            document.getElementById('input_recall_batch').innerHTML = options;
+                },
+                error: function (e)
+                {
+                    alert("Something Went Wrong");
+                    console.log(e);
+                }
+            });
+        })
     
     });
 }
