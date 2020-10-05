@@ -661,6 +661,7 @@ if(navigator.onLine)
                 error: function (e)
                 {
                     alert("Something Went Wrong");
+                    modal.style.display = "none";
                     console.log(e);
                 }
             });
