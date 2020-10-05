@@ -27,7 +27,16 @@
               <p>Submitting..</p>
             </div>
           
-          </div>
+        </div>
+
+        <div id="myModalRecall" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+              <p>Updating Batch..</p>
+            </div>
+          
+        </div>
 
       
      
@@ -123,7 +132,32 @@
             <h3 style="text-align: center;">Recall Screen Form</h3>
 
             <form class="form-production-recall card" id="recallForm" method = "POST">
-        
+                
+                <div style="margin-top: 20px;">
+                    <label for="inputRecallDate" >Date</label>
+                    <input type="date" id="input_recall_date" class="form-control" placeholder="Enter Date" required autofocus>
+                </div>
+                
+
+                <div style="margin-top: 20px;">
+                    <label for="input_recall_shift" >Shift</label>
+                    <select id="input_recall_shift" name="input_recall_shift" class="form-control" required autofocus>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                    </select>
+                </div>
+
                 <div style="margin-top: 20px;">
                     <label for="input_recall_batch" >Batch</label>
                     <select id="input_recall_batch" name="input_recall_batch" class="form-control" required autofocus>
