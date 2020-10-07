@@ -116,8 +116,6 @@ if(navigator.onLine)
 
                                         for(var i = 0; i < m.data.length; i++){
 
-                                            if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
-
                                                     var date = new Date(m.data[i][0]);
                                                     var finalD = formatDate(m.data[i][0]);
                                                     var remTime = msToTime(m.data[i][11]) === "00:00"? "Done" : msToTime(m.data[i][11]);
@@ -134,7 +132,7 @@ if(navigator.onLine)
                                                         remTime,
                                                         m.data[i][7],
                                                     ]);                                                                                         
-                                            }
+                                            
                                         }
 
                                 }
