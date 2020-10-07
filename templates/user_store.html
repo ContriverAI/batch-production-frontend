@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Lilita One' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/user_store.css')}}">
+    <link rel="stylesheet" href="https:////cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/autoFill.dataTables.min.css')}}">
     <title>PIMS</title>
    
   </head>
@@ -130,17 +132,26 @@
         
         <div id="Live_Table" class="tabcontent">
             <h3 style="text-align: center;">Live Table</h3>
-            <!-- <button id = "saveTable" class="btn btn-lg btn-primary btn-block saveBtn" >Save Table</button> -->
             <table id="user_store_table">
-                <tr>
-                    <th>QTY RECEIVED STANDARD</th>
-                    <th>QTY RECEIVED ROUGH</th>
-                    <th>DISPATCHED STANDARD</th>
-                    <th>DISPATCHED ROUGH</th>
-                    <th>ROUGH RETURNED BREAD</th>
-                    <th>BREAD IN STORE</th>
-                    <th>ROUGH BREAD IN STORE</th>
-                </tr>
+                <thead>
+                    <tr>
+                        <th> DATE </th>
+                        <th> PRODUCT </th>
+                        <th>QTY RECEIVED STANDARD</th>
+                        <th>QTY RECEIVED ROUGH</th>
+                        <th>DISPATCHED STANDARD</th>
+                        <th>DISPATCHED ROUGH</th>
+                        <th>ROUGH RETURNED BREAD</th>
+                        <th>BREAD IN STORE</th>
+                        <th>ROUGH BREAD IN STORE</th>
+                        <th>Pkg Supervisor</th>
+                        <th>Dispatched Date</th>
+                        <th>Dispatch Supervisor</th>
+                    </tr>
+                </thead>
+                <tbody id="tab">
+
+                </tbody>
             </table>
         </div>
     </div>
@@ -179,6 +190,8 @@
     
     <script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script>
     <script src = "{{url_for('static',filename='js/user_store.js')}}" ></script>
+    <script src="https:////cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src = "{{url_for('static',filename='js/dataTables.autoFill.min.js')}}" ></script>
 
 
     

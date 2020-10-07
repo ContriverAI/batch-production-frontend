@@ -90,21 +90,9 @@ if(navigator.onLine)
                 function localStoreData(){
 
                     if(sessionStorage.getItem("storeData")){
-                    var table_row = `<tr>
-                                <th> DATE </th>
-                                <th> PRODUCT </th>
-                                <th>QTY RECEIVED STANDARD</th>
-                                <th>QTY RECEIVED ROUGH</th>
-                                <th>DISPATCHED STANDARD</th>
-                                <th>DISPATCHED ROUGH</th>
-                                <th>ROUGH RETURNED BREAD</th>
-                                <th>BREAD IN STORE</th>
-                                <th>ROUGH BREAD IN STORE</th>
-                            </tr>`;
-
+                            $('#user_store_table').dataTable().fnClearTable();
                             var data = sessionStorage.getItem("storeData");
                             var m = JSON.parse(data);
-                            console.log(m.data);
 
                             var bis = [];
                             var rbis = [];
@@ -119,27 +107,28 @@ if(navigator.onLine)
                                 }
                             }
 
-                            for(var i = 0; i < m.data.length; i++){
-
-
+                                    for(var i = 0; i < m.data.length; i++){
                                         var date = new Date(m.data[i][0]);
                                         var finalD = formatDate(m.data[i][0]);
-                                        table_row += 
-                                        '<tr>'+
-                                            '<td>'+ finalD +'</td>'+
-                                            '<td>'+m.data[i][1]+'</td>'+
-                                            '<td>'+m.data[i][2]+'</td>'+
-                                            '<td>'+m.data[i][3]+'</td>'+
-                                            '<td>'+m.data[i][4]+'</td>'+
-                                            '<td>'+m.data[i][5]+'</td>'+
-                                            '<td>'+m.data[i][6]+'</td>'+
-                                            '<td>'+bis[i]+'</td>'+
-                                            '<td>'+rbis[i]+'</td>'+
-                                        '</tr>';
-                            }
-
-                            document.getElementById('user_store_table').innerHTML = table_row;
-                        }
+                                        var date_1 = new Date(m.data[i][11])
+                                        var finalD_1 = formatDate(m.data[i][11]);
+                                        
+                                        $('#user_store_table').dataTable().fnAddData([
+                                            finalD,
+                                            m.data[i][1],
+                                            m.data[i][2],
+                                            m.data[i][3],
+                                            m.data[i][4],
+                                            m.data[i][5],
+                                            m.data[i][6],
+                                            bis[i],
+                                            rbis[i],
+                                            m.data[i][10],
+                                            finalD_1,
+                                            m.data[i][12],
+                                        ]);
+                                    }
+                    }
                 }
 
                 localStoreData();

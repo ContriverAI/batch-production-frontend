@@ -89,56 +89,45 @@ if(navigator.onLine)
                 function localStoreData(){
 
                     if(sessionStorage.getItem("storeData")){
-                        var table_row = `<tr>
-                                    <th> DATE </th>
-                                    <th> PRODUCT </th>
-                                    <th>QTY RECEIVED STANDARD</th>
-                                    <th>QTY RECEIVED ROUGH</th>
-                                    <th>DISPATCHED STANDARD</th>
-                                    <th>DISPATCHED ROUGH</th>
-                                    <th>ROUGH RETURNED BREAD</th>
-                                    <th>BREAD IN STORE</th>
-                                    <th>ROUGH BREAD IN STORE</th>
-                                </tr>`;
+                        $('#superviser_store_table').dataTable().fnClearTable();
+                            var data = sessionStorage.getItem("storeData");
+                            var m = JSON.parse(data);
 
-                                var data = sessionStorage.getItem("storeData");
-                                var m = JSON.parse(data);
-                                console.log(m.data);
-
-                                var bis = [];
-                                var rbis = [];
-                                for(var i= 0 ; i < m.data.length;i++){
-                                    if( i === 0){
-                                        bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6]);
-                                        rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
-                                    }
-                                    else{
-                                        bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6] + bis[i-1]);
-                                        rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
-                                    }
+                            var bis = [];
+                            var rbis = [];
+                            for(var i= 0 ; i < m.data.length;i++){
+                                if( i === 0){
+                                    bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6]);
+                                    rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
                                 }
-
-                                for(var i = 0; i < m.data.length; i++){
-
-
-                                            var date = new Date(m.data[i][0]);
-                                            var finalD = formatDate(m.data[i][0]);
-                                            table_row += 
-                                            '<tr>'+
-                                                '<td>'+ finalD +'</td>'+
-                                                '<td>'+m.data[i][1]+'</td>'+
-                                                '<td>'+m.data[i][2]+'</td>'+
-                                                '<td>'+m.data[i][3]+'</td>'+
-                                                '<td>'+m.data[i][4]+'</td>'+
-                                                '<td>'+m.data[i][5]+'</td>'+
-                                                '<td>'+m.data[i][6]+'</td>'+
-                                                '<td>'+bis[i]+'</td>'+
-                                                '<td>'+rbis[i]+'</td>'+
-                                            '</tr>';
+                                else{
+                                    bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6] + bis[i-1]);
+                                    rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
                                 }
-
-                                document.getElementById('superviser_store_table').innerHTML = table_row;
                             }
+
+                                    for(var i = 0; i < m.data.length; i++){
+                                        var date = new Date(m.data[i][0]);
+                                        var finalD = formatDate(m.data[i][0]);
+                                        var date_1 = new Date(m.data[i][11])
+                                        var finalD_1 = formatDate(m.data[i][11]);
+                                        
+                                        $('#superviser_store_table').dataTable().fnAddData([
+                                            finalD,
+                                            m.data[i][1],
+                                            m.data[i][2],
+                                            m.data[i][3],
+                                            m.data[i][4],
+                                            m.data[i][5],
+                                            m.data[i][6],
+                                            bis[i],
+                                            rbis[i],
+                                            m.data[i][10],
+                                            finalD_1,
+                                            m.data[i][12],
+                                        ]);
+                                    }
+                    }
                 }
 
                 localStoreData();

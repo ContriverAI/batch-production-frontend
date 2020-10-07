@@ -116,50 +116,31 @@ if(navigator.onLine)
 
                 function localProductionData(){
                     if(sessionStorage.getItem("prodData")){
-                            var table_row = `<tr>    
-                                <th>Date</th>
-                                <th>Shift</th>
-                                <th>Batch</th>
-                                <th>Flour</th>
-                                <th>Remix</th>
-                                <th>Yeast</th>
-                                <th>Product</th>
-                                <th>Yield Value </th>
-                                <th>Mixing Time</th>
-                                <th>Status</th>
-                                <th>Baking Time</th>
-                                <th>Batch Recall</th>
-                                <th>Recall Time</th>
-                            </tr>`;
-
+                            var tb = $('#user_production_table').DataTable();
+                            $('#user_production_table').dataTable().fnClearTable();
                             var data = sessionStorage.getItem("prodData");
                             var m = JSON.parse(data);
 
                             for(var i = 0; i < m.data.length; i++){
-
                                         var date = new Date(m.data[i][0]);
                                         var finalD = formatDate(m.data[i][0]);
-                                        table_row += 
-                                        '<tr>'+
-                                            '<td>'+ finalD +'</td>'+
-                                            '<td>'+m.data[i][2]+'</td>'+
-                                            '<td>'+m.data[i][8]+'</td>'+
-                                            '<td>'+m.data[i][1]+'</td>'+
-                                            '<td>'+m.data[i][3]+'</td>'+
-                                            '<td>'+m.data[i][4]+'</td>'+
-                                            '<td>'+m.data[i][13]+'</td>'+
-                                            '<td>'+m.data[i][10]+'</td>'+
-                                            '<td>'+msToTime(m.data[i][5])+'</td>'+
-                                            '<td>'+m.data[i][9]+'</td>'+
-                                            '<td>'+msToTime(m.data[i][6])+'</td>'+
-                                            '<td>'+m.data[i][11]+'</td>'+
-                                            '<td>'+msToTime(m.data[i][12])+'</td>'+
-                                        '</tr>';
-                                
+                                        
+                                        $('#user_production_table').dataTable().fnAddData([
+                                            finalD,
+                                            m.data[i][2],
+                                            m.data[i][8],
+                                            m.data[i][1],
+                                            m.data[i][3],
+                                            m.data[i][4],
+                                            m.data[i][13],
+                                            m.data[i][10],
+                                            msToTime(m.data[i][5]),
+                                            m.data[i][9],
+                                            msToTime(m.data[i][6]),
+                                            m.data[i][11],
+                                            msToTime(m.data[i][12]),
+                                        ]);
                             }
-
-
-                            document.getElementById('user_production_table').innerHTML = table_row;
 
                             var options = ''
 
@@ -170,7 +151,6 @@ if(navigator.onLine)
                                 
 
                             document.getElementById('input_recall_batch').innerHTML = options;
-                            // document.getElementById('input_bake_batch').innerHTML = options;
                         }
                 }
 

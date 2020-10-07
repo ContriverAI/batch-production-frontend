@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Lilita One' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/superviser_cooling.css')}}">
+    <link rel="stylesheet" href="https:////cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/autoFill.dataTables.min.css')}}">
     <title>PIMS</title>
    
   </head>
@@ -133,15 +135,43 @@
         <div id="Cooling_Table" class="tabcontent" style="display: flex;flex-direction: column;justify-content: center;">
             <h3 style="text-align: center;">Cooling Table</h3>
             <table id="user_live_table" style="width: 60%;margin: auto;">
-                
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Trolley</th>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Time In</th>
+                        <th>Complete Time</th>
+                        <th>Remaining Time</th>
+                    </tr>
+                </thead>
+                <tbody id="tab">
+
+                </tbody>
             </table>
         </div>
         
         <div id="Live_Table" class="tabcontent" style="display: flex;flex-direction: column;justify-content: center;">
             <h3 style="text-align: center;">Live Table</h3>
-            <!-- <button id = "saveTable" class="btn btn-lg btn-primary btn-block saveBtn" >Save Table</button> -->
-            <table id="superviser_cooling_table" style="width: 60%;margin: auto;">
-                
+            <table id="superviser_cooling_table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Trolley</th>
+                        <th>Shift </th>
+                        <th>Product</th>
+                        <th>Qty</th>
+                        <th>Time In</th>
+                        <th>Duration</th>
+                        <th>Complete Time</th>
+                        <th>Remaining Time</th>
+                        <th>Packaging Complete </th>
+                    </tr>
+                </thead>
+                <tbody id="tab">
+
+                </tbody>
             </table>
         </div>
 
@@ -251,6 +281,8 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+    <script src="https:////cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src = "{{url_for('static',filename='js/dataTables.autoFill.min.js')}}" ></script>
 
     
     

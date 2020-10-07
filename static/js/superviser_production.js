@@ -116,8 +116,6 @@ if(navigator.onLine)
             socket.on('data', function (data) {
                 try {
                     var d = JSON.parse(data.proddata);
-                    console.log(d.columns);
-                    console.log(d.data);
                     sessionStorage.setItem("prodData" , JSON.stringify(d));
 
                 } catch (err) {
@@ -135,60 +133,33 @@ if(navigator.onLine)
 
                 function localProductionData(){
                     if(sessionStorage.getItem("prodData")){
-                            var table_row = `<tr>    
-                                <th>Date</th>
-                                <th>Shift</th>
-                                <th>Batch</th>
-                                <th>Flour</th>
-                                <th>Remix</th>
-                                <th>Yeast</th>
-                                <th>Product</th>
-                                <th>Yield Value </th>
-                                <th>Mixing Time</th>
-                                <th>Status</th>
-                                <th>Baking Time</th>
-                                <th>Batch Recall</th>
-                                <th>Recall Time</th>
-                            </tr>`;
-
+                            var tb = $('#superviser_production_table').DataTable();
+                            $('#superviser_production_table').dataTable().fnClearTable();
                             var data = sessionStorage.getItem("prodData");
                             var m = JSON.parse(data);
 
                             for(var i = 0; i < m.data.length; i++){
-                                    var finalD = formatDate(m.data[i][0]);
-                                    table_row += 
-                                    '<tr>'+
-                                        '<td>'+ finalD +'</td>'+
-                                        '<td>'+m.data[i][2]+'</td>'+
-                                        '<td>'+m.data[i][8]+'</td>'+
-                                        '<td>'+m.data[i][1]+'</td>'+
-                                        '<td>'+m.data[i][3]+'</td>'+
-                                        '<td>'+m.data[i][4]+'</td>'+
-                                        '<td>'+m.data[i][13]+'</td>'+
-                                        '<td>'+m.data[i][10]+'</td>'+
-                                        '<td>'+msToTime(m.data[i][5])+'</td>'+
-                                        '<td>'+m.data[i][9]+'</td>'+
-                                        '<td>'+msToTime(m.data[i][6])+'</td>'+
-                                        '<td>'+m.data[i][11]+'</td>'+
-                                        '<td>'+msToTime(m.data[i][12])+'</td>'+
-                                    '</tr>';
-                                
+                                        var date = new Date(m.data[i][0]);
+                                        var finalD = formatDate(m.data[i][0]);
+                                        
+                                        $('#superviser_production_table').dataTable().fnAddData([
+                                            finalD,
+                                            m.data[i][2],
+                                            m.data[i][8],
+                                            m.data[i][1],
+                                            m.data[i][3],
+                                            m.data[i][4],
+                                            m.data[i][13],
+                                            m.data[i][10],
+                                            msToTime(m.data[i][5]),
+                                            m.data[i][9],
+                                            msToTime(m.data[i][6]),
+                                            m.data[i][11],
+                                            msToTime(m.data[i][12]),
+                                        ]);
                             }
-
-                            document.getElementById('superviser_production_table').innerHTML = table_row;
-
-                            var options = '';
-                        
-                            for(var i = 0; i < m.data.length; i++){
-                                if(m.data[i][11] !== "Yes")
-                                    options += '<option value="'+m.data[i][8]+'">'+m.data[i][8]+'</option>';
-                            }
-                                
-
-                            document.getElementById('input_recall_batch').innerHTML = options;
-                            // document.getElementById('input_bake_batch').innerHTML = options;
                         }
-            }
+                }
                 
                 localProductionData();
                 setInterval(localProductionData , 10000);
@@ -233,7 +204,6 @@ if(navigator.onLine)
                     var yyyy = today.getFullYear();
 
                     today =  dd + '-' + mm + '-'+ yyyy;
-                    console.log(today);
                     $("#input_main_date").val(today);
                 }
 
@@ -370,6 +340,8 @@ if(navigator.onLine)
                 type:"POST",
                 data:JSON.stringify({
                     "u_key": sessionStorage.getItem("ukey"), 
+                    "date": $('#input_recall_date').val(), 
+                    "shift":$('#input_recall_shift').val(),
                     "batch": $('#input_recall_batch').val(),
                     "cancel": Yes,
                     "time": new Date().toLocaleTimeString(),
@@ -628,6 +600,44 @@ if(navigator.onLine)
 
         });
 
+        $('#input_recall_shift').change(function(){
+
+            var modal = document.getElementById("myModalRecall");
+            modal.style.display = "block";
+            const url = "http://34.122.82.176:9001/get/datewisebatch"
+            $.ajax({
+                url:url,
+                type:"POST",
+                data:JSON.stringify({
+                    "date": $('#input_recall_date').val(),
+                    "shift": $('#input_recall_shift').val(),
+                }),
+                statusCode :{
+                200: function() {
+                        console.log("success");
+                }
+                },
+                contentType:"application/json; charset=utf-8",
+                success: function(data, textStatus, jqXHR)
+                {
+                    modal.style.display = "none";
+                    console.log(data);
+                    var d = JSON.parse(data);    
+                    var options = '';
+                        
+                            for(var i = 0; i < d.data.length; i++)
+                                options += '<option value="'+d.data[i]+'">'+ d.data[i]+'</option>';
+                                
+
+                            document.getElementById('input_recall_batch').innerHTML = options;
+                },
+                error: function (e)
+                {
+                    alert("Something Went Wrong");
+                    console.log(e);
+                }
+            });
+        })
     
     });
 }

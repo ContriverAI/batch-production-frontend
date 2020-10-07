@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Lilita One' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/superviser_production.css')}}">
+    <link rel="stylesheet" href="https:////cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/autoFill.dataTables.min.css')}}">
     <title>PIMS</title>
    
   </head>
@@ -27,7 +29,16 @@
               <p>Submitting..</p>
             </div>
           
-          </div>
+        </div>
+
+        <div id="myModalRecall" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+              <p>Updating Batch..</p>
+            </div>
+          
+        </div>
 
       
      
@@ -123,7 +134,32 @@
             <h3 style="text-align: center;">Recall Screen Form</h3>
 
             <form class="form-production-recall card" id="recallForm" method = "POST">
-        
+                
+                <div style="margin-top: 20px;">
+                    <label for="inputRecallDate" >Date</label>
+                    <input type="date" id="input_recall_date" class="form-control" placeholder="Enter Date" required autofocus>
+                </div>
+                
+
+                <div style="margin-top: 20px;">
+                    <label for="input_recall_shift" >Shift</label>
+                    <select id="input_recall_shift" name="input_recall_shift" class="form-control" required autofocus>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                        <option value="13">13</option>
+                    </select>
+                </div>
+
                 <div style="margin-top: 20px;">
                     <label for="input_recall_batch" >Batch</label>
                     <select id="input_recall_batch" name="input_recall_batch" class="form-control" required autofocus>
@@ -179,8 +215,30 @@
         <div id="Live_Table" class="tabcontent">
             <h3 style="text-align: center;">Live Table</h3>
             <!-- <button id = "saveTable" class="btn btn-lg btn-primary btn-block saveBtn" >Save Table</button> -->
-            <table id="superviser_production_table">
+            <!-- <table id="superviser_production_table">
                 
+            </table> -->
+            <table id="superviser_production_table">
+                <thead>
+                    <tr>    
+                        <th>Date</th>
+                        <th>Shift</th>
+                        <th>Batch</th>
+                        <th>Flour</th>
+                        <th>Remix</th>
+                        <th>Yeast</th>
+                        <th>Product</th>
+                        <th>Yield Value </th>
+                        <th>Mixing Time</th>
+                        <th>Status</th>
+                        <th>Baking Time</th>
+                        <th>Batch Recall</th>
+                        <th>Recall Time</th>
+                    </tr>
+                </thead>
+                <tbody id="tab">
+
+                </tbody>
             </table>
         </div>
 
@@ -317,6 +375,8 @@
     <script src="https://cdn.jsdelivr.net/npm/socket.io-client@2/dist/socket.io.js"></script>
     
     <script src = "{{url_for('static',filename='js/superviser_production.js')}}" ></script>
+    <script src="https:////cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src = "{{url_for('static',filename='js/dataTables.autoFill.min.js')}}" ></script>
 
 
     
