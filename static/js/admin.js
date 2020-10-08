@@ -2,6 +2,13 @@ if(navigator.onLine)
 {
     $(document).ready(function(){
 
+        
+        $("#Logout").click(function(event){
+            event.preventDefault();
+            sessionStorage.clear();
+            window.location.pathname = "/";
+        });
+
         function checkLogin() {
             if(!(sessionStorage.getItem("designation") === "admin") && !(sessionStorage.getItem("role") === "system")){
                 window.location.pathname = "/";
@@ -96,15 +103,34 @@ if(navigator.onLine)
             display()
         });
 
+        $("#cooling_table").DataTable({
+            retrieve: true,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+
+        $("#production_table").DataTable({
+            retrieve: true,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+
+        $("#store_table").DataTable({
+            retrieve: true,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+
         function display(){
 
                 if( loaded ) {
 
-                        $("#Logout").click(function(event){
-                            event.preventDefault();
-                            sessionStorage.clear();
-                            window.location.pathname = "/";
-                        });
 
                         function msToTime(duration) {
                             var milliseconds = parseInt((duration % 1000) / 100),

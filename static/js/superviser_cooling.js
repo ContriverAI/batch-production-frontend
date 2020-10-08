@@ -170,6 +170,22 @@ if(navigator.onLine)
             refreshTable();
         })
 
+        $("#superviser_cooling_table").DataTable({
+            retrieve: true,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+
+        $("#filter_table").DataTable({
+            retrieve: true,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+
         function msToTime(duration) {
             var milliseconds = parseInt((duration % 1000) / 100),
             seconds = Math.floor((duration / 1000) % 60),
@@ -448,37 +464,53 @@ if(navigator.onLine)
 
         function showFilterData(){
             if(sessionStorage.getItem("filterData")){
-                
+                $('#filter_table').dataTable().fnClearTable();
                 var data = sessionStorage.getItem("filterData");
                 var m = JSON.parse(data);
 
-                var table_row = `<tr>`;
+                for(var i = 0; i < m.data.length; i++){
 
-                        for(var i = 0; i < m.columns.length; i++){
+                            var date = new Date(m.data[i][0]);
+                            var finalD = formatDate(m.data[i][0]);
+                            var remTime = msToTime(m.data[i][11]) === "00:00"? "Done" : msToTime(m.data[i][11]);
 
-                            table_row += '<th>'+ m.columns[i] +'</th>';
+                            $('#filter_table').dataTable().fnAddData([
+                                finalD,
+                                m.data[i][1],
+                                m.data[i][2],
+                                m.data[i][3],
+                            ]);                                                                                         
+                }  
+
+                
+
+                // var table_row = `<tr>`;
+
+                //         for(var i = 0; i < m.columns.length; i++){
+
+                //             table_row += '<th>'+ m.columns[i] +'</th>';
                         
-                        }
+                //         }
 
-                    table_row += `</tr>`
+                //     table_row += `</tr>`
 
 
-                        for(var i = 0; i < m.data.length; i++){
+                //         for(var i = 0; i < m.data.length; i++){
 
-                                    var date = new Date(m.data[i][0]);
-                                    var finalD = formatDate(m.data[i][0]);
+                //                     var date = new Date(m.data[i][0]);
+                //                     var finalD = formatDate(m.data[i][0]);
 
-                                    table_row += 
-                                    '<tr>'+
-                                        '<td>'+ finalD +'</td>'+
-                                        '<td>'+m.data[i][1]+'</td>'+
-                                        '<td>'+m.data[i][2]+'</td>'+
-                                        '<td>'+m.data[i][3]+'</td>'+
-                                    '</tr>';
+                //                     table_row += 
+                //                     '<tr>'+
+                //                         '<td>'+ finalD +'</td>'+
+                //                         '<td>'+m.data[i][1]+'</td>'+
+                //                         '<td>'+m.data[i][2]+'</td>'+
+                //                         '<td>'+m.data[i][3]+'</td>'+
+                //                     '</tr>';
                             
-                        }
+                //         }
 
-                        document.getElementById('filter_table').innerHTML = table_row;
+                //         document.getElementById('filter_table').innerHTML = table_row;
                 }
         }
 

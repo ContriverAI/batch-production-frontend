@@ -86,7 +86,7 @@ if(navigator.onLine)
             if(loaded){
                 function localStoreData(){
                     if(sessionStorage.getItem("storeData")){
-                        $('#superviser_store_table').dataTable().fnClearTable();
+                            $('#superviser_store_table').dataTable().fnClearTable();
                             var data = sessionStorage.getItem("storeData");
                             var m = JSON.parse(data);
 
@@ -134,6 +134,22 @@ if(navigator.onLine)
         $('#refreshTable').click(function(){
             refreshTable();
         })
+
+        $("#superviser_store_table").DataTable({
+            retrieve: true,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+
+        $("#filter_table").DataTable({
+            retrieve: true,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
 
         function msToTime(duration) {
             var milliseconds = parseInt((duration % 1000) / 100),
@@ -282,59 +298,97 @@ if(navigator.onLine)
 
         function showFilterData(){
             if(sessionStorage.getItem("filterData")){
-                        var table_row = `<tr>
-                        <th> DATE </th>
-                        <th> PRODUCT </th>
-                        <th>QTY RECEIVED STANDARD</th>
-                        <th>QTY RECEIVED ROUGH</th>
-                        <th>DISPATCHED STANDARD</th>
-                        <th>DISPATCHED ROUGH</th>
-                        <th>ROUGH RETURNED BREAD</th>
-                        <th>BREAD IN STORE</th>
-                        <th>ROUGH BREAD IN STORE</th>
-                        <th>Pkg Supervisor</th>
-                        <th>Dispatch Supervisor</th>
-                    </tr>`;
+                        $('#filter_table').dataTable().fnClearTable();
+                        var data = sessionStorage.getItem("filterData");
+                        var m = JSON.parse(data);
 
-                    var data = sessionStorage.getItem("filterData");
-                    var m = JSON.parse(data);
-                    console.log(m.data);
-
-                    var bis = [];
-                    var rbis = [];
-                    for(var i= 0 ; i < m.data.length;i++){
-                        if( i === 0){
-                            bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6]);
-                            rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
+                        var bis = [];
+                        var rbis = [];
+                        for(var i= 0 ; i < m.data.length;i++){
+                            if( i === 0){
+                                bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6]);
+                                rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
+                            }
+                            else{
+                                bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6] + bis[i-1]);
+                                rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
+                            }
                         }
-                        else{
-                            bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6] + bis[i-1]);
-                            rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
+
+                        for(var i = 0; i < m.data.length; i++){
+                            var date = new Date(m.data[i][0]);
+                            var finalD = formatDate(m.data[i][0]);
+                            var date_1 = new Date(m.data[i][11])
+                            var finalD_1 = formatDate(m.data[i][11]);
+                            
+                            $('#filter_table').dataTable().fnAddData([
+                                finalD,
+                                m.data[i][1],
+                                m.data[i][2],
+                                m.data[i][3],
+                                m.data[i][4],
+                                m.data[i][5],
+                                m.data[i][6],
+                                bis[i],
+                                rbis[i],
+                                m.data[i][9],
+                                m.data[i][10],
+                            ]);
                         }
-                    }
 
-                    for(var i = 0; i < m.data.length; i++){
+                //         var table_row = `<tr>
+                //         <th> DATE </th>
+                //         <th> PRODUCT </th>
+                //         <th>QTY RECEIVED STANDARD</th>
+                //         <th>QTY RECEIVED ROUGH</th>
+                //         <th>DISPATCHED STANDARD</th>
+                //         <th>DISPATCHED ROUGH</th>
+                //         <th>ROUGH RETURNED BREAD</th>
+                //         <th>BREAD IN STORE</th>
+                //         <th>ROUGH BREAD IN STORE</th>
+                //         <th>Pkg Supervisor</th>
+                //         <th>Dispatch Supervisor</th>
+                //     </tr>`;
+
+                //     var data = sessionStorage.getItem("filterData");
+                //     var m = JSON.parse(data);
+                //     console.log(m.data);
+
+                //     var bis = [];
+                //     var rbis = [];
+                //     for(var i= 0 ; i < m.data.length;i++){
+                //         if( i === 0){
+                //             bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6]);
+                //             rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
+                //         }
+                //         else{
+                //             bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6] + bis[i-1]);
+                //             rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
+                //         }
+                //     }
+
+                //     for(var i = 0; i < m.data.length; i++){
 
 
-                                var date = new Date(m.data[i][0]);
-                                var finalD = formatDate(m.data[i][0]);
-                                table_row += 
-                                '<tr>'+
-                                    '<td>'+ finalD +'</td>'+
-                                    '<td>'+m.data[i][1]+'</td>'+
-                                    '<td>'+m.data[i][2]+'</td>'+
-                                    '<td>'+m.data[i][3]+'</td>'+
-                                    '<td>'+m.data[i][4]+'</td>'+
-                                    '<td>'+m.data[i][5]+'</td>'+
-                                    '<td>'+m.data[i][6]+'</td>'+
-                                    '<td>'+bis[i]+'</td>'+
-                                    '<td>'+rbis[i]+'</td>'+
-                                    '<td>'+m.data[i][9]+'</td>'+
-                                    '<td>'+m.data[i][10]+'</td>'+
-                                '</tr>';
-                    }
+                //                 var date = new Date(m.data[i][0]);
+                //                 var finalD = formatDate(m.data[i][0]);
+                //                 table_row += 
+                //                 '<tr>'+
+                //                     '<td>'+ finalD +'</td>'+
+                //                     '<td>'+m.data[i][1]+'</td>'+
+                //                     '<td>'+m.data[i][2]+'</td>'+
+                //                     '<td>'+m.data[i][3]+'</td>'+
+                //                     '<td>'+m.data[i][4]+'</td>'+
+                //                     '<td>'+m.data[i][5]+'</td>'+
+                //                     '<td>'+m.data[i][6]+'</td>'+
+                //                     '<td>'+bis[i]+'</td>'+
+                //                     '<td>'+rbis[i]+'</td>'+
+                //                     '<td>'+m.data[i][9]+'</td>'+
+                //                     '<td>'+m.data[i][10]+'</td>'+
+                //                 '</tr>';
+                //     }
 
-                document.getElementById('filter_table').innerHTML = table_row;
+                // document.getElementById('filter_table').innerHTML = table_row;
 
             }
         }

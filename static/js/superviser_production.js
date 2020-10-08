@@ -167,6 +167,22 @@ if(navigator.onLine)
             refreshTable();
         });
 
+        $("#superviser_production_table").DataTable({
+            retrieve: true,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+
+        $("#filter_data").DataTable({
+            retrieve: true,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+
         function msToTime(duration) {
             var milliseconds = parseInt((duration % 1000) / 100),
             seconds = Math.floor((duration / 1000) % 60),
@@ -432,42 +448,65 @@ if(navigator.onLine)
 
         function showFilterData(){
             if(sessionStorage.getItem("filterData")){
-                        var table_row = `<tr>    
-                            <th>Date</th>
-                            <th>Product</th>
-                            <th>Shift</th>
-                            <th>Batch</th>
-                            <th>sum(flour)</th>
-                            <th>sum(remix)</th>
-                            <th>sum(yeast)</th>
-                            <th>sum(yield)</th>
-                            <th>status</th>
-                            <th>Batch Recall</th>
-                        </tr>`;
-
+                        var tb = $('#filter_table').DataTable();
+                        $('#filter_table').dataTable().fnClearTable();
                         var data = sessionStorage.getItem("filterData");
                         var m = JSON.parse(data);
 
                         for(var i = 0; i < m.data.length; i++){
-                                var date = new Date(m.data[i][0]);
-                                var finalD = formatDate(m.data[i][0]);
-                                table_row += 
-                                '<tr>'+
-                                    '<td>'+ finalD +'</td>'+
-                                    '<td>'+m.data[i][1]+'</td>'+
-                                    '<td>'+m.data[i][2]+'</td>'+
-                                    '<td>'+m.data[i][3]+'</td>'+
-                                    '<td>'+m.data[i][4]+'</td>'+
-                                    '<td>'+m.data[i][5]+'</td>'+
-                                    '<td>'+m.data[i][6]+'</td>'+
-                                    '<td>'+m.data[i][7]+'</td>'+
-                                    '<td>'+m.data[i][8]+'</td>'+
-                                    '<td>'+m.data[i][9]+'</td>'+
-                                '</tr>';
-                            
+                                    var date = new Date(m.data[i][0]);
+                                    var finalD = formatDate(m.data[i][0]);
+                                    
+                                    $('#filter_table').dataTable().fnAddData([
+                                        finalD,
+                                        m.data[i][1],
+                                        m.data[i][2],
+                                        m.data[i][3],
+                                        m.data[i][4],
+                                        m.data[i][5],
+                                        m.data[i][6],
+                                        m.data[i][7],
+                                        m.data[i][8],
+                                        m.data[i][9],
+                                    ]);
                         }
 
-                        document.getElementById('filter_table').innerHTML = table_row;
+                        // var table_row = `<tr>    
+                        //     <th>Date</th>
+                        //     <th>Product</th>
+                        //     <th>Shift</th>
+                        //     <th>Batch</th>
+                        //     <th>sum(flour)</th>
+                        //     <th>sum(remix)</th>
+                        //     <th>sum(yeast)</th>
+                        //     <th>sum(yield)</th>
+                        //     <th>status</th>
+                        //     <th>Batch Recall</th>
+                        // </tr>`;
+
+                        // var data = sessionStorage.getItem("filterData");
+                        // var m = JSON.parse(data);
+
+                        // for(var i = 0; i < m.data.length; i++){
+                        //         var date = new Date(m.data[i][0]);
+                        //         var finalD = formatDate(m.data[i][0]);
+                        //         table_row += 
+                        //         '<tr>'+
+                        //             '<td>'+ finalD +'</td>'+
+                        //             '<td>'+m.data[i][1]+'</td>'+
+                        //             '<td>'+m.data[i][2]+'</td>'+
+                        //             '<td>'+m.data[i][3]+'</td>'+
+                        //             '<td>'+m.data[i][4]+'</td>'+
+                        //             '<td>'+m.data[i][5]+'</td>'+
+                        //             '<td>'+m.data[i][6]+'</td>'+
+                        //             '<td>'+m.data[i][7]+'</td>'+
+                        //             '<td>'+m.data[i][8]+'</td>'+
+                        //             '<td>'+m.data[i][9]+'</td>'+
+                        //         '</tr>';
+                            
+                        // }
+
+                        // document.getElementById('filter_table').innerHTML = table_row;
 
             }
         }

@@ -133,6 +133,14 @@ if(navigator.onLine)
              refreshTable();
          })
          
+         $("#user_production_table").DataTable({
+            retrieve: true,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+
          function msToTime(duration) {
             var milliseconds = parseInt((duration % 1000) / 100),
             seconds = Math.floor((duration / 1000) % 60),
