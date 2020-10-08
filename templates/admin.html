@@ -157,9 +157,67 @@
                 </div>
                 <div style="display: flex;">
                     <div style="overflow-x:auto;width: 60%;">
-                        <table id="filter_table" style="margin-top: 10px;width: 100%;">
+                        <!-- <table id="filter_table" style="margin-top: 10px;width: 100%;">
                             
-                        </table>
+                        </table> -->
+                        <div id="filter_div_cooling" style="display: inline;">
+                            <table id="filter_table_cooling" style="margin-top: 10px;width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>date_time</th>
+                                        <th>product</th>
+                                        <th>sum(qty) </th>
+                                        <th>packaging complete</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tab">
+                
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="filter_div_production" style="display: none;">
+                            <table id="filter_table_production" style="margin-top: 10px;width: 100%;">
+                                <thead>
+                                    <tr>    
+                                        <th>date_time</th>
+                                        <th>product</th>
+                                        <th>shift</th>
+                                        <th>batch</th>
+                                        <th>sum(flour)</th>
+                                        <th>sum(remix)</th>
+                                        <th>sum(yeast)</th>
+                                        <th>sum(yield) </th>
+                                        <th>status</th>
+                                        <th>batch recall</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tab">
+                
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="filter_div_store" style="display: none;">
+                            <table id="filter_table_store" style="margin-top: 10px;width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th> date_time </th>
+                                        <th> product </th>
+                                        <th>sum(`qty received standard`)</th>
+                                        <th>sum(`qty received rough`)</th>
+                                        <th>sum(`dispatched standard`)</th>
+                                        <th>sum(`dispatched rough`)</th>
+                                        <th>sum(`rough returned bread`)</th>
+                                        <th>sum(`bread in store`)</th>
+                                        <th>sum(`rough bread in store`)</th>
+                                        <th>pkg_supervisor</th>
+                                        <th>dsp_supervisor</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tab">
+                
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     <form class="form-create-cooling card" id="createCoolingForm" method = "POST">
