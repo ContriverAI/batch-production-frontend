@@ -183,7 +183,8 @@ if(navigator.onLine)
             dom: 'Bfrtip',
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'
-            ]
+            ],
+            scrollX : true,
         });
 
         function msToTime(duration) {
