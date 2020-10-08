@@ -82,12 +82,9 @@ if(navigator.onLine)
 
         getStoreData()
 
-        function display(){
-
+        function refreshTable(){
             if(loaded){
-
                 function localStoreData(){
-
                     if(sessionStorage.getItem("storeData")){
                         $('#superviser_store_table').dataTable().fnClearTable();
                             var data = sessionStorage.getItem("storeData");
@@ -131,8 +128,29 @@ if(navigator.onLine)
                 }
 
                 localStoreData();
+            }
+        }
 
-                setInterval(localStoreData ,10000);
+        $('#refreshTable').click(function(){
+            refreshTable();
+        })
+
+        function msToTime(duration) {
+            var milliseconds = parseInt((duration % 1000) / 100),
+            seconds = Math.floor((duration / 1000) % 60),
+            minutes = Math.floor((duration / (1000 * 60)) % 60),
+            hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+        
+            hours = (hours < 10) ? "0" + hours : hours;
+            minutes = (minutes < 10) ? "0" + minutes : minutes;
+        
+            return hours + ":" + minutes ;
+        }
+
+        function display(){
+
+            if(loaded){
+                refreshTable();
 
                 function setDateForm(){
                     var today = new Date();

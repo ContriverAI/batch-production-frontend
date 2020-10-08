@@ -84,6 +84,18 @@ if(navigator.onLine)
 
         getCoolingData()
 
+        $('#refreshTableProduction').click(function(){
+            display()
+        });
+
+        $('#refreshTableCooling').click(function(){
+            display()
+        });
+
+        $('#refreshTableStore').click(function(){
+            display()
+        });
+
         function display(){
 
                 if( loaded ) {
@@ -139,7 +151,6 @@ if(navigator.onLine)
                         }
 
                         localCoolingData();
-                        setInterval(localCoolingData , 10000);
 
                         function localProductionData(){
                             if(sessionStorage.getItem("prodData")){
@@ -173,7 +184,6 @@ if(navigator.onLine)
                         }
 
                         localProductionData();
-                        setInterval(localProductionData , 10000);
 
                         function localStoreData(){
 
@@ -222,7 +232,6 @@ if(navigator.onLine)
                         }
 
                         localStoreData();
-                        setInterval(localStoreData , 10000);
 
                         function getUsersData(){
 
@@ -306,9 +315,8 @@ if(navigator.onLine)
                         }
 
                     }
-                }
+            }
 
-                setInterval(display , 10000);
 
                 $(".form-create-config").submit(function(event) {
                     event.stopPropagation();

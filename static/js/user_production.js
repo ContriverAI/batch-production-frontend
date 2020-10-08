@@ -82,38 +82,9 @@ if(navigator.onLine)
 
          setInterval(dataLoad , 3000);
 
-         
-        function display(){
-
-            if(loaded){
-
-                function setDateForm(){
-                    var today = new Date();
-                    var dd = String(today.getDate()).padStart(2, '0');
-                    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-                    var yyyy = today.getFullYear();
-
-                    today =  dd + '-' + mm + '-'+ yyyy;
-                    console.log(today);
-                    $("#input_main_date").val(today);
-                }
-
-                setDateForm()
-
-                function msToTime(duration) {
-                    var milliseconds = parseInt((duration % 1000) / 100),
-                    seconds = Math.floor((duration / 1000) % 60),
-                    minutes = Math.floor((duration / (1000 * 60)) % 60),
-                    hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
-                
-                    hours = (hours < 10) ? "0" + hours : hours;
-                    minutes = (minutes < 10) ? "0" + minutes : minutes;
-                
-                    return hours + ":" + minutes ;
-                }
-
-                
-
+         function refreshTable(){
+             if(loaded){
+                 
                 function localProductionData(){
                     if(sessionStorage.getItem("prodData")){
                             var tb = $('#user_production_table').DataTable();
@@ -154,8 +125,54 @@ if(navigator.onLine)
                         }
                 }
 
-                localProductionData();
-                setInterval(localProductionData , 10000);
+                localProductionData()
+             }
+         }
+
+         $('#refreshTable').click(function(){
+             refreshTable();
+         })
+         
+         function msToTime(duration) {
+            var milliseconds = parseInt((duration % 1000) / 100),
+            seconds = Math.floor((duration / 1000) % 60),
+            minutes = Math.floor((duration / (1000 * 60)) % 60),
+            hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+        
+            hours = (hours < 10) ? "0" + hours : hours;
+            minutes = (minutes < 10) ? "0" + minutes : minutes;
+        
+            return hours + ":" + minutes ;
+        }
+
+        function display(){
+
+            if(loaded){
+                refreshTable();
+                function setDateForm(){
+                    var today = new Date();
+                    var dd = String(today.getDate()).padStart(2, '0');
+                    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                    var yyyy = today.getFullYear();
+
+                    today =  dd + '-' + mm + '-'+ yyyy;
+                    console.log(today);
+                    $("#input_main_date").val(today);
+                }
+
+                setDateForm()
+
+                function msToTime(duration) {
+                    var milliseconds = parseInt((duration % 1000) / 100),
+                    seconds = Math.floor((duration / 1000) % 60),
+                    minutes = Math.floor((duration / (1000 * 60)) % 60),
+                    hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+                
+                    hours = (hours < 10) ? "0" + hours : hours;
+                    minutes = (minutes < 10) ? "0" + minutes : minutes;
+                
+                    return hours + ":" + minutes ;
+                }
 
 
                 function localProductionBakeData(){
@@ -199,45 +216,45 @@ if(navigator.onLine)
         }
         setInterval(display , 10000);
 
-            $(document).on("click" , "#Bak"  ,  function(e) {
-                e.preventDefault();
-                var pid = $(this).parent().parent().attr("id");
+        $(document).on("click" , "#Bak"  ,  function(e) {
+            e.preventDefault();
+            var pid = $(this).parent().parent().attr("id");
 
-                var modal = document.getElementById("myModal");
-                modal.style.display = "block";
+            var modal = document.getElementById("myModal");
+            modal.style.display = "block";
 
-                const url = "http://34.122.82.176:9001/get/production_bake_screen"
+            const url = "http://34.122.82.176:9001/get/production_bake_screen"
 
-                $.ajax({
-                    url:url,
-                    type:"POST",
-                    data:JSON.stringify({
-                        "u_key": sessionStorage.getItem("ukey"), 
-                        "batch": pid,
-                        "status": "Baked",
-                        "time": new Date().toLocaleTimeString(),
-                    }),
-                    statusCode :{
-                    200: function() {
-                            console.log("success");
-                    }
-                    }
-                    ,
-                    contentType:"application/json; charset=utf-8",
-                    success: function(data, textStatus, jqXHR)
-                    {
-                        modal.style.display = "none";
-                        alert(data);   
-                        var id = "#" + pid;   
-                        $(id).remove();              
-                    },
-                    error: function (e)
-                    {
-                        console.log(e);
-                    }
-                });
-            
+            $.ajax({
+                url:url,
+                type:"POST",
+                data:JSON.stringify({
+                    "u_key": sessionStorage.getItem("ukey"), 
+                    "batch": pid,
+                    "status": "Baked",
+                    "time": new Date().toLocaleTimeString(),
+                }),
+                statusCode :{
+                200: function() {
+                        console.log("success");
+                }
+                }
+                ,
+                contentType:"application/json; charset=utf-8",
+                success: function(data, textStatus, jqXHR)
+                {
+                    modal.style.display = "none";
+                    alert(data);   
+                    var id = "#" + pid;   
+                    $(id).remove();              
+                },
+                error: function (e)
+                {
+                    console.log(e);
+                }
             });
+        
+        });
         
 
             //change tables

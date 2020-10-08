@@ -127,10 +127,8 @@ if(navigator.onLine)
 
         getProductionData()
 
-        function display(){
-
+        function refreshTable(){
             if(loaded) {
-
                 function localProductionData(){
                     if(sessionStorage.getItem("prodData")){
                             var tb = $('#superviser_production_table').DataTable();
@@ -160,10 +158,31 @@ if(navigator.onLine)
                             }
                         }
                 }
-                
-                localProductionData();
-                setInterval(localProductionData , 10000);
 
+                localProductionData();
+            }
+        }
+
+        $('#refreshTable').click(function(){
+            refreshTable();
+        });
+
+        function msToTime(duration) {
+            var milliseconds = parseInt((duration % 1000) / 100),
+            seconds = Math.floor((duration / 1000) % 60),
+            minutes = Math.floor((duration / (1000 * 60)) % 60),
+            hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+        
+            hours = (hours < 10) ? "0" + hours : hours;
+            minutes = (minutes < 10) ? "0" + minutes : minutes;
+        
+            return hours + ":" + minutes ;
+        }
+
+
+        function display(){
+            if(loaded) {
+                refreshTable();
                 function localProductionBakeData(){
                     if(sessionStorage.getItem("prodData")){
                             var table_row = `<tr>  
@@ -223,7 +242,7 @@ if(navigator.onLine)
         }
 
         setInterval(display ,10000);
-
+        refreshTable();
 
         $("#Logout").click(function(event){
             event.preventDefault();
