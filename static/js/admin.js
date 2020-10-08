@@ -108,8 +108,7 @@ if(navigator.onLine)
             dom: 'Bfrtip',
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'
-            ],
-            scrollX : true,
+            ]
         });
 
         $("#production_table").DataTable({
@@ -117,8 +116,7 @@ if(navigator.onLine)
             dom: 'Bfrtip',
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'
-            ],
-            scrollX : true,
+            ]
         });
 
         $("#store_table").DataTable({
@@ -126,8 +124,7 @@ if(navigator.onLine)
             dom: 'Bfrtip',
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'
-            ],
-            scrollX : true,
+            ]
         });
 
         $("#filter_table_cooling").DataTable({
@@ -135,8 +132,7 @@ if(navigator.onLine)
             dom: 'Bfrtip',
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'
-            ],
-            scrollX : true,
+            ]
         });
         
         $("#filter_table_production").DataTable({
@@ -144,8 +140,7 @@ if(navigator.onLine)
             dom: 'Bfrtip',
             buttons: [
                 'copy', 'csv', 'excel', 'pdf', 'print'
-            ],
-            scrollX : true,
+            ]
         });
 
         $("#filter_table_store").DataTable({
