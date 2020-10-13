@@ -214,9 +214,8 @@ if(navigator.onLine)
                                 var finalD = new Date(m.data[i][0]);
                                 var yesterday = new Date();
                                 yesterday.setDate(yesterday.getDate() - 1);
-
-
                                 if(m.data[i][9] === "Unbaked" && m.data[i][11] === "No" && finalD >= yesterday){
+                                    console.log(finalD);
                                         table_row += 
                                         '<tr id='+m.data[i][8]+'>'+
                                             '<td>'+m.data[i][8]+'</td>'+
@@ -695,6 +694,7 @@ if(navigator.onLine)
                 },
                 error: function (e)
                 {
+                    modal.style.display = "none";
                     alert("Something Went Wrong");
                     console.log(e);
                 }
