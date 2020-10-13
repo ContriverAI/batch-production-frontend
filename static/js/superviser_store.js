@@ -167,8 +167,6 @@ if(navigator.onLine)
         function display(){
 
             if(loaded){
-                refreshTable();
-
                 function setDateForm(){
                     var today = new Date();
                     var dd = String(today.getDate()).padStart(2, '0');

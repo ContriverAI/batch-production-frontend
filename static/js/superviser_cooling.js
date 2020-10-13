@@ -202,7 +202,6 @@ if(navigator.onLine)
 
             if(loaded) {
 
-                refreshTable();
 
                 function localCoolingLiveData(){
                     if(sessionStorage.getItem("tableData")){

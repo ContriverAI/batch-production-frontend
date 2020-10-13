@@ -198,7 +198,6 @@ if(navigator.onLine)
 
         function display(){
             if(loaded) {
-                refreshTable();
                 function localProductionBakeData(){
                     if(sessionStorage.getItem("prodData")){
                             var table_row = `<tr>  
@@ -212,7 +211,12 @@ if(navigator.onLine)
                             // console.log(m.data);
 
                             for(var i = 0; i < m.data.length; i++){
-                                if(m.data[i][9] === "Unbaked" && m.data[i][11] === "No"){
+                                var finalD = new Date(m.data[i][0]);
+                                var yesterday = new Date();
+                                yesterday.setDate(yesterday.getDate() - 1);
+
+
+                                if(m.data[i][9] === "Unbaked" && m.data[i][11] === "No" && finalD >= yesterday){
                                         table_row += 
                                         '<tr id='+m.data[i][8]+'>'+
                                             '<td>'+m.data[i][8]+'</td>'+

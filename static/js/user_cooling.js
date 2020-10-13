@@ -146,7 +146,6 @@ if(navigator.onLine)
         function display(){
 
             if(loaded){
-                refreshTable();
                 document.getElementById("user-main").style.display = "inline";
                 document.getElementById("loader").style.display = "none";
 
