@@ -60,7 +60,7 @@ if(navigator.onLine)
          
         function getCoolingData(){
 
-            const socket = io('http://localhost:9001/');
+            const socket = io('http://192.168.8.3:9001/');
             socket.on('conn', data => {
                 console.log("CONNECTION RESPONSE: ", data)
                 socket.emit('getData', () => { })
@@ -81,71 +81,74 @@ if(navigator.onLine)
 
         getCoolingData()
 
-        function display(){
-
+        function refreshTable(){
             if(loaded){
                 
-                document.getElementById("user-main").style.display = "inline";
-                document.getElementById("loader").style.display = "none";
-
                 function localCoolingData(){
 
                     if(sessionStorage.getItem("tableData")){
-                        var table_row = `<tr>
-                                    <th>Date</th>
-                                    <th>Trolley</th>
-                                    <th>Shift </th>
-                                    <th>Product</th>
-                                    <th>Qty</th>
-                                    <th>Time In</th>
-                                    <th>Duration</th>
-                                    <th>Complete Time</th>
-                                    <th>Remaining Time</th>
-                                    <th>Packaging Complete </th>
-                                </tr>`;
+                        $('#user_cooling_table').dataTable().fnClearTable();
+                        var data = sessionStorage.getItem("tableData");
+                        var m = JSON.parse(data);
 
-                                var data = sessionStorage.getItem("tableData");
-                                var m = JSON.parse(data);
-                                console.log(m.data);
+                        for(var i = 0; i < m.data.length; i++){
 
-                                for(var i = 0; i < m.data.length; i++){
+                                    var date = new Date(m.data[i][0]);
+                                    var finalD = formatDate(m.data[i][0]);
+                                    var remTime = msToTime(m.data[i][11]) === "00:00"? "Done" : msToTime(m.data[i][11]);
 
-                                    if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
-
-                                            var date = new Date(m.data[i][0]);
-                                            var finalD = formatDate(m.data[i][0]);
-                                            var remTime = msToTime(m.data[i][11]) === "00:00"? "Done" : msToTime(m.data[i][11]);
-                                            
-                                                table_row += 
-                                                '<tr>'+
-                                                    '<td>'+ finalD +'</td>'+
-                                                    '<td>'+m.data[i][1]+'</td>'+
-                                                    '<td>'+m.data[i][9]+'</td>'+
-                                                    '<td>'+m.data[i][2]+'</td>'+
-                                                    '<td>'+m.data[i][3]+'</td>'+
-                                                    '<td>'+msToTime(m.data[i][4])+'</td>'+
-                                                    '<td>'+msToTime(m.data[i][5])+'</td>'+
-                                                    '<td>'+msToTime(m.data[i][6])+'</td>'+
-                                                    '<td>'+remTime+'</td>'+
-                                                    '<td>'+m.data[i][7]+'</td>'+
-                                                '</tr>';
-                                    }
-                                }
-
-                                document.getElementById('user_cooling_table').innerHTML = table_row;
-                                // var options = '';
-                    
-                                // for(var i = 0; i < m.data.length; i++)
-                                //     if(m.data[i][7] === "No"){
-                                //         options += '<option value="'+m.data[i][1]+'">'+m.data[i][1]+'</option>';
-                                //     }
-
-                                // document.getElementById('input_packaging_trolley').innerHTML = options;
-                        }
+                                    $('#user_cooling_table').dataTable().fnAddData([
+                                        finalD,
+                                        m.data[i][1],
+                                        m.data[i][9],
+                                        m.data[i][2],
+                                        m.data[i][3],
+                                        msToTime(m.data[i][4]),
+                                        msToTime(m.data[i][5]),
+                                        msToTime(m.data[i][6]),
+                                        remTime,
+                                        m.data[i][7],
+                                    ]);                                                                                         
+                            
+                        }    
+                    }
                 }
 
                 localCoolingData();
-                setInterval(localCoolingData , 10000);
+
+            }
+        }
+
+        $('#refreshTable').click(function(){
+            refreshTable();
+        })
+
+        $("#user_cooling_table").DataTable({
+            retrieve: true,
+            ordering: false,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+
+        function msToTime(duration) {
+            var milliseconds = parseInt((duration % 1000) / 100),
+            seconds = Math.floor((duration / 1000) % 60),
+            minutes = Math.floor((duration / (1000 * 60)) % 60),
+            hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+        
+            hours = (hours < 10) ? "0" + hours : hours;
+            minutes = (minutes < 10) ? "0" + minutes : minutes;
+        
+            return hours + ":" + minutes ;
+        }
+
+        function display(){
+
+            if(loaded){
+                document.getElementById("user-main").style.display = "inline";
+                document.getElementById("loader").style.display = "none";
 
                 function localCoolingLiveData(){
 
@@ -199,8 +202,9 @@ if(navigator.onLine)
                                     
                                 }
 
-                                document.getElementById('user_live_table').innerHTML = table_row;
-                        }
+                                document.getElementById('user_live_table').innerHTML = table_row; 
+                    
+                    }
                 }
 
                 localCoolingLiveData();
@@ -285,7 +289,7 @@ if(navigator.onLine)
                 var modal = document.getElementById("myModal");
                 modal.style.display = "block";
 
-                const url = "http://localhost:9001/get/create_cooling_packaging"
+                const url = "http://192.168.8.3:9001/get/create_cooling_packaging"
 
                     $.ajax({
                         url:url,
@@ -328,7 +332,7 @@ if(navigator.onLine)
                 var modal = document.getElementById("myModal");
                 modal.style.display = "block";
 
-                const url = "http://localhost:9001/get/create_cooling_main"
+                const url = "http://192.168.8.3:9001/get/create_cooling_main"
 
                 $.ajax({
                     url:url,
@@ -375,7 +379,7 @@ if(navigator.onLine)
                 var modal = document.getElementById("myModal");
                 modal.style.display = "block";
 
-                const url = "http://localhost:9001/get/create_cooling_packaging"
+                const url = "http://192.168.8.3:9001/get/create_cooling_packaging"
 
                 $.ajax({
                     url:url,

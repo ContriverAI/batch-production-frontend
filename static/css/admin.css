@@ -218,3 +218,11 @@ tr:nth-child(even) {
   background: white;
   display: none;
 }
+
+.saveBtn{
+  margin-bottom: 15px;
+  margin-top: 15px;
+  margin-left: auto;
+  margin-right:auto; 
+  width: 10%;
+}

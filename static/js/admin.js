@@ -2,6 +2,13 @@ if(navigator.onLine)
 {
     $(document).ready(function(){
 
+        
+        $("#Logout").click(function(event){
+            event.preventDefault();
+            sessionStorage.clear();
+            window.location.pathname = "/";
+        });
+
         function checkLogin() {
             if(!(sessionStorage.getItem("designation") === "admin") && !(sessionStorage.getItem("role") === "system")){
                 window.location.pathname = "/";
@@ -61,7 +68,7 @@ if(navigator.onLine)
          
          function getCoolingData(){
 
-            const socket = io('http://localhost:9001/');
+            const socket = io('http://192.168.8.3:9001/');
             socket.on('conn', data => {
                 console.log("CONNECTION RESPONSE: ", data)
                 socket.emit('getData', () => { })
@@ -84,15 +91,75 @@ if(navigator.onLine)
 
         getCoolingData()
 
+        $('#refreshTableProduction').click(function(){
+            display()
+        });
+
+        $('#refreshTableCooling').click(function(){
+            display()
+        });
+
+        $('#refreshTableStore').click(function(){
+            display()
+        });
+
+        $("#cooling_table").DataTable({
+            retrieve: true,
+            ordering: false,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+
+        $("#production_table").DataTable({
+            retrieve: true,
+            ordering: false,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+
+        $("#store_table").DataTable({
+            retrieve: true,
+            ordering: false,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+
+        $("#filter_table_cooling").DataTable({
+            retrieve: true,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+        
+        $("#filter_table_production").DataTable({
+            retrieve: true,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+
+        $("#filter_table_store").DataTable({
+            retrieve: true,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ],
+            scrollX : true,
+        });
+
+
         function display(){
 
                 if( loaded ) {
 
-                        $("#Logout").click(function(event){
-                            event.preventDefault();
-                            sessionStorage.clear();
-                            window.location.pathname = "/";
-                        });
 
                         function msToTime(duration) {
                             var milliseconds = parseInt((duration % 1000) / 100),
@@ -110,25 +177,11 @@ if(navigator.onLine)
                         function localCoolingData(){
 
                             if(sessionStorage.getItem("tableData")){
-                                // var table_row = `<tr>
-                                //             <th>Date</th>
-                                //             <th>Trolley</th>
-                                //             <th>Shift </th>
-                                //             <th>Product</th>
-                                //             <th>Qty</th>
-                                //             <th>Time In</th>
-                                //             <th>Duration</th>
-                                //             <th>Complete Time</th>
-                                //             <th>Remaining Time</th>
-                                //             <th>Packaging Complete </th>
-                                //         </tr>`;
                                         $('#cooling_table').dataTable().fnClearTable();
                                         var data = sessionStorage.getItem("tableData");
                                         var m = JSON.parse(data);
 
                                         for(var i = 0; i < m.data.length; i++){
-
-                                            if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
 
                                                     var date = new Date(m.data[i][0]);
                                                     var finalD = formatDate(m.data[i][0]);
@@ -145,49 +198,17 @@ if(navigator.onLine)
                                                         msToTime(m.data[i][6]),
                                                         remTime,
                                                         m.data[i][7],
-                                                    ]);
-                                                        // table_row += 
-                                                        // '<tr>'+
-                                                        //     '<td>'+ finalD +'</td>'+
-                                                        //     '<td>'+m.data[i][1]+'</td>'+
-                                                        //     '<td>'+m.data[i][9]+'</td>'+
-                                                        //     '<td>'+m.data[i][2]+'</td>'+
-                                                        //     '<td>'+m.data[i][3]+'</td>'+
-                                                        //     '<td>'+msToTime(m.data[i][4])+'</td>'+
-                                                        //     '<td>'+msToTime(m.data[i][5])+'</td>'+
-                                                        //     '<td>'+msToTime(m.data[i][6])+'</td>'+
-                                                        //     '<td>'+remTime+'</td>'+
-                                                        //     '<td>'+m.data[i][7]+'</td>'+
-                                                        // '</tr>';
-                                                    
-                                                    
-                                            }
+                                                    ]);                                                                                         
+                                            
                                         }
 
-                                        // document.getElementById('cooling_table').innerHTML = table_row;
                                 }
                         }
 
                         localCoolingData();
-                        setInterval(localCoolingData , 10000);
 
                         function localProductionData(){
                             if(sessionStorage.getItem("prodData")){
-                                        // var table_row = `<tr>    
-                                        //     <th>Date</th>
-                                        //     <th>Shift</th>
-                                        //     <th>Batch</th>
-                                        //     <th>Flour</th>
-                                        //     <th>Remix</th>
-                                        //     <th>Yeast</th>
-                                        //     <th>Product</th>
-                                        //     <th>Yield Value </th>
-                                        //     <th>Mixing Time</th>
-                                        //     <th>Status</th>
-                                        //     <th>Baking Time</th>
-                                        //     <th>Batch Recall</th>
-                                        //     <th>Recall Time</th>
-                                        // </tr>`;
                                     var tb = $('#production_table').DataTable();
                                     $('#production_table').dataTable().fnClearTable();
                                     var data = sessionStorage.getItem("prodData");
@@ -212,48 +233,16 @@ if(navigator.onLine)
                                                     m.data[i][11],
                                                     msToTime(m.data[i][12]),
                                                 ]);
-                                                // table_row += 
-                                                // '<tr>'+
-                                                //     '<td>'+ finalD +'</td>'+
-                                                //     '<td>'+m.data[i][2]+'</td>'+
-                                                //     '<td>'+m.data[i][8]+'</td>'+
-                                                //     '<td>'+m.data[i][1]+'</td>'+
-                                                //     '<td>'+m.data[i][3]+'</td>'+
-                                                //     '<td>'+m.data[i][4]+'</td>'+
-                                                //     '<td>'+m.data[i][13]+'</td>'+
-                                                //     '<td>'+m.data[i][10]+'</td>'+
-                                                //     '<td>'+msToTime(m.data[i][5])+'</td>'+
-                                                //     '<td>'+m.data[i][9]+'</td>'+
-                                                //     '<td>'+msToTime(m.data[i][6])+'</td>'+
-                                                //     '<td>'+m.data[i][11]+'</td>'+
-                                                //     '<td>'+msToTime(m.data[i][12])+'</td>'+
-                                                // '</tr>';
                                         
                                     }
-                                    // document.getElementById('production_table').innerHTML = table_row;
                                 }
                         }
 
                         localProductionData();
-                        setInterval(localProductionData , 10000);
 
                         function localStoreData(){
 
                             if(sessionStorage.getItem("storeData")){
-                                // var table_row = `<tr>
-                                //             <th> DATE </th>
-                                //             <th> PRODUCT </th>
-                                //             <th>QTY RECEIVED STANDARD</th>
-                                //             <th>QTY RECEIVED ROUGH</th>
-                                //             <th>DISPATCHED STANDARD</th>
-                                //             <th>DISPATCHED ROUGH</th>
-                                //             <th>ROUGH RETURNED BREAD</th>
-                                //             <th>BREAD IN STORE</th>
-                                //             <th>ROUGH BREAD IN STORE</th>
-                                //             <th>Pkg Supervisor</th>
-                                //             <th>Dispatched Date</th>
-                                //             <th>Dispatch Supervisor</th>
-                                //         </tr>`;
                                         
                                         $('#store_table').dataTable().fnClearTable();
                                         var data = sessionStorage.getItem("storeData");
@@ -292,35 +281,17 @@ if(navigator.onLine)
                                                         finalD_1,
                                                         m.data[i][12],
                                                     ]);
-
-                                                    // table_row += 
-                                                    // '<tr>'+
-                                                    //     '<td>'+ finalD +'</td>'+
-                                                    //     '<td>'+m.data[i][1]+'</td>'+
-                                                    //     '<td>'+m.data[i][2]+'</td>'+
-                                                    //     '<td>'+m.data[i][3]+'</td>'+
-                                                    //     '<td>'+m.data[i][4]+'</td>'+
-                                                    //     '<td>'+m.data[i][5]+'</td>'+
-                                                    //     '<td>'+m.data[i][6]+'</td>'+
-                                                    //     '<td>'+bis[i]+'</td>'+
-                                                    //     '<td>'+rbis[i]+'</td>'+
-                                                    //     '<td>'+m.data[i][10]+'</td>'+
-                                                    //     '<td>'+finalD_1+'</td>'+
-                                                    //     '<td>'+m.data[i][12]+'</td>'+
-                                                    // '</tr>';
                                         }
 
-                                        // document.getElementById('store_table').innerHTML = table_row;
                                 }
                         }
 
                         localStoreData();
-                        setInterval(localStoreData , 10000);
 
                         function getUsersData(){
 
                             var settings = {
-                                "url": "http://localhost:9001/get/allusers",
+                                "url": "http://192.168.8.3:9001/get/allusers",
                                 "method": "GET",
                             };
                             
@@ -360,7 +331,7 @@ if(navigator.onLine)
                         function getConfigData(){
 
                             var settings = {
-                                "url": "http://localhost:9001/get/configparams",
+                                "url": "http://192.168.8.3:9001/get/configparams",
                                 "method": "GET",
                             };
                             
@@ -399,15 +370,14 @@ if(navigator.onLine)
                         }
 
                     }
-                }
+            }
 
-                setInterval(display , 10000);
 
                 $(".form-create-config").submit(function(event) {
                     event.stopPropagation();
                     event.preventDefault();
 
-                    const url = "http://localhost:9001/get/updateconfigparams"
+                    const url = "http://192.168.8.3:9001/get/updateconfigparams"
                     document.getElementById("updatingText").style.display = "inline";
 
                     $.ajax({
@@ -444,7 +414,7 @@ if(navigator.onLine)
                     event.stopPropagation();
                     event.preventDefault();
 
-                    const url = "http://localhost:9001/get/create_user"
+                    const url = "http://192.168.8.3:9001/get/create_user"
                     document.getElementById("creatingText").style.display = "inline";
 
                     $.ajax({
@@ -483,7 +453,7 @@ if(navigator.onLine)
                     event.stopPropagation();
                     event.preventDefault();
 
-                    const url = "http://localhost:9001/get/update_user"
+                    const url = "http://192.168.8.3:9001/get/update_user"
                     document.getElementById("updatingText").style.display = "inline";
 
                     $.ajax({
@@ -520,7 +490,7 @@ if(navigator.onLine)
                     event.stopPropagation();
                     event.preventDefault();
 
-                    const url = "http://localhost:9001/get/delete_user"
+                    const url = "http://192.168.8.3:9001/get/delete_user"
                     document.getElementById("deletingText").style.display = "inline";
 
                     $.ajax({
@@ -610,6 +580,10 @@ if(navigator.onLine)
                     document.getElementById("createCoolingForm").style.display = "inline";
                     document.getElementById("createProductionForm").style.display = "none";
                     document.getElementById("createStoreForm").style.display = "none";
+                    
+                    document.getElementById("filter_div_cooling").style.display = "inline";
+                    document.getElementById("filter_div_production").style.display = "none";
+                    document.getElementById("filter_div_store").style.display = "none";
                 });
 
                 $("#productionBtn").click(function(){
@@ -619,6 +593,10 @@ if(navigator.onLine)
                     document.getElementById("createCoolingForm").style.display = "none";
                     document.getElementById("createProductionForm").style.display = "inline";
                     document.getElementById("createStoreForm").style.display = "none";
+
+                    document.getElementById("filter_div_cooling").style.display = "none";
+                    document.getElementById("filter_div_production").style.display = "inline";
+                    document.getElementById("filter_div_store").style.display = "none";
                 });
 
                 $("#storeBtn").click(function(){
@@ -628,41 +606,62 @@ if(navigator.onLine)
                     document.getElementById("createCoolingForm").style.display = "none";
                     document.getElementById("createProductionForm").style.display = "none";
                     document.getElementById("createStoreForm").style.display = "inline";
+
+                    document.getElementById("filter_div_cooling").style.display = "none";
+                    document.getElementById("filter_div_production").style.display = "none";
+                    document.getElementById("filter_div_store").style.display = "inline";
                 });
 
                 function showFilterCoolingData(){
                     if(sessionStorage.getItem("filterCoolingData")){
-                        
+
+                        $('#filter_table_cooling').dataTable().fnClearTable();
                         var data = sessionStorage.getItem("filterCoolingData");
                         var m = JSON.parse(data);
+
+                        for(var i = 0; i < m.data.length; i++){
+
+                                    var date = new Date(m.data[i][0]);
+                                    var finalD = formatDate(m.data[i][0]);
+
+                                    $('#filter_table_cooling').dataTable().fnAddData([
+                                        finalD,
+                                        m.data[i][1],
+                                        m.data[i][2],
+                                        m.data[i][3],
+                                    ]);                                                                                         
+                        }  
+                        
+                        // var data = sessionStorage.getItem("filterCoolingData");
+                        // var m = JSON.parse(data);
         
-                        var table_row = `<tr>`;
+                        // var table_row = `<tr>`;
         
-                                for(var i = 0; i < m.columns.length; i++){
+                        //         for(var i = 0; i < m.columns.length; i++){
         
-                                    table_row += '<th>'+ m.columns[i] +'</th>';
+                        //             table_row += '<th>'+ m.columns[i] +'</th>';
                                 
-                                }
+                        //         }
         
-                            table_row += `</tr>`
+                        //     table_row += `</tr>`
         
         
-                                for(var i = 0; i < m.data.length; i++){
+                        //         for(var i = 0; i < m.data.length; i++){
         
-                                            var date = new Date(m.data[i][0]);
-                                            var finalD = formatDate(m.data[i][0]);
+                        //                     var date = new Date(m.data[i][0]);
+                        //                     var finalD = formatDate(m.data[i][0]);
         
-                                            table_row += 
-                                            '<tr>'+
-                                                '<td>'+ finalD +'</td>'+
-                                                '<td>'+m.data[i][1]+'</td>'+
-                                                '<td>'+m.data[i][2]+'</td>'+
-                                                '<td>'+m.data[i][3]+'</td>'+
-                                            '</tr>';
+                        //                     table_row += 
+                        //                     '<tr>'+
+                        //                         '<td>'+ finalD +'</td>'+
+                        //                         '<td>'+m.data[i][1]+'</td>'+
+                        //                         '<td>'+m.data[i][2]+'</td>'+
+                        //                         '<td>'+m.data[i][3]+'</td>'+
+                        //                     '</tr>';
                                     
-                                }
+                        //         }
         
-                                document.getElementById('filter_table').innerHTML = table_row;
+                        //         document.getElementById('filter_table').innerHTML = table_row;
                         }
                 }
         
@@ -671,7 +670,7 @@ if(navigator.onLine)
                     event.stopPropagation();
                     event.preventDefault();
         
-                    const url = "http://localhost:9001/get/coolingreport"
+                    const url = "http://192.168.8.3:9001/get/coolingreport"
                     document.getElementById("coolingText").style.display = "inline";
 
                     var JSP = $('#input_main_product_filter_cooling_JS:checkbox:checked').val();
@@ -745,43 +744,67 @@ if(navigator.onLine)
 
                 function showFilterProductionData(){
                     if(sessionStorage.getItem("filterProductionData")){
-                                var table_row = `<tr>  
-                                    <th>Date</th>
-                                    <th>Product</th>
-                                    <th>Shift</th>
-                                    <th>Batch</th>
-                                    <th>sum(flour)</th>
-                                    <th>sum(remix)</th>
-                                    <th>sum(yeast)</th>
-                                    <th>sum(yield)</th>
-                                    <th>status</th>
-                                    <th>Batch Recall</th>
-                                </tr>`;
-            
+
+                                var tb = $('#filter_table_production').DataTable();
+                                $('#filter_table_production').dataTable().fnClearTable();
                                 var data = sessionStorage.getItem("filterProductionData");
                                 var m = JSON.parse(data);
-                                console.log(m.data);
-        
+
                                 for(var i = 0; i < m.data.length; i++){
-                                        var date = new Date(m.data[i][0]);
-                                        var finalD = formatDate(m.data[i][0]);
-                                        table_row += 
-                                        '<tr>'+
-                                            '<td>'+ finalD +'</td>'+
-                                            '<td>'+m.data[i][1]+'</td>'+
-                                            '<td>'+m.data[i][2]+'</td>'+
-                                            '<td>'+m.data[i][3]+'</td>'+
-                                            '<td>'+m.data[i][4]+'</td>'+
-                                            '<td>'+m.data[i][5]+'</td>'+
-                                            '<td>'+m.data[i][6]+'</td>'+
-                                            '<td>'+m.data[i][7]+'</td>'+
-                                            '<td>'+m.data[i][8]+'</td>'+
-                                            '<td>'+m.data[i][9]+'</td>'+
-                                        '</tr>';
-                                    
+                                            var date = new Date(m.data[i][0]);
+                                            var finalD = formatDate(m.data[i][0]);
+                                            
+                                            $('#filter_table_production').dataTable().fnAddData([
+                                                finalD,
+                                                m.data[i][1],
+                                                m.data[i][2],
+                                                m.data[i][3],
+                                                m.data[i][4],
+                                                m.data[i][5],
+                                                m.data[i][6],
+                                                m.data[i][7],
+                                                m.data[i][8],
+                                                m.data[i][9],
+                                            ]);
                                 }
+
+                                // var table_row = `<tr>  
+                                //     <th>Date</th>
+                                //     <th>Product</th>
+                                //     <th>Shift</th>
+                                //     <th>Batch</th>
+                                //     <th>sum(flour)</th>
+                                //     <th>sum(remix)</th>
+                                //     <th>sum(yeast)</th>
+                                //     <th>sum(yield)</th>
+                                //     <th>status</th>
+                                //     <th>Batch Recall</th>
+                                // </tr>`;
+            
+                                // var data = sessionStorage.getItem("filterProductionData");
+                                // var m = JSON.parse(data);
+                                // console.log(m.data);
         
-                                document.getElementById('filter_table').innerHTML = table_row;
+                                // for(var i = 0; i < m.data.length; i++){
+                                //         var date = new Date(m.data[i][0]);
+                                //         var finalD = formatDate(m.data[i][0]);
+                                //         table_row += 
+                                //         '<tr>'+
+                                //             '<td>'+ finalD +'</td>'+
+                                //             '<td>'+m.data[i][1]+'</td>'+
+                                //             '<td>'+m.data[i][2]+'</td>'+
+                                //             '<td>'+m.data[i][3]+'</td>'+
+                                //             '<td>'+m.data[i][4]+'</td>'+
+                                //             '<td>'+m.data[i][5]+'</td>'+
+                                //             '<td>'+m.data[i][6]+'</td>'+
+                                //             '<td>'+m.data[i][7]+'</td>'+
+                                //             '<td>'+m.data[i][8]+'</td>'+
+                                //             '<td>'+m.data[i][9]+'</td>'+
+                                //         '</tr>';
+                                    
+                                // }
+        
+                                // document.getElementById('filter_table').innerHTML = table_row;
         
                     }
                 }
@@ -790,7 +813,7 @@ if(navigator.onLine)
                     event.stopPropagation();
                     event.preventDefault();
         
-                    const url = "http://localhost:9001/get/productionreport"
+                    const url = "http://192.168.8.3:9001/get/productionreport"
                     document.getElementById("productionText").style.display = "inline";
 
                     var JSP = $('#input_main_product_filter_production_JS:checkbox:checked').val();
@@ -934,24 +957,11 @@ if(navigator.onLine)
 
                 function showFilterStoreData(){
                     if(sessionStorage.getItem("filterStoreData")){
-                                var table_row = `<tr>
-                                    <th> DATE </th>
-                                    <th> PRODUCT </th>
-                                    <th>QTY RECEIVED STANDARD</th>
-                                    <th>QTY RECEIVED ROUGH</th>
-                                    <th>DISPATCHED STANDARD</th>
-                                    <th>DISPATCHED ROUGH</th>
-                                    <th>ROUGH RETURNED BREAD</th>
-                                    <th>BREAD IN STORE</th>
-                                    <th>ROUGH BREAD IN STORE</th>
-                                    <th>Pkg Supervisor</th>
-                                    <th>Dispatch Supervisor</th>
-                                </tr>`;
-            
+
+                            $('#filter_table_store').dataTable().fnClearTable();
                             var data = sessionStorage.getItem("filterStoreData");
                             var m = JSON.parse(data);
-                            console.log(m.data);
-        
+
                             var bis = [];
                             var rbis = [];
                             for(var i= 0 ; i < m.data.length;i++){
@@ -964,29 +974,81 @@ if(navigator.onLine)
                                     rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
                                 }
                             }
-        
+
                             for(var i = 0; i < m.data.length; i++){
-        
-        
-                                        var date = new Date(m.data[i][0]);
-                                        var finalD = formatDate(m.data[i][0]);
-                                        table_row += 
-                                        '<tr>'+
-                                            '<td>'+ finalD +'</td>'+
-                                            '<td>'+m.data[i][1]+'</td>'+
-                                            '<td>'+m.data[i][2]+'</td>'+
-                                            '<td>'+m.data[i][3]+'</td>'+
-                                            '<td>'+m.data[i][4]+'</td>'+
-                                            '<td>'+m.data[i][5]+'</td>'+
-                                            '<td>'+m.data[i][6]+'</td>'+
-                                            '<td>'+bis[i]+'</td>'+
-                                            '<td>'+rbis[i]+'</td>'+
-                                            '<td>'+m.data[i][9]+'</td>'+
-                                            '<td>'+m.data[i][10]+'</td>'+
-                                        '</tr>';
+                                var date = new Date(m.data[i][0]);
+                                var finalD = formatDate(m.data[i][0]);
+                                var date_1 = new Date(m.data[i][11])
+                                var finalD_1 = formatDate(m.data[i][11]);
+                                
+                                $('#filter_table_store').dataTable().fnAddData([
+                                    finalD,
+                                    m.data[i][1],
+                                    m.data[i][2],
+                                    m.data[i][3],
+                                    m.data[i][4],
+                                    m.data[i][5],
+                                    m.data[i][6],
+                                    bis[i],
+                                    rbis[i],
+                                    m.data[i][9],
+                                    m.data[i][10],
+                                ]);
                             }
+
+                        //         var table_row = `<tr>
+                        //             <th> DATE </th>
+                        //             <th> PRODUCT </th>
+                        //             <th>QTY RECEIVED STANDARD</th>
+                        //             <th>QTY RECEIVED ROUGH</th>
+                        //             <th>DISPATCHED STANDARD</th>
+                        //             <th>DISPATCHED ROUGH</th>
+                        //             <th>ROUGH RETURNED BREAD</th>
+                        //             <th>BREAD IN STORE</th>
+                        //             <th>ROUGH BREAD IN STORE</th>
+                        //             <th>Pkg Supervisor</th>
+                        //             <th>Dispatch Supervisor</th>
+                        //         </tr>`;
+            
+                        //     var data = sessionStorage.getItem("filterStoreData");
+                        //     var m = JSON.parse(data);
+                        //     console.log(m.data);
         
-                        document.getElementById('filter_table').innerHTML = table_row;
+                        //     var bis = [];
+                        //     var rbis = [];
+                        //     for(var i= 0 ; i < m.data.length;i++){
+                        //         if( i === 0){
+                        //             bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6]);
+                        //             rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
+                        //         }
+                        //         else{
+                        //             bis.push(m.data[i][2] +m.data[i][3] -m.data[i][4] -m.data[i][5] -m.data[i][6] + bis[i-1]);
+                        //             rbis.push(m.data[i][3] + m.data[i][6] - m.data[i][5]);
+                        //         }
+                        //     }
+        
+                        //     for(var i = 0; i < m.data.length; i++){
+        
+        
+                        //                 var date = new Date(m.data[i][0]);
+                        //                 var finalD = formatDate(m.data[i][0]);
+                        //                 table_row += 
+                        //                 '<tr>'+
+                        //                     '<td>'+ finalD +'</td>'+
+                        //                     '<td>'+m.data[i][1]+'</td>'+
+                        //                     '<td>'+m.data[i][2]+'</td>'+
+                        //                     '<td>'+m.data[i][3]+'</td>'+
+                        //                     '<td>'+m.data[i][4]+'</td>'+
+                        //                     '<td>'+m.data[i][5]+'</td>'+
+                        //                     '<td>'+m.data[i][6]+'</td>'+
+                        //                     '<td>'+bis[i]+'</td>'+
+                        //                     '<td>'+rbis[i]+'</td>'+
+                        //                     '<td>'+m.data[i][9]+'</td>'+
+                        //                     '<td>'+m.data[i][10]+'</td>'+
+                        //                 '</tr>';
+                        //     }
+        
+                        // document.getElementById('filter_table').innerHTML = table_row;
         
                     }
                 }
@@ -995,7 +1057,7 @@ if(navigator.onLine)
                     event.stopPropagation();
                     event.preventDefault();
         
-                    const url = "http://localhost:9001/get/storereport"
+                    const url = "http://192.168.8.3:9001/get/storereport"
                     document.getElementById("storeText").style.display = "inline";
 
                     var JSP = $('#input_main_product_filter_store_JS:checkbox:checked').val();

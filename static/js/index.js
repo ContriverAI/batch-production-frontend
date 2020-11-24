@@ -35,7 +35,7 @@ if(navigator.onLine)
             event.stopPropagation();
             event.preventDefault();
 
-            const url = "http://localhost:9001/get/users"
+            const url = "http://192.168.8.3:9001/get/users"
             document.getElementById("loadingText").style.display = "inline";
 
             $.ajax({

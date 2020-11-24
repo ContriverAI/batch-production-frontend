@@ -110,7 +110,7 @@ if(navigator.onLine)
          
          function getCoolingData(){
 
-            const socket = io('http://localhost:9001/');
+            const socket = io('http://192.168.8.3:9001/');
             socket.on('conn', data => {
                 console.log("CONNECTION RESPONSE: ", data)
                 socket.emit('getData', () => { })
@@ -131,52 +131,117 @@ if(navigator.onLine)
 
         getCoolingData()
 
+        function refreshTable(){
+            if(loaded){
+                function localCoolingData(){
+
+                    if(sessionStorage.getItem("tableData")){
+                                $('#superviser_cooling_table').dataTable().fnClearTable();
+                                var data = sessionStorage.getItem("tableData");
+                                var m = JSON.parse(data);
+
+                                for(var i = 0; i < m.data.length; i++){
+
+                                            var date = new Date(m.data[i][0]);
+                                            var finalD = formatDate(m.data[i][0]);
+                                            var remTime = msToTime(m.data[i][11]) === "00:00"? "Done" : msToTime(m.data[i][11]);
+
+                                            $('#superviser_cooling_table').dataTable().fnAddData([
+                                                finalD,
+                                                m.data[i][1],
+                                                m.data[i][9],
+                                                m.data[i][2],
+                                                m.data[i][3],
+                                                msToTime(m.data[i][4]),
+                                                msToTime(m.data[i][5]),
+                                                msToTime(m.data[i][6]),
+                                                remTime,
+                                                m.data[i][7],
+                                            ]);                                                                                         
+                                }  
+                        }
+                }
+                localCoolingData();
+
+            }
+        }
+
+        $('#refreshTable').click(function(){
+            refreshTable();
+        })
+
+        $("#superviser_cooling_table").DataTable({
+            retrieve: true,
+            ordering: false,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+
+        $("#filter_table").DataTable({
+            retrieve: true,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+
+        function msToTime(duration) {
+            var milliseconds = parseInt((duration % 1000) / 100),
+            seconds = Math.floor((duration / 1000) % 60),
+            minutes = Math.floor((duration / (1000 * 60)) % 60),
+            hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+        
+            hours = (hours < 10) ? "0" + hours : hours;
+            minutes = (minutes < 10) ? "0" + minutes : minutes;
+        
+            return hours + ":" + minutes ;
+        }
+
          function display(){
 
             if(loaded) {
 
-            function localCoolingData(){
 
-                if(sessionStorage.getItem("tableData")){
-                    var table_row = `<tr>
-                                <th>Date</th>
-                                <th>Trolley</th>
-                                <th>Shift </th>
-                                <th>Product</th>
-                                <th>Qty</th>
-                                <th>Time In</th>
-                                <th>Duration</th>
-                                <th>Complete Time</th>
-                                <th>Remaining Time</th>
-                                <th>Packaging Complete </th>
-                            </tr>`;
+                function localCoolingLiveData(){
+                    if(sessionStorage.getItem("tableData")){
+                        var table_row = `<tr>
+                                    <th>Date</th>
+                                    <th>Trolley</th>
+                                    <th>Product</th>
+                                    <th>Qty</th>
+                                    <th>Time In</th>
+                                    <th>Complete Time</th>
+                                    <th>Remaining Time</th>
+                                </tr>`;
 
-                            var data = sessionStorage.getItem("tableData");
-                            var m = JSON.parse(data);
-                            console.log(m.data);
+                                var data = sessionStorage.getItem("tableData");
+                                var m = JSON.parse(data);
+                                console.log(m.data);
 
-                            for(var i = 0; i < m.data.length; i++){
+                                for(var i = 0; i < m.data.length; i++){
+                                    var finalD = new Date(m.data[i][0]);
+                                    var yesterday = new Date();
+                                    yesterday.setDate(yesterday.getDate() - 1);
+                                    yesterday.setHours(0,0,0,0);
 
-                                if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
+                                    if(m.data[i][7] === "No" && finalD >= yesterday){
 
-                                        var date = new Date(m.data[i][0]);
-                                        var finalD = formatDate(m.data[i][0]);
-                                        var remTime = msToTime(m.data[i][11]) === "00:00"? "Done" : msToTime(m.data[i][11]);
+                                            var date = new Date(m.data[i][0]);
+                                            var finalD = formatDate(m.data[i][0]);
+                                            var remTime = msToTime(m.data[i][11]) === "00:00"? "Done" : msToTime(m.data[i][11]);
 
-
-                                        if( remTime === "Done"){
+                                            if( remTime === "Done"){
                                                 table_row += 
                                                 '<tr style="background-color:#C6DEB5">'+
                                                     '<td>'+ finalD +'</td>'+
                                                     '<td>'+m.data[i][1]+'</td>'+
-                                                    '<td>'+m.data[i][9]+'</td>'+
                                                     '<td>'+m.data[i][2]+'</td>'+
                                                     '<td>'+m.data[i][3]+'</td>'+
                                                     '<td>'+msToTime(m.data[i][4])+'</td>'+
-                                                    '<td>'+msToTime(m.data[i][5])+'</td>'+
                                                     '<td>'+msToTime(m.data[i][6])+'</td>'+
                                                     '<td>'+remTime+'</td>'+
-                                                    '<td>'+m.data[i][7]+'</td>'+
                                                 '</tr>';
                                             }
                                             else{
@@ -184,146 +249,94 @@ if(navigator.onLine)
                                                 '<tr>'+
                                                     '<td>'+ finalD +'</td>'+
                                                     '<td>'+m.data[i][1]+'</td>'+
-                                                    '<td>'+m.data[i][9]+'</td>'+
                                                     '<td>'+m.data[i][2]+'</td>'+
                                                     '<td>'+m.data[i][3]+'</td>'+
                                                     '<td>'+msToTime(m.data[i][4])+'</td>'+
-                                                    '<td>'+msToTime(m.data[i][5])+'</td>'+
                                                     '<td>'+msToTime(m.data[i][6])+'</td>'+
                                                     '<td>'+remTime+'</td>'+
-                                                    '<td>'+m.data[i][7]+'</td>'+
                                                 '</tr>';
                                             }
+                                    }
+                                    
                                 }
-                            }
 
-                            document.getElementById('superviser_cooling_table').innerHTML = table_row;
+                                document.getElementById('user_live_table').innerHTML = table_row;
 
-                            // var options = '';
-                    
-                            // for(var i = 0; i < m.data.length; i++)
-                            //     if(m.data[i][7] === "No"){
-                            //         options += '<option value="'+m.data[i][1]+'">'+m.data[i][1]+'</option>';
-                            //     }
+                        }        
+                }
 
-                            // document.getElementById('input_packaging_trolley').innerHTML = options;
-                    }
-            }
+                localCoolingLiveData();
+                setInterval(localCoolingLiveData , 10000);
 
-            localCoolingData();
-            setInterval(localCoolingData , 10000);
+                function localPackageData(){
 
-            function localCoolingLiveData(){
+                    if(sessionStorage.getItem("tableData")){
+                        var table_row = `<tr>
+                                    <th>Trolley</th>
+                                    <th>Product</th>
+                                    <th>Qty</th>
+                                    <th>Packaging Complete </th>
+                                </tr>`;
 
-                if(sessionStorage.getItem("tableData")){
-                    var table_row = `<tr>
-                                <th>Date</th>
-                                <th>Trolley</th>
-                                <th>Product</th>
-                                <th>Qty</th>
-                                <th>Time In</th>
-                                <th>Complete Time</th>
-                                <th>Remaining Time</th>
-                            </tr>`;
+                                var data = sessionStorage.getItem("tableData");
+                                var m = JSON.parse(data);
 
-                            var data = sessionStorage.getItem("tableData");
-                            var m = JSON.parse(data);
-                            console.log(m.data);
-
-                            for(var i = 0; i < m.data.length; i++){
-
-                                if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
-
-                                        var date = new Date(m.data[i][0]);
-                                        var finalD = formatDate(m.data[i][0]);
-                                        var remTime = msToTime(m.data[i][11]) === "00:00"? "Done" : msToTime(m.data[i][11]);
-
-                                        table_row += 
-                                        '<tr>'+
-                                            '<td>'+ finalD +'</td>'+
-                                            '<td>'+m.data[i][1]+'</td>'+
-                                            '<td>'+m.data[i][2]+'</td>'+
-                                            '<td>'+m.data[i][3]+'</td>'+
-                                            '<td>'+msToTime(m.data[i][4])+'</td>'+
-                                            '<td>'+msToTime(m.data[i][6])+'</td>'+
-                                            '<td>'+remTime+'</td>'+
-                                        '</tr>';
+                                for(var i = 0; i < m.data.length; i++){
+                                    var finalD = new Date(m.data[i][0]);
+                                    var yesterday = new Date();
+                                    yesterday.setDate(yesterday.getDate() - 1);
+                                    yesterday.setHours(0,0,0,0);
+                                    if(m.data[i][7] === "No" && finalD >= yesterday){
+                                            table_row += 
+                                            '<tr id='+m.data[i][1]+'>'+
+                                                '<td>'+m.data[i][1]+'</td>'+
+                                                '<td>'+m.data[i][2]+'</td>'+
+                                                '<td>'+m.data[i][3]+'</td>'+
+                                                '<td><button style="width: 200px" id = "Pak" class="btn btn-lg btn-primary btn-block" type="button">Yes</button></td>'+
+                                            '</tr>';
+                                    }
                                 }
-                            }
 
-                            document.getElementById('user_live_table').innerHTML = table_row;
-                    }
+                                document.getElementById('user_cooling_packaging_table').innerHTML = table_row;
+                        }
+                }
+
+                localPackageData();
+                setInterval(localPackageData , 10000);
+
+                function setDateForm(){
+                    var today = new Date();
+                    var dd = String(today.getDate()).padStart(2, '0');
+                    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                    var yyyy = today.getFullYear();
+
+                    today =  dd + '-' + mm + '-'+ yyyy;
+                    $("#input_main_date").val(today);
+                }
+
+                setDateForm()
+
+                function msToTime(duration) {
+                    var milliseconds = parseInt((duration % 1000) / 100),
+                    seconds = Math.floor((duration / 1000) % 60),
+                    minutes = Math.floor((duration / (1000 * 60)) % 60),
+                    hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+                
+                    hours = (hours < 10) ? "0" + hours : hours;
+                    minutes = (minutes < 10) ? "0" + minutes : minutes;
+                
+                    return hours + ":" + minutes ;
+                }
+
+
+
+                $("#Logout").click(function(event){
+                    event.preventDefault();
+                    sessionStorage.clear();
+                    window.location.pathname = "/";
+                });
+
             }
-
-            localCoolingLiveData();
-            setInterval(localCoolingLiveData , 10000);
-
-            function localPackageData(){
-
-                if(sessionStorage.getItem("tableData")){
-                    var table_row = `<tr>
-                                <th>Trolley</th>
-                                <th>Product</th>
-                                <th>Qty</th>
-                                <th>Packaging Complete </th>
-                            </tr>`;
-
-                            var data = sessionStorage.getItem("tableData");
-                            var m = JSON.parse(data);
-
-                            for(var i = 0; i < m.data.length; i++){
-
-                                if(m.data[i][7] === "No" || m.data[i][7] === "no"  ){
-                                        table_row += 
-                                        '<tr id='+m.data[i][1]+'>'+
-                                            '<td>'+m.data[i][1]+'</td>'+
-                                            '<td>'+m.data[i][2]+'</td>'+
-                                            '<td>'+m.data[i][3]+'</td>'+
-                                            '<td><button style="width: 200px" id = "Pak" class="btn btn-lg btn-primary btn-block" type="button">Yes</button></td>'+
-                                        '</tr>';
-                                }
-                            }
-
-                            document.getElementById('user_cooling_packaging_table').innerHTML = table_row;
-                    }
-            }
-
-            localPackageData();
-            setInterval(localPackageData , 10000);
-
-            function setDateForm(){
-                var today = new Date();
-                var dd = String(today.getDate()).padStart(2, '0');
-                var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-                var yyyy = today.getFullYear();
-
-                today =  dd + '-' + mm + '-'+ yyyy;
-                $("#input_main_date").val(today);
-            }
-
-            setDateForm()
-
-            function msToTime(duration) {
-                var milliseconds = parseInt((duration % 1000) / 100),
-                seconds = Math.floor((duration / 1000) % 60),
-                minutes = Math.floor((duration / (1000 * 60)) % 60),
-                hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
-            
-                hours = (hours < 10) ? "0" + hours : hours;
-                minutes = (minutes < 10) ? "0" + minutes : minutes;
-            
-                return hours + ":" + minutes ;
-            }
-
-
-
-            $("#Logout").click(function(event){
-                event.preventDefault();
-                sessionStorage.clear();
-                window.location.pathname = "/";
-            });
-
-        }
     }
 
      setInterval(display ,10000);
@@ -337,7 +350,7 @@ if(navigator.onLine)
         var modal = document.getElementById("myModal");
         modal.style.display = "block";
 
-        const url = "http://localhost:9001/get/create_cooling_packaging"
+        const url = "http://192.168.8.3:9001/get/create_cooling_packaging"
 
             $.ajax({
                 url:url,
@@ -379,7 +392,7 @@ if(navigator.onLine)
         var modal = document.getElementById("myModal");
         modal.style.display = "block";
 
-        const url = "http://localhost:9001/get/create_cooling_main"
+        const url = "http://192.168.8.3:9001/get/create_cooling_main"
 
         $.ajax({
             url:url,
@@ -424,7 +437,7 @@ if(navigator.onLine)
             var modal = document.getElementById("myModal");
             modal.style.display = "block";
 
-            const url = "http://localhost:9001/get/create_cooling_packaging"
+            const url = "http://192.168.8.3:9001/get/create_cooling_packaging"
 
             $.ajax({
                 url:url,
@@ -458,37 +471,53 @@ if(navigator.onLine)
 
         function showFilterData(){
             if(sessionStorage.getItem("filterData")){
-                
+                $('#filter_table').dataTable().fnClearTable();
                 var data = sessionStorage.getItem("filterData");
                 var m = JSON.parse(data);
 
-                var table_row = `<tr>`;
+                for(var i = 0; i < m.data.length; i++){
 
-                        for(var i = 0; i < m.columns.length; i++){
+                            var date = new Date(m.data[i][0]);
+                            var finalD = formatDate(m.data[i][0]);
+                            var remTime = msToTime(m.data[i][11]) === "00:00"? "Done" : msToTime(m.data[i][11]);
 
-                            table_row += '<th>'+ m.columns[i] +'</th>';
+                            $('#filter_table').dataTable().fnAddData([
+                                finalD,
+                                m.data[i][1],
+                                m.data[i][2],
+                                m.data[i][3],
+                            ]);                                                                                         
+                }  
+
+                
+
+                // var table_row = `<tr>`;
+
+                //         for(var i = 0; i < m.columns.length; i++){
+
+                //             table_row += '<th>'+ m.columns[i] +'</th>';
                         
-                        }
+                //         }
 
-                    table_row += `</tr>`
+                //     table_row += `</tr>`
 
 
-                        for(var i = 0; i < m.data.length; i++){
+                //         for(var i = 0; i < m.data.length; i++){
 
-                                    var date = new Date(m.data[i][0]);
-                                    var finalD = formatDate(m.data[i][0]);
+                //                     var date = new Date(m.data[i][0]);
+                //                     var finalD = formatDate(m.data[i][0]);
 
-                                    table_row += 
-                                    '<tr>'+
-                                        '<td>'+ finalD +'</td>'+
-                                        '<td>'+m.data[i][1]+'</td>'+
-                                        '<td>'+m.data[i][2]+'</td>'+
-                                        '<td>'+m.data[i][3]+'</td>'+
-                                    '</tr>';
+                //                     table_row += 
+                //                     '<tr>'+
+                //                         '<td>'+ finalD +'</td>'+
+                //                         '<td>'+m.data[i][1]+'</td>'+
+                //                         '<td>'+m.data[i][2]+'</td>'+
+                //                         '<td>'+m.data[i][3]+'</td>'+
+                //                     '</tr>';
                             
-                        }
+                //         }
 
-                        document.getElementById('filter_table').innerHTML = table_row;
+                //         document.getElementById('filter_table').innerHTML = table_row;
                 }
         }
 
@@ -497,7 +526,7 @@ if(navigator.onLine)
             event.stopPropagation();
             event.preventDefault();
 
-            const url = "http://localhost:9001/get/coolingreport"
+            const url = "http://192.168.8.3:9001/get/coolingreport"
             document.getElementById("filterText").style.display = "inline";
 
                     var JSP = $('#input_main_product_filter_cooling_JS:checkbox:checked').val();

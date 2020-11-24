@@ -50,7 +50,7 @@ if(navigator.onLine)
          
          function getProductionData(){
 
-            const socket = io('http://localhost:9001/');
+            const socket = io('http://192.168.8.3:9001/');
             socket.on('conn', data => {
                 console.log("CONNECTION RESPONSE: ", data)
                 socket.emit('getData', () => { })
@@ -82,11 +82,81 @@ if(navigator.onLine)
 
          setInterval(dataLoad , 3000);
 
+         function refreshTable(){
+             if(loaded){
+                 
+                function localProductionData(){
+                    if(sessionStorage.getItem("prodData")){
+                            var tb = $('#user_production_table').DataTable();
+                            $('#user_production_table').dataTable().fnClearTable();
+                            var data = sessionStorage.getItem("prodData");
+                            var m = JSON.parse(data);
+
+                            for(var i = 0; i < m.data.length; i++){
+                                        var date = new Date(m.data[i][0]);
+                                        var finalD = formatDate(m.data[i][0]);
+                                        
+                                        $('#user_production_table').dataTable().fnAddData([
+                                            finalD,
+                                            m.data[i][2],
+                                            m.data[i][8],
+                                            m.data[i][1],
+                                            m.data[i][3],
+                                            m.data[i][4],
+                                            m.data[i][13],
+                                            m.data[i][10],
+                                            msToTime(m.data[i][5]),
+                                            m.data[i][9],
+                                            msToTime(m.data[i][6]),
+                                            m.data[i][11],
+                                            msToTime(m.data[i][12]),
+                                        ]);
+                            }
+
+                            var options = ''
+
+                            for(var i = 0; i < m.data.length; i++){
+                                if(m.data[i][11] !== "Yes")
+                                    options += '<option value="'+m.data[i][8]+'">'+m.data[i][8]+'</option>';
+                            }
+                                
+
+                            document.getElementById('input_recall_batch').innerHTML = options;
+                        }
+                }
+
+                localProductionData()
+             }
+         }
+
+         $('#refreshTable').click(function(){
+             refreshTable();
+         })
          
+         $("#user_production_table").DataTable({
+            retrieve: true,
+            ordering: false,
+            dom: 'Bfrtip',
+            buttons: [
+                'copy', 'csv', 'excel', 'pdf', 'print'
+            ]
+        });
+
+         function msToTime(duration) {
+            var milliseconds = parseInt((duration % 1000) / 100),
+            seconds = Math.floor((duration / 1000) % 60),
+            minutes = Math.floor((duration / (1000 * 60)) % 60),
+            hours = Math.floor((duration / (1000 * 60 * 60)) % 24);
+        
+            hours = (hours < 10) ? "0" + hours : hours;
+            minutes = (minutes < 10) ? "0" + minutes : minutes;
+        
+            return hours + ":" + minutes ;
+        }
+
         function display(){
 
             if(loaded){
-
                 function setDateForm(){
                     var today = new Date();
                     var dd = String(today.getDate()).padStart(2, '0');
@@ -112,71 +182,6 @@ if(navigator.onLine)
                     return hours + ":" + minutes ;
                 }
 
-                
-
-                function localProductionData(){
-                    if(sessionStorage.getItem("prodData")){
-                            var table_row = `<tr>    
-                                <th>Date</th>
-                                <th>Shift</th>
-                                <th>Batch</th>
-                                <th>Flour</th>
-                                <th>Remix</th>
-                                <th>Yeast</th>
-                                <th>Product</th>
-                                <th>Yield Value </th>
-                                <th>Mixing Time</th>
-                                <th>Status</th>
-                                <th>Baking Time</th>
-                                <th>Batch Recall</th>
-                                <th>Recall Time</th>
-                            </tr>`;
-
-                            var data = sessionStorage.getItem("prodData");
-                            var m = JSON.parse(data);
-
-                            for(var i = 0; i < m.data.length; i++){
-
-                                        var date = new Date(m.data[i][0]);
-                                        var finalD = formatDate(m.data[i][0]);
-                                        table_row += 
-                                        '<tr>'+
-                                            '<td>'+ finalD +'</td>'+
-                                            '<td>'+m.data[i][2]+'</td>'+
-                                            '<td>'+m.data[i][8]+'</td>'+
-                                            '<td>'+m.data[i][1]+'</td>'+
-                                            '<td>'+m.data[i][3]+'</td>'+
-                                            '<td>'+m.data[i][4]+'</td>'+
-                                            '<td>'+m.data[i][13]+'</td>'+
-                                            '<td>'+m.data[i][10]+'</td>'+
-                                            '<td>'+msToTime(m.data[i][5])+'</td>'+
-                                            '<td>'+m.data[i][9]+'</td>'+
-                                            '<td>'+msToTime(m.data[i][6])+'</td>'+
-                                            '<td>'+m.data[i][11]+'</td>'+
-                                            '<td>'+msToTime(m.data[i][12])+'</td>'+
-                                        '</tr>';
-                                
-                            }
-
-
-                            document.getElementById('user_production_table').innerHTML = table_row;
-
-                            var options = ''
-
-                            for(var i = 0; i < m.data.length; i++){
-                                if(m.data[i][11] !== "Yes")
-                                    options += '<option value="'+m.data[i][8]+'">'+m.data[i][8]+'</option>';
-                            }
-                                
-
-                            document.getElementById('input_recall_batch').innerHTML = options;
-                            // document.getElementById('input_bake_batch').innerHTML = options;
-                        }
-                }
-
-                localProductionData();
-                setInterval(localProductionData , 10000);
-
 
                 function localProductionBakeData(){
                     if(sessionStorage.getItem("prodData")){
@@ -190,7 +195,7 @@ if(navigator.onLine)
                             var m = JSON.parse(data);
 
                             for(var i = 0; i < m.data.length; i++){
-                                if(m.data[i][9] === "Unbaked"){
+                                if(m.data[i][9] === "Unbaked" && m.data[i][11] === "No"){
                                         table_row += 
                                         '<tr id='+m.data[i][8]+'>'+
                                             '<td>'+m.data[i][8]+'</td>'+
@@ -219,45 +224,45 @@ if(navigator.onLine)
         }
         setInterval(display , 10000);
 
-            $(document).on("click" , "#Bak"  ,  function(e) {
-                e.preventDefault();
-                var pid = $(this).parent().parent().attr("id");
+        $(document).on("click" , "#Bak"  ,  function(e) {
+            e.preventDefault();
+            var pid = $(this).parent().parent().attr("id");
 
-                var modal = document.getElementById("myModal");
-                modal.style.display = "block";
+            var modal = document.getElementById("myModal");
+            modal.style.display = "block";
 
-                const url = "http://localhost:9001/get/production_bake_screen"
+            const url = "http://192.168.8.3:9001/get/production_bake_screen"
 
-                $.ajax({
-                    url:url,
-                    type:"POST",
-                    data:JSON.stringify({
-                        "u_key": sessionStorage.getItem("ukey"), 
-                        "batch": pid,
-                        "status": "Baked",
-                        "time": new Date().toLocaleTimeString(),
-                    }),
-                    statusCode :{
-                    200: function() {
-                            console.log("success");
-                    }
-                    }
-                    ,
-                    contentType:"application/json; charset=utf-8",
-                    success: function(data, textStatus, jqXHR)
-                    {
-                        modal.style.display = "none";
-                        alert(data);   
-                        var id = "#" + pid;   
-                        $(id).remove();              
-                    },
-                    error: function (e)
-                    {
-                        console.log(e);
-                    }
-                });
-            
+            $.ajax({
+                url:url,
+                type:"POST",
+                data:JSON.stringify({
+                    "u_key": sessionStorage.getItem("ukey"), 
+                    "batch": pid,
+                    "status": "Baked",
+                    "time": new Date().toLocaleTimeString(),
+                }),
+                statusCode :{
+                200: function() {
+                        console.log("success");
+                }
+                }
+                ,
+                contentType:"application/json; charset=utf-8",
+                success: function(data, textStatus, jqXHR)
+                {
+                    modal.style.display = "none";
+                    alert(data);   
+                    var id = "#" + pid;   
+                    $(id).remove();              
+                },
+                error: function (e)
+                {
+                    console.log(e);
+                }
             });
+        
+        });
         
 
             //change tables
@@ -270,7 +275,7 @@ if(navigator.onLine)
                 modal.style.display = "block";
 
                 //API required
-                const url = "http://localhost:9001/get/production_main_screen"
+                const url = "http://192.168.8.3:9001/get/production_main_screen"
 
                 $.ajax({
                     url:url,
@@ -321,7 +326,7 @@ if(navigator.onLine)
                 modal.style.display = "block";
 
                 //API required
-                const url = "http://localhost:9001/get/production_recall_screen"
+                const url = "http://192.168.8.3:9001/get/production_recall_screen"
 
                 $.ajax({
                     url:url,
@@ -364,7 +369,7 @@ if(navigator.onLine)
                 var modal = document.getElementById("myModal");
                 modal.style.display = "block";
 
-                const url = "http://localhost:9001/get/production_bake_screen"
+                const url = "http://192.168.8.3:9001/get/production_bake_screen"
 
                 $.ajax({
                     url:url,
