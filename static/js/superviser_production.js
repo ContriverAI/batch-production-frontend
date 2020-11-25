@@ -108,7 +108,7 @@ if(navigator.onLine)
         
         function getProductionData(){
 
-            const socket = io('http://192.168.8.3:9001/');
+            const socket = io('http://192.168.8.3:9003/');
             socket.on('conn', data => {
                 console.log("CONNECTION RESPONSE: ", data)
                 socket.emit('getData', () => { })
@@ -280,7 +280,7 @@ if(navigator.onLine)
             var modal = document.getElementById("myModal");
             modal.style.display = "block";
 
-            const url = "http://192.168.8.3:9001/get/production_bake_screen"
+            const url = "http://192.168.8.3:9003/get/production_bake_screen"
             console.log(ids);
             $.ajax({
                 url:url,
@@ -325,7 +325,7 @@ if(navigator.onLine)
             modal.style.display = "block";
 
             //API required
-            const url = "http://192.168.8.3:9001/get/production_main_screen"
+            const url = "http://192.168.8.3:9003/get/production_main_screen"
 
             $.ajax({
                 url:url,
@@ -377,7 +377,7 @@ if(navigator.onLine)
             var Yes = $('#input_recall_cancelbatch:checkbox:checked').val();
 
             //API required
-            const url = "http://192.168.8.3:9001/get/production_recall_screen"
+            const url = "http://192.168.8.3:9003/get/production_recall_screen"
 
             $.ajax({
                 url:url,
@@ -421,7 +421,7 @@ if(navigator.onLine)
             var modal = document.getElementById("myModal");
             modal.style.display = "block";
 
-            const url = "http://192.168.8.3:9001/get/production_bake_screen"
+            const url = "http://192.168.8.3:9003/get/production_bake_screen"
 
             
 
@@ -461,7 +461,7 @@ if(navigator.onLine)
                         $('#filter_table').dataTable().fnClearTable();
                         var data = sessionStorage.getItem("filterData");
                         var m = JSON.parse(data);
-
+                        console.log(m);
                         for(var i = 0; i < m.data.length; i++){
                                     var date = new Date(m.data[i][0]);
                                     var finalD = formatDate(m.data[i][0]);
@@ -475,8 +475,8 @@ if(navigator.onLine)
                                         m.data[i][5],
                                         m.data[i][6],
                                         m.data[i][7],
-                                        m.data[i][8],
-                                        m.data[i][9],
+                                        m.data[i][8]
+                                    //    m.data[i][9],
                                     ]);
                         }
 
@@ -524,7 +524,7 @@ if(navigator.onLine)
             event.stopPropagation();
             event.preventDefault();
 
-            const url = "http://192.168.8.3:9001/get/productionreport"
+            const url = "http://192.168.8.3:9003/get/productionreport"
             document.getElementById("filterText").style.display = "inline";
 
                     var JSP = $('#input_main_product_filter_production_JS:checkbox:checked').val();
@@ -671,7 +671,7 @@ if(navigator.onLine)
 
             var modal = document.getElementById("myModalRecall");
             modal.style.display = "block";
-            const url = "http://192.168.8.3:9001/get/datewisebatch"
+            const url = "http://192.168.8.3:9003/get/datewisebatch"
             $.ajax({
                 url:url,
                 type:"POST",
